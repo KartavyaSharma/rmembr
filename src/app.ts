@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import cors = require('cors');
 import dotenv = require('dotenv');
 
+import { addRoute } from './utils/server_utils'
+
 import routes from './routes/home';
 import AuthRoutes from './routes/auth/auth_routes';
 
@@ -25,7 +27,7 @@ class App {
 
     routes() {
         this.server.use(routes);
-        this.server.use(new AuthRoutes().routes());
+        addRoute(this.server, new AuthRoutes());
     }
 
     middleware() {

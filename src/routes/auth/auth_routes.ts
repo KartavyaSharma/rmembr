@@ -11,7 +11,7 @@ import { Routes } from '../routes';
 export default class AuthRoutes extends Routes {
 
     /** Base URL for all authentication routes. */
-    static readonly BASE:string = "/auth";
+    protected static BASE = "/auth";
 
     /**
      * Initializes routes object from Routes abstract class.
@@ -19,25 +19,24 @@ export default class AuthRoutes extends Routes {
      */
     constructor() {
         super();
-        this.addCreateUser();
-        this.addLoginUser();
+        this.createRoutes();
     }
 
-    /**
-     * Adds a route for creating a user. Route is at /create-user.
-     */
-    private addCreateUser():void {
-        this.routes.post(`${AuthRoutes.BASE}/create-user`, (req:Request, res:Response) => {
+    private createRoutes(): void {
+        /**
+         * Adds a route for creating a user. Route is at /create-user.
+         */
+        this._routes.post(`/create-user`, (req: Request, res: Response) => {
             /** Add functionality for creating user... */
+            res.json({ 'createUser': 'is working' });
         });
-    }
 
-    /**
-     * Adds a route for loggin in an existing user. Route is at /login.
-     */
-    private addLoginUser():void {
-        this.routes.post(`${AuthRoutes.BASE}/login`, (req:Request, res:Response) => {
+        /**
+        * Adds a route for loggin in an existing user. Route is at /login.
+        */
+        this._routes.post(`/login`, (req: Request, res: Response) => {
             /** Add functionality for logging in user... */
+            res.json({ 'loginUser': 'is working' });
         });
     }
 

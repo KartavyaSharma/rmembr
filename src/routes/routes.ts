@@ -5,7 +5,12 @@ import { Router } from 'express';
  * rmember server.
  */
 
-export class Routes {
+export abstract class Routes {
+
+    /**
+     * Property that contains the URL base for this route sublcass.
+     */
+    protected static BASE: string;
 
     /** 
      * Initializes _routes object, instance of Router. All routes
@@ -16,12 +21,19 @@ export class Routes {
     }
 
     /**
+     * Returns the static BASE property for route subclass.
+     */
+    public get getBase() {
+        return (this.constructor as typeof Routes).BASE;
+    }
+
+    /**
      * Returns the route object.
      */
-    public get routes():any {
+    public get getRouter() {
         return this._routes;
     }
 
     /** Route object containing any added routes. */
-    private _routes: any;
+    protected _routes;
 }
