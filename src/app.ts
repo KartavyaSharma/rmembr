@@ -6,6 +6,7 @@ import cors = require('cors');
 import dotenv = require('dotenv');
 
 import { addRoute } from './utils/server_utils'
+import { Db } from './utils/db';
 
 import routes from './routes/home';
 import AuthRoutes from './routes/auth/auth_routes';
@@ -23,6 +24,8 @@ class App {
 
     setup() {
         dotenv.config();
+        const newDb = new Db();
+        newDb.connect();
     }
 
     routes() {

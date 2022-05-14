@@ -5,10 +5,11 @@ import { Routes } from '../routes/routes'
  */
 
 /**
- * 
+ * Adds a new Router middleware for given server instance with a
+ * route class BASE property.
  * @param expressApp instance of the current server.
  * @param routerClass instance of the particular router being used.
  */
-export function addRoute(expressApp: Express, routerClass: Routes):void {
+export function addRoute(expressApp: Express, routerClass: Routes): void {
     expressApp.use(routerClass.getBase, routerClass.getRouter);
 }
