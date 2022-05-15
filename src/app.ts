@@ -5,8 +5,9 @@ import morgan from 'morgan';
 import cors = require('cors');
 import dotenv = require('dotenv');
 
+import { Exception } from './utils/errors/exception'
 import { addRoute } from './utils/server_utils'
-import { Db } from './utils/db';
+import { Db } from './utils/database/db';
 
 import routes from './routes/home';
 import AuthRoutes from './routes/auth/auth_routes';
@@ -17,9 +18,9 @@ class App {
 
     constructor() {
         this.server = express();
-        this.middleware();
-        this.routes();
         this.setup();
+        this.routes();
+        this.middleware();
     }
 
     setup() {
@@ -28,6 +29,11 @@ class App {
         // Connects to the database
         const newDb = new Db();
         newDb.connect();
+        // Other middleware required to be setup before the routes
+        this.server.use(express.json());
+        this.server.use(helmet());
+        this.server.use(bodyParser.json());
+        this.server.use(express.urlencoded({ extended: true }))
     }
 
     routes() {
@@ -36,12 +42,12 @@ class App {
     }
 
     middleware() {
-        this.server.use(express.json());
-        this.server.use(helmet());
-        this.server.use(bodyParser.json());
-        this.server.use(express.urlencoded({ extended: true }))
         this.server.use(cors());
         this.server.use(morgan('combined'));
+
+        /** Custom middlware */
+
+        this.server.use(Exception.handler);
     }
 }
 

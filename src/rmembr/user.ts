@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { Exception } from "../utils/errors/exception";
+import { ErrorCode } from "../utils/errors/error_codes";
 import { ulid } from "ulid";
 import { IUser, UserModel } from "../models/db/user";
 import { Auth } from "./auth/auth_engine";
@@ -32,8 +34,7 @@ export class User {
         // Check if user exists
         const userExists: IUser = await UserModel.findOne({ email: this._email });
         if (userExists) {
-            this._resObj.status(500).send("Duplicate entry error");
-            return;
+            throw new Exception(ErrorCode.UnknownError, "Duplicate user.");
         }
         const newAuth = new Auth();
         const passwordHash: string = newAuth.generateHash(this._password);
@@ -54,16 +55,18 @@ export class User {
      */
     public static async getUser(email: string): Promise<User> {
         const user: IUser = await UserModel.findOne({ email: email })
-        if (user == null) return null;
+        if (user == null) {
+            throw new Exception(ErrorCode.NotFound, "User not found.");
+        }
         return new User(user);
     }
 
     /**
      * Extract Email, Name, and Password from the body of the request object.
      * @param req request object from the client side, with nothing changed.
-     * @returns { email, name, password } as an object.
+     * @return { email, name, password } as an object.
      */
-     public static extractUser(req: Request): IUser {
+    public static extractUser(req: Request): IUser {
         const { email, name, password } = req.body;
         return { email, name, password };
     }
@@ -91,7 +94,7 @@ export class User {
     public get id() {
         return this._Id;
     }
-    
+
     /** 
      * Returns the password field for this User.
      * @return this User's password.

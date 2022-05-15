@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Routes } from '../routes';
 import { User } from '../../rmembr/user';
 import { Auth } from '../../rmembr/auth/auth_engine';
@@ -29,10 +29,14 @@ export default class AuthRoutes extends Routes {
          * Adds a route for creating a user. Route is at /create-user.
          * Creates a new user in the DB.
          */
-        this._routes.post(`/create-user`, (req: Request, res: Response) => {
+        this._routes.post(`/create-user`, async (req: Request, res: Response, next: NextFunction) => {
             const newUser = new User(User.extractUser(req));
             newUser.resObj = res;
-            newUser.createUser();
+            try {
+                await newUser.createUser();
+            } catch (err) {
+                return next(err);
+            }
             /**
              * Need to send user to course list from here. Redirect from here to the
              * course list route.
@@ -42,15 +46,14 @@ export default class AuthRoutes extends Routes {
         /**
         * Adds a route for loggin in an existing user. Route is at /login.
         */
-        this._routes.post(`/login`, async (req: Request, res: Response) => {
+        this._routes.post(`/login`, async (req: Request, res: Response, next: NextFunction) => {
             const newAuth = new Auth();
             const loginReq: IAuthRequest = req.body;
-            const user: User = await User.getUser(loginReq.email);
-            if (user == null) {
-                return res.status(401).send("User not found.");
-            }
-            if (! (await newAuth.authUser(loginReq.email, loginReq.password))) {
-                return res.status(403).send("Incorrect Password");
+            let user: User;
+            try {
+                user = await newAuth.authUser(loginReq.email, loginReq.password)
+            } catch (err) {
+                return next(err);
             }
             return res.send({ jwt: newAuth.generateToken(user) })
             /**

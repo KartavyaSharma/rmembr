@@ -2,6 +2,8 @@ import jwt = require('jsonwebtoken');
 import { hashSync, compareSync } from 'bcryptjs';
 import { User } from '../user';
 import { IUser } from '../../models/db/user';
+import { Exception } from '../../utils/errors/exception';
+import { ErrorCode } from '../../utils/errors/error_codes';
 
 /**
  * Class contains all the methods used to initiate new user creation
@@ -29,9 +31,12 @@ export class Auth {
      * @param password from login form input field.
      * @return a Promise containing a boolean value for if the password is correct.
      */
-    public async authUser(email: string, password: string): Promise<boolean> {
+    public async authUser(email: string, password: string): Promise<User> {
         const user: User = await User.getUser(email);
-        return compareSync(password, user.password);
+        if (!compareSync(password, user.password)) {
+            throw new Exception(ErrorCode.Unauthenticated, "Incorrect Password.");
+        }
+        return user;
     }
 
     /**
