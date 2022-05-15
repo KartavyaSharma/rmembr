@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { IAuthRequest } from "../models/request/request_models";
 import { ulid } from "ulid";
 import { IUser, UserModel } from "../models/db/user";
 import { Auth } from "./auth/auth_engine";
@@ -20,22 +19,11 @@ export class User {
      * @param req Request object from the client
      * @param res Response object to be sent to the client.
      */
-    constructor(req: Request, res: Response) {
-        const userDetails: IAuthRequest = this.extractUser(req);
-        this._email = userDetails.email;
-        this._name = userDetails.name;
-        this._password = userDetails.password;
-        this._resObj = res;
-    }
-
-    /**
-     * Extract Email, Name, and Password from the body of the request object.
-     * @param req request object from the client side, with nothing changed.
-     * @returns { Email, Name, Password } as an object.
-     */
-    private extractUser(req: Request): IAuthRequest {
-        const { email, name, password } = req.body;
-        return { email, name, password };
+    constructor(userObj: IUser) {
+        this._email = userObj.email;
+        this._name = userObj.name;
+        this._password = userObj.password;
+        this._Id = ulid();
     }
 
     /**
@@ -43,22 +31,71 @@ export class User {
      */
     public async createUser() {
         // Check if user exists
-        const userExists = await UserModel.findOne({ email: this._email });
+        const userExists: IUser = await UserModel.findOne({ email: this._email });
         if (userExists) {
             this._resObj.status(500).send("Duplicate entry error");
             return;
         }
         const newAuth = new Auth();
-        const passwordHash: string = await newAuth.generateHash(this._password);
+        const passwordHash: string = newAuth.generateHash(this._password);
         const newUser: IUser = {
-            _id: ulid(),
+            _id: this._Id,
             email: this._email,
             name: this._name,
             password: passwordHash
         }
         const created = await UserModel.create(newUser);
-        this._resObj.send({ done: true });
+        this._resObj.send({ done: created.name });
     }
+
+    /**
+     * Returns a user based on the email identifier.
+     * @param email used as a unique identifier for the user.
+     */
+    public static async getUser(email: string): Promise<User> {
+        const user: IUser = await UserModel.findOne({ email: email })
+        if (user == null) return null;
+        return new User(user);
+    }
+
+    /**
+     * Extract Email, Name, and Password from the body of the request object.
+     * @param req request object from the client side, with nothing changed.
+     * @returns { email, name, password } as an object.
+     */
+     public static extractUser(req: Request): IUser {
+        const { email, name, password } = req.body;
+        return { email, name, password };
+    }
+
+    /** Sets the response object for User functions. */
+    public set resObj(res: Response) {
+        this._resObj = res;
+    }
+
+    /**
+     * Returns the User's email.
+     */
+    public get email() {
+        return this._email;
+    }
+
+    /**
+     * Returns the User's ID.
+     */
+    public get id() {
+        return this._Id;
+    }
+    
+    /** 
+     * Returns the password field for this User. 
+     * */
+    public get password() {
+        return this._password;
+    }
+
+    /** User's ID */
+    private _Id: string;
 
     /** User's Email */
     private _email: string;

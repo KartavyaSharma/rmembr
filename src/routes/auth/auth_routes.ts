@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { Routes } from '../routes';
 import { User } from '../../rmembr/user';
+import { Auth } from '../../rmembr/auth/auth_engine';
+import { IAuthRequest } from '../../models/request/request_models';
 
 /**
  * Class defining authentication routes and associated functions.
@@ -12,7 +14,7 @@ import { User } from '../../rmembr/user';
 export default class AuthRoutes extends Routes {
 
     /** Base URL for all authentication routes. */
-    protected static BASE = "/auth";
+    protected static readonly BASE = "/auth";
 
     /**
      * Initializes routes object from Routes abstract class.
@@ -26,18 +28,36 @@ export default class AuthRoutes extends Routes {
     private createRoutes(): void {
         /**
          * Adds a route for creating a user. Route is at /create-user.
+         * Creates a new user in the DB.
          */
         this._routes.post(`/create-user`, (req: Request, res: Response) => {
-            const newUser: User = new User(req, res);
+            const newUser = new User(User.extractUser(req));
+            newUser.resObj = res;
             newUser.createUser();
+            /**
+             * Need to send user to course list from here. Redirect from here to the
+             * course list route.
+             */
         });
 
         /**
         * Adds a route for loggin in an existing user. Route is at /login.
         */
-        this._routes.post(`/login`, (req: Request, res: Response) => {
-            /** Add functionality for logging in user... */
-            res.json({ 'loginUser': 'is working' });
+        this._routes.post(`/login`, async (req: Request, res: Response) => {
+            const newAuth = new Auth();
+            const loginReq: IAuthRequest = req.body;
+            const user: User = await User.getUser(loginReq.email);
+            if (user == null) {
+                res.status(401).send("User not found.");
+            }
+            if (!newAuth.authUser(loginReq.email, loginReq.password)) {
+                res.status(403).send("Incorrect Password");
+            }
+            res.send({ jwt: newAuth.generateToken(user) })
+            /**
+             * Need to send user to course list from here. Redirect from here to the
+             * course list route.
+             */
         });
     }
 

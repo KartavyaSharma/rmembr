@@ -1,5 +1,7 @@
 import jwt = require('jsonwebtoken');
-import { genSalt, hash } from 'bcryptjs';
+import { hashSync, compareSync } from 'bcryptjs';
+import { User } from '../user';
+import { IUser } from '../../models/db/user';
 
 /**
  * Class contains all the methods used to initiate new user creation
@@ -12,10 +14,49 @@ export class Auth {
     
     /**
      * Returns the hash for a password using the bcrypt library.
+     * @param password input password for hash.
+     * @return the hash for the password the user has enetered.
      */
-    public async generateHash(password: string): Promise<string> {
-        const salt: string = await genSalt(Auth.saltRounds);
-        const hashed: string = await hash(password, salt);
+    public generateHash(password: string): string {
+        const hashed: string = hashSync(password, Auth.saltRounds);
         return hashed;
     }
+
+    /**
+     * Authenticates user based on their email ID. Compares hash
+     * of input password with that of stored in the DB.
+     * @param email user identifier to retrieve hash.
+     * @param password from login form input field.
+     * @return a Promise containing a boolean value for if the password is correct.
+     */
+    public async authUser(email: string, password: string): Promise<boolean> {
+        const user: User = await User.getUser(email);
+        return compareSync(password, user.password);
+    }
+
+    /**
+     * Generates and returns a JWT authentication token that is formed usin
+     * a User's id, and email.
+     * @param user for which this token is being generated.
+     * @return JWT token to pass with each request to the API.
+     */
+    public generateToken(user: User): string {
+        const token = jwt.sign({_id: user.id, email: user.email}, process.env.TOKEN_SECRET, {
+            expiresIn: "24h"
+        });
+        return token;
+    }
+
+    /**
+     * Verifies an existing JWT authentication token. 
+     */
+    public verifyToken(token: string): IUser {
+        try {
+            const tokenData = jwt.verify(token, process.env.TOKEN_SECRET);
+            return tokenData as {_id: string, email: string};
+        } catch (error) {
+            return null;
+        }
+    }
+
 }

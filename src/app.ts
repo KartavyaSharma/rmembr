@@ -1,5 +1,5 @@
 import express, { Express } from 'express';
-import bodyParser, { urlencoded } from 'body-parser';
+import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cors = require('cors');

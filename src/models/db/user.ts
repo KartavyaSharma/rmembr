@@ -4,10 +4,10 @@ import { model, Model, Schema } from "mongoose";
  * Defines a users properties. For the database.
  */
 export interface IUser {
-    _id: string;
+    _id?: string;
     email: string;
-    password: string;
-    name: string;
+    password?: string;
+    name?: string;
 }
 
 /**
