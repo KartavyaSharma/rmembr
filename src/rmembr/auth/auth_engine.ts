@@ -1,46 +1,21 @@
 import jwt = require('jsonwebtoken');
-import { Request, Response } from 'express';
+import { genSalt, hash } from 'bcryptjs';
+
 /**
- * Class contains all the methods used to create a new user and authenticating
- * existing ones.
+ * Class contains all the methods used to initiate new user creation
+ * and authenticaiton of existing users. New user creation is handled
+ * by the ../user.ts module.
  */
+export class Auth {
 
-class Auth {
-
+    static readonly saltRounds: number = 10;
+    
     /**
-     * Creates a new JWT for a new user. Function does not generate new
-     * user, just a session JWT.
-     * @param username username with which to sign new token with.
+     * Returns the hash for a password using the bcrypt library.
      */
-    public createToken(username: string) {
-        return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+    public async generateHash(password: string): Promise<string> {
+        const salt: string = await genSalt(Auth.saltRounds);
+        const hashed: string = await hash(password, salt);
+        return hashed;
     }
-
-    /**
-     * Authenticates jwt token given from the request.
-     * @param req request from caller at route.
-     * @param res response sent, only if error in script.
-     * @param next next function to be called from this middleware.
-     */
-    public authenticate(req: Request, res: Response, next: any): void {
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-
-        if (token == null) {
-            res.sendStatus(401);
-            return;
-        }
-
-        jwt.verify(token, process.env.TOKEN_SECRET as string, (err: any, user: any) => {
-            console.log(err);
-            if (err) {
-                res.sendStatus(403);
-                return;
-            }
-            // req.user = user;
-        });
-
-        next();
-    }
-
 }

@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { Routes } from '../routes';
+import { User } from '../../rmembr/user';
+
 /**
  * Class defining authentication routes and associated functions.
  * Client can create a new user (register), and client can log into
@@ -7,7 +9,6 @@ import { Routes } from '../routes';
  * 
  * Calls methods from ../../rmembr/auth/
  */
-
 export default class AuthRoutes extends Routes {
 
     /** Base URL for all authentication routes. */
@@ -27,8 +28,8 @@ export default class AuthRoutes extends Routes {
          * Adds a route for creating a user. Route is at /create-user.
          */
         this._routes.post(`/create-user`, (req: Request, res: Response) => {
-            /** Add functionality for creating user... */
-            res.json({ 'createUser': 'is working' });
+            const newUser: User = new User(req, res);
+            newUser.createUser();
         });
 
         /**

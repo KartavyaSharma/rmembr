@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import bodyParser from 'body-parser';
 
 /**
  * Parent class representing routes for any service on the
@@ -36,4 +37,7 @@ export abstract class Routes {
 
     /** Route object containing any added routes. */
     protected _routes;
+
+    // Enables server to parse application/x-www-form-urlencoded
+    protected urlencodedParser = bodyParser.urlencoded({ extended: true });
 }

@@ -6,5 +6,8 @@
  * corresponding functions from inside ../rmembr directory.
  */
 
-
-
+export interface IAuthRequest {
+    email: string;
+    name: string;
+    password: string;
+}

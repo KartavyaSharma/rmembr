@@ -1,5 +1,5 @@
 import express, { Express } from 'express';
-import bodyParser from 'body-parser';
+import bodyParser, { urlencoded } from 'body-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cors = require('cors');
@@ -13,17 +13,19 @@ import AuthRoutes from './routes/auth/auth_routes';
 
 
 class App {
-    public server:Express;
+    public server: Express;
 
     constructor() {
         this.server = express();
-        this.routes();
         this.middleware();
+        this.routes();
         this.setup();
     }
 
     setup() {
+        // Sets up server to use process.env.[...]
         dotenv.config();
+        // Connects to the database
         const newDb = new Db();
         newDb.connect();
     }
@@ -37,6 +39,7 @@ class App {
         this.server.use(express.json());
         this.server.use(helmet());
         this.server.use(bodyParser.json());
+        this.server.use(express.urlencoded({ extended: true }))
         this.server.use(cors());
         this.server.use(morgan('combined'));
     }
