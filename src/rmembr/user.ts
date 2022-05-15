@@ -16,8 +16,7 @@ export class User {
 
     /**
      * Initializes a new user with Id, Email, Name, and Password
-     * @param req Request object from the client
-     * @param res Response object to be sent to the client.
+     * @param userObj JS Object with all the IUser properties.
      */
     constructor(userObj: IUser) {
         this._email = userObj.email;
@@ -51,6 +50,7 @@ export class User {
     /**
      * Returns a user based on the email identifier.
      * @param email used as a unique identifier for the user.
+     * @return new User instance with the given email.
      */
     public static async getUser(email: string): Promise<User> {
         const user: IUser = await UserModel.findOne({ email: email })
@@ -68,13 +68,17 @@ export class User {
         return { email, name, password };
     }
 
-    /** Sets the response object for User functions. */
+    /** 
+     * Sets the response object for User functions.
+     * @param res Response object from the route caller.
+     * */
     public set resObj(res: Response) {
         this._resObj = res;
     }
 
     /**
      * Returns the User's email.
+     * @return this User's email field.
      */
     public get email() {
         return this._email;
@@ -82,13 +86,15 @@ export class User {
 
     /**
      * Returns the User's ID.
+     * @return this User's ID field.
      */
     public get id() {
         return this._Id;
     }
     
     /** 
-     * Returns the password field for this User. 
+     * Returns the password field for this User.
+     * @return this User's password.
      * */
     public get password() {
         return this._password;

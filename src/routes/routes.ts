@@ -19,7 +19,14 @@ export abstract class Routes {
      */
     constructor() {
         this._routes = Router();
+        this.createRoutes();
     }
+
+    /** 
+     * Abstract function that adds routes to the Router
+     * object.
+     */
+    protected abstract createRoutes(): void;
 
     /**
      * Returns the static BASE property for route subclass.

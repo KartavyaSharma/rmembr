@@ -22,10 +22,9 @@ export default class AuthRoutes extends Routes {
      */
     constructor() {
         super();
-        this.createRoutes();
     }
 
-    private createRoutes(): void {
+    protected createRoutes(): void {
         /**
          * Adds a route for creating a user. Route is at /create-user.
          * Creates a new user in the DB.
@@ -48,12 +47,12 @@ export default class AuthRoutes extends Routes {
             const loginReq: IAuthRequest = req.body;
             const user: User = await User.getUser(loginReq.email);
             if (user == null) {
-                res.status(401).send("User not found.");
+                return res.status(401).send("User not found.");
             }
-            if (!newAuth.authUser(loginReq.email, loginReq.password)) {
-                res.status(403).send("Incorrect Password");
+            if (! (await newAuth.authUser(loginReq.email, loginReq.password))) {
+                return res.status(403).send("Incorrect Password");
             }
-            res.send({ jwt: newAuth.generateToken(user) })
+            return res.send({ jwt: newAuth.generateToken(user) })
             /**
              * Need to send user to course list from here. Redirect from here to the
              * course list route.
