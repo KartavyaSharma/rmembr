@@ -20,13 +20,12 @@ export class Db {
      * Connects to database instance on MongoDB Atlas.
      */
     public async connect() {
+        for (const state of Db.states) {
+            mongoose.connection.on(state, () => {
+                console.log(`MongoDB: ${state}.`);
+            });
+        }
         try {
-            for (const state of Db.states) {
-                mongoose.connection.on(state, () => {
-                    console.log(`MongoDB: ${state}.`);
-                });
-            }
-
             if (mongoose.connection.readyState !== 1 && mongoose.connection.readyState !== 2) {
                 const dbConnection = await mongoose.connect(process.env.MONGO_URI, {
                     autoIndex: true,

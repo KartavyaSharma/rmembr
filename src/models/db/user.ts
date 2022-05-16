@@ -1,7 +1,7 @@
 import { model, Model, Schema } from "mongoose";
 
 /**
- * Defines a users properties. For the database.
+ * Defines a users properties.
  */
 export interface IUser {
     _id?: string;

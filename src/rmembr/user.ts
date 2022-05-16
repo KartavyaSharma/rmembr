@@ -67,7 +67,16 @@ export class User {
      * @return { email, name, password } as an object.
      */
     public static extractUser(req: Request): IUser {
-        const { email, name, password } = req.body;
+        let email: string;
+        let name: string;
+        let password: string;
+        try {
+            email = req.body.email;
+            name = req.body.name;
+            password = req.body.password;
+        } catch (err) {
+            throw new Exception(ErrorCode.NotFound, "Request didn't contain all User credentials.");
+        }
         return { email, name, password };
     }
 

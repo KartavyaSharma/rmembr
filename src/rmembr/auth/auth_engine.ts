@@ -60,7 +60,7 @@ export class Auth {
             const tokenData = jwt.verify(token, process.env.TOKEN_SECRET);
             return tokenData as {_id: string, email: string};
         } catch (error) {
-            return null;
+            throw new Exception(ErrorCode.Unauthenticated, "Request does not contain token, or an incorect one.");
         }
     }
 

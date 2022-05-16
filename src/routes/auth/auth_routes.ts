@@ -62,5 +62,4 @@ export default class AuthRoutes extends Routes {
              */
         });
     }
-
 }
