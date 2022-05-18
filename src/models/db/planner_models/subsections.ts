@@ -88,6 +88,6 @@ const ISubSectionSchema = new Schema<ISubSection>(
 )
 
 export const subsectionModel: Model<ISubSection> = model(
-    'subsections',
+    'course-group',
     ISubSectionSchema
 )

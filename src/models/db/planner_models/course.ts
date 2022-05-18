@@ -1,6 +1,6 @@
 import { model, Model, Schema } from "mongoose";
 import { ICourseGroup } from "./course_group";
-import { ISection } from "./sections";
+import { ISection, SectionModel } from "./sections";
 
 /**
  * Defines properties of a course.
@@ -9,7 +9,7 @@ export interface ICourse {
     _id: string;
     _courseGroupId: ICourseGroup['_id'];
     name: string;
-    sections: string[];
+    sections: [ISection];
 }
 
 /**
@@ -21,12 +21,11 @@ const ICourseSchema = new Schema<ICourse>(
         _id: { type: String, required: true },
         _courseGroupId: { type: Schema.Types.ObjectId, required: true },
         name: { type: String, required: true },
-        sections: { type: [String], required: false}
-    },
-    { collection: 'courses', timestamps: true }
+        sections: {type: [SectionModel], required: false, default: null}
+    }
 )
 
 export const CoursesModel: Model<ICourse> = model(
-    'courses',
+    'course-group', 
     ICourseSchema
 )

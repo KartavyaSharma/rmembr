@@ -1,5 +1,6 @@
 import { model, Model, Schema } from "mongoose";
 import { IUser } from "../user";
+import { CoursesModel, ICourse } from "./course";
 
 /**
  * Defines the properties of a course group.
@@ -8,7 +9,7 @@ export interface ICourseGroup {
     _id: string;
     _userId: IUser['_id'];
     name: string;
-    courses: string[];
+    courses: [ICourse]
 }
 
 /**
@@ -20,7 +21,7 @@ const ICourseGroupSchema = new Schema<ICourseGroup>(
         _id: { type: String, required: true },
         _userId: { type: Schema.Types.ObjectId, required: true },
         name: { type: String, required: true },
-        courses: { type: [String], required: false }
+        courses: {type: [CoursesModel], default: null}
     },
     { collection: 'course-group', timestamps: true }
 )
