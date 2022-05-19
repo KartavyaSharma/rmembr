@@ -11,6 +11,7 @@ import { Db } from './utils/database/db';
 
 import routes from './routes/home';
 import AuthRoutes from './routes/auth/auth_routes';
+import PlannerRoutes from './routes/planner/planner_routes';
 
 
 class App {
@@ -39,6 +40,7 @@ class App {
     routes() {
         this.server.use(routes);
         addRoute(this.server, new AuthRoutes());
+        addRoute(this.server, new PlannerRoutes());
     }
 
     middleware() {

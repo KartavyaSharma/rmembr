@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { NextFunction, Router, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 
 /**
@@ -18,7 +18,7 @@ export abstract class Routes {
      * will be assigned to this object.
      */
     constructor() {
-        this._routes = Router();
+        this._routes = Router({mergeParams: true});
         this.createRoutes();
     }
 
@@ -40,6 +40,17 @@ export abstract class Routes {
      */
     public get getRouter() {
         return this._routes;
+    }
+
+    /**
+     * Adds cascading to routes. Allows routes like
+     * /planner/course/:courseId/sections/:sectionId.
+     */
+    protected nestRoutes(nestRoutes: Routes, morePath: string = ""): void {
+        this._routes.use(
+            `${morePath != "" ? `/${morePath}` : ""}${nestRoutes.getBase}`, 
+            nestRoutes.getRouter
+        );
     }
 
     /** Route object containing any added routes. */
