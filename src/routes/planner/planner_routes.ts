@@ -33,5 +33,4 @@ export default class PlannerRoutes extends Routes {
             res.send({"Hello world": "planner here"});
         });
     }
-
 }

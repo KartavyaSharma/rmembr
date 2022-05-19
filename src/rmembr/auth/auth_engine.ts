@@ -1,3 +1,4 @@
+import { Request, Response, NextFunction } from 'express';
 import jwt = require('jsonwebtoken');
 import { hashSync, compareSync } from 'bcryptjs';
 import { User } from '../user';
@@ -19,7 +20,7 @@ export class Auth {
      * @param password input password for hash.
      * @return the hash for the password the user has enetered.
      */
-    public generateHash(password: string): string {
+    public static generateHash(password: string): string {
         const hashed: string = hashSync(password, Auth.saltRounds);
         return hashed;
     }
@@ -31,7 +32,7 @@ export class Auth {
      * @param password from login form input field.
      * @return a Promise containing a boolean value for if the password is correct.
      */
-    public async authUser(email: string, password: string): Promise<User> {
+    public static async authUser(email: string, password: string): Promise<User> {
         const user: User = await User.getUser(email);
         if (!compareSync(password, user.password)) {
             throw new Exception(ErrorCode.Unauthenticated, "Incorrect Password.");
@@ -45,7 +46,7 @@ export class Auth {
      * @param user for which this token is being generated.
      * @return JWT token to pass with each request to the API.
      */
-    public generateToken(user: User): string {
+    public static generateToken(user: User): string {
         const token = jwt.sign({_id: user.id, email: user.email}, process.env.TOKEN_SECRET, {
             expiresIn: "24h"
         });
@@ -55,7 +56,7 @@ export class Auth {
     /**
      * Verifies an existing JWT authentication token. 
      */
-    public verifyToken(token: string): IUser {
+    public static verifyToken(token: string): IUser {
         try {
             const tokenData = jwt.verify(token, process.env.TOKEN_SECRET);
             return tokenData as {_id: string, email: string};
@@ -64,4 +65,21 @@ export class Auth {
         }
     }
 
+    /** Middleware that handles authentication on each REST API call. */
+    public static authMid(req: Request, res: Response, next: NextFunction) {
+        const auth = req.headers.authorization;
+        if (auth && auth.startsWith('Bearer')) {
+            const token = auth.slice(7);
+            try {
+                const tokenData = Auth.verifyToken(token);
+                req.body.tokenData = tokenData;
+                next();
+            } catch (err) {
+                console.log(err);
+                throw new Exception(ErrorCode.Unauthenticated, "Invalid JWT token.");
+            }
+        } else {
+            throw new Exception(ErrorCode.Unauthenticated, "Request missing Bearer token.");
+        }
+    }
 }

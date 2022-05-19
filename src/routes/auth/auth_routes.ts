@@ -47,15 +47,14 @@ export default class AuthRoutes extends Routes {
         * Adds a route for loggin in an existing user. Route is at /login.
         */
         this._routes.post(`/login`, async (req: Request, res: Response, next: NextFunction) => {
-            const newAuth = new Auth();
             const loginReq: IAuthRequest = req.body;
             let user: User;
             try {
-                user = await newAuth.authUser(loginReq.email, loginReq.password)
+                user = await Auth.authUser(loginReq.email, loginReq.password)
             } catch (err) {
                 return next(err);
             }
-            return res.send({ jwt: newAuth.generateToken(user) })
+            return res.send({ jwt: Auth.generateToken(user) })
             /**
              * Need to send user to course list from here. Redirect from here to the
              * course list route.

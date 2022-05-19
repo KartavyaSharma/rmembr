@@ -18,7 +18,7 @@ export abstract class Routes {
      * will be assigned to this object.
      */
     constructor() {
-        this._routes = Router({mergeParams: true});
+        this._routes = Router({ mergeParams: true });
         this.createRoutes();
     }
 
@@ -46,9 +46,9 @@ export abstract class Routes {
      * Adds cascading to routes. Allows routes like
      * /planner/course/:courseId/sections/:sectionId.
      */
-    protected nestRoutes(nestRoutes: Routes, morePath: string = ""): void {
+    protected nestRoutes(nestRoutes: Routes, morePath = ""): void {
         this._routes.use(
-            `${morePath != "" ? `/${morePath}` : ""}${nestRoutes.getBase}`, 
+            `${morePath != "" ? `/${morePath}` : ""}${nestRoutes.getBase}`,
             nestRoutes.getRouter
         );
     }

@@ -1,4 +1,4 @@
-import { Express } from "express";
+import { Express, RequestHandler } from "express";
 import { Routes } from '../routes/routes'
 /**
  * Utils containing frequently used methods.
@@ -10,6 +10,6 @@ import { Routes } from '../routes/routes'
  * @param expressApp instance of the current server.
  * @param routerClass instance of the particular router being used.
  */
-export function addRoute(expressApp: Express, routerClass: Routes): void {
-    expressApp.use(routerClass.getBase, routerClass.getRouter);
+export function addRoute(expressApp: Express, routerClass: Routes, ...middleware: RequestHandler[]): void {
+    expressApp.use(routerClass.getBase, ...middleware, routerClass.getRouter);
 }

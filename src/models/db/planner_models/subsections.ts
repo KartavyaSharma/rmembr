@@ -7,6 +7,7 @@ import { ISection } from "./sections";
 export interface ISubSection {
     _id: string,
     _sectionId: ISection['_id'],
+    name: string;
     inClass: Date,
     status: IStatus,
     revisionSchedule: IRevisionSchedule;
@@ -53,6 +54,7 @@ const ISubSectionSchema = new Schema<ISubSection>(
         _id: { type: String, required: true },
         _sectionId: { type: Schema.Types.ObjectId, required: true },
         inClass: { type: Date, required: true },
+        name: { type: String, required: true },
         status: {
             state: { type: String, required: true },
             enum: ['pending', 'wip', 'done', 'overdue'],

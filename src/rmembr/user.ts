@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Exception } from "../utils/errors/exception";
 import { ErrorCode } from "../utils/errors/error_codes";
-import { ulid } from "ulid";
+import { nanoid } from "nanoid";
 import { IUser, UserModel } from "../models/db/user";
 import { Auth } from "./auth/auth_engine";
 
@@ -24,7 +24,7 @@ export class User {
         this._email = userObj.email;
         this._name = userObj.name;
         this._password = userObj.password;
-        this._Id = ulid();
+        this._Id = nanoid();
     }
 
     /**
@@ -36,8 +36,7 @@ export class User {
         if (userExists) {
             throw new Exception(ErrorCode.UnknownError, "Duplicate user.");
         }
-        const newAuth = new Auth();
-        const passwordHash: string = newAuth.generateHash(this._password);
+        const passwordHash: string = Auth.generateHash(this._password);
         const newUser: IUser = {
             _id: this._Id,
             email: this._email,
@@ -45,7 +44,8 @@ export class User {
             password: passwordHash
         }
         const created = await UserModel.create(newUser);
-        this._resObj.send({ done: created.name });
+        const newUserToken = Auth.generateToken(this);
+        this._resObj.send({ token: newUserToken });
     }
 
     /**
@@ -67,17 +67,12 @@ export class User {
      * @return { email, name, password } as an object.
      */
     public static extractUser(req: Request): IUser {
-        let email: string;
-        let name: string;
-        let password: string;
         try {
-            email = req.body.email;
-            name = req.body.name;
-            password = req.body.password;
+            const { email, name, password } = req.body;
+            return { email, name, password };
         } catch (err) {
             throw new Exception(ErrorCode.NotFound, "Request didn't contain all User credentials.");
         }
-        return { email, name, password };
     }
 
     /** 
