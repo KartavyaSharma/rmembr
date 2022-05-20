@@ -75,7 +75,6 @@ export class Auth {
                 req.body.tokenData = tokenData;
                 next();
             } catch (err) {
-                console.log(err);
                 throw new Exception(ErrorCode.Unauthenticated, "Invalid JWT token.");
             }
         } else {

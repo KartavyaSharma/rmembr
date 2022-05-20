@@ -1,6 +1,6 @@
 import { model, Model, Schema } from "mongoose";
 import { ICourseGroup } from "./course_group";
-import { ISection, SectionModel } from "./sections";
+import { ISection, ISectionSchema } from "./sections";
 
 /**
  * Defines properties of a course.
@@ -9,23 +9,23 @@ export interface ICourse {
     _id: string;
     _courseGroupId: ICourseGroup['_id'];
     name: string;
-    sections: [ISection];
+    sections: ISection[];
 }
 
 /**
  * Creates a mongoose schema which creates a
  * 'course' collection in MongoDB Atlas.
  */
-const ICourseSchema = new Schema<ICourse>(
+export const ICourseSchema = new Schema<ICourse>(
     {
         _id: { type: String, required: true },
         _courseGroupId: { type: Schema.Types.ObjectId, required: true },
         name: { type: String, required: true },
-        sections: {type: [SectionModel], required: false, default: null}
+        sections: {type: [ISectionSchema], required: false, default: null}
     }
 )
 
-export const CoursesModel: Model<ICourse> = model(
-    'course-group', 
-    ICourseSchema
-)
+// export const CoursesModel: Model<ICourse> = model(
+//     'course-group', 
+//     ICourseSchema
+// )

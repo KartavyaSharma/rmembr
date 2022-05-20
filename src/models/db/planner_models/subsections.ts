@@ -49,7 +49,7 @@ export interface IQuestions {
 /**
  * Creates a new collection in the DB named 'subsections'.
  */
-const ISubSectionSchema = new Schema<ISubSection>(
+export const ISubSectionSchema = new Schema<ISubSection>(
     {
         _id: { type: String, required: true },
         _sectionId: { type: Schema.Types.ObjectId, required: true },
@@ -85,11 +85,10 @@ const ISubSectionSchema = new Schema<ISubSection>(
             questions: { type: [String], required: false },
             required: false
         }
-    },
-    { collection: 'subsections', timestamps: true }
+    }
 )
 
-export const subsectionModel: Model<ISubSection> = model(
-    'course-group',
-    ISubSectionSchema
-)
+// export const subsectionModel: Model<ISubSection> = model(
+//     'course-group',
+//     ISubSectionSchema
+// )

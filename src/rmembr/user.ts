@@ -4,6 +4,8 @@ import { ErrorCode } from "../utils/errors/error_codes";
 import { nanoid } from "nanoid";
 import { IUser, UserModel } from "../models/db/user";
 import { Auth } from "./auth/auth_engine";
+import CourseGroup from "./planner/course_group";
+import { ICourseGroupResponse } from "../models/response/response_models";
 
 /**
  * Class representing a user.
@@ -24,13 +26,13 @@ export class User {
         this._email = userObj.email;
         this._name = userObj.name;
         this._password = userObj.password;
-        this._Id = nanoid();
+        this._Id = userObj._id == null ? nanoid() : userObj._id;
     }
 
     /**
      * Create new user and hash password (done by the Auth module).
      */
-    public async createUser() {
+    public async createUser(): Promise<void> {
         // Check if user exists
         const userExists: IUser = await UserModel.findOne({ email: this._email });
         if (userExists) {
@@ -45,7 +47,10 @@ export class User {
         }
         const created = await UserModel.create(newUser);
         const newUserToken = Auth.generateToken(this);
-        this._resObj.send({ token: newUserToken });
+        /** Creating a new course group for the user. */
+        const newGroup: CourseGroup = new CourseGroup(this);
+        const courseGroupInfo: ICourseGroupResponse = await newGroup.initialize();
+        this._resObj.send({ ...courseGroupInfo, token: newUserToken });
     }
 
     /**
@@ -105,6 +110,14 @@ export class User {
      * */
     public get password() {
         return this._password;
+    }
+
+    /**
+     * Returns the name of the user.
+     * @return name of the user.
+     */
+    public get name() {
+        return this._name;
     }
 
     /** User's ID */

@@ -3,7 +3,8 @@
  */
 
 export interface ICourseGroupResponse {
-    courses: [ICourseGroupCourseInfo];
+    name: string;
+    courses: ICourseGroupCourseInfo[];
 }
 
 export interface ICourseGroupCourseInfo {

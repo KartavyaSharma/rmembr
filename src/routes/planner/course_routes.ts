@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { Routes } from "../routes";
+import { User } from "../../rmembr/user";
 import SectionRoutes from "./section_routes";
+import CourseGroup from "../../rmembr/planner/course_group";
+import { ICourse } from "../../models/db/planner_models/course";
 
 export default class CourseRoutes extends Routes {
 
@@ -33,7 +36,10 @@ export default class CourseRoutes extends Routes {
     protected createRoutes(): void {
         /** ========== GET ========== */
         this._routes.get(`/`, async (req: Request, res: Response, next: NextFunction) => {
-            res.send({ "this is": `courses of ${req.body.tokenData.email}` });
+            const newUser: User = await User.getUser(req.body.tokenData.email);
+            const userCourseGroup: CourseGroup = new CourseGroup(newUser);
+            const courseList: ICourse[] = await userCourseGroup.courseList();
+            res.send({ ...courseList });
         });
         this._routes.get(`/:courseId`, async (req: Request, res: Response, next: NextFunction) => {
             res.send({ "course-id": req.params.courseId });
