@@ -26,6 +26,9 @@ export function addRoute(expressApp: Express, routerClass: Routes, ...middleware
  */
 export function validateObject(targetObj: Object, field: string): void {
     if (!targetObj.hasOwnProperty(field)) {
-        throw new Exception(ErrorCode.ValidationError, `Object ${targetObj.constructor.name} does not contain ${field}`);
+        throw new Exception(
+            ErrorCode.ValidationError, 
+            `Object ${targetObj.constructor.name} does not contain ${field}`
+        );
     }
 }

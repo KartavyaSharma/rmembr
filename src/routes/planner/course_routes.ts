@@ -47,7 +47,7 @@ export default class CourseRoutes extends Routes {
             validateObject(req.params, 'courseId');
             const newUser: User = await User.getUser(req.body.tokenData.email);
             const course: ICourse = await Course.getCourse(req.params.courseId, newUser.id);
-            res.send({ ...course });
+            res.send(course);
         });
 
         /** ========== POST ========== */
