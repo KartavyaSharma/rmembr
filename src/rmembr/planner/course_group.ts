@@ -50,7 +50,7 @@ export default class CourseGroup {
      * @return list of courses in this course group.
      */
     public async courseList(): Promise<ICourse[]> {
-        await this.updateCourses();
+        await this.refreshCourses();
         return this.courses;
     }
 
@@ -58,9 +58,23 @@ export default class CourseGroup {
      * Updates the this.courses array with the latest
      * courses from mongo.
      */
-    public async updateCourses(): Promise<void> {
+    public async refreshCourses(): Promise<void> {
         const group: ICourseGroup = await CourseGroupModel.findOne({ _userId: this._userId });
         this.courses = group.courses;
+    }
+
+    /**
+     * Updates the courses array in this course group with
+     * a new course object.
+     * @param courseObj object representing course to be added to Mongo.
+     * @param courseGroupId id for the course group where the new course will up put.
+     */
+    public static async updateCourse(courseObj: ICourse, courseGroupId: string): Promise<void> {
+        const created = await CourseGroupModel.findOneAndUpdate(
+            { _id: courseGroupId }, 
+            { $push: { courses: courseObj } },
+            { new: true }
+        );
     }
 
     /** 

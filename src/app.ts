@@ -13,6 +13,7 @@ import routes from './routes/home';
 import AuthRoutes from './routes/auth/auth_routes';
 import PlannerRoutes from './routes/planner/planner_routes';
 import { Auth } from './rmembr/auth/auth_engine';
+import { User } from './rmembr/user';
 
 
 class App {
@@ -41,7 +42,7 @@ class App {
     routes() {
         this.server.use(routes);
         addRoute(this.server, new AuthRoutes());
-        addRoute(this.server, new PlannerRoutes(), Auth.authMid);
+        addRoute(this.server, new PlannerRoutes(), Auth.authMid, User.setUser);
     }
 
     middleware() {

@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import { CourseGroupModel, ICourseGroup } from "../../models/db/planner_models/course_group";
 import { Exception } from "../../utils/errors/exception";
 import { ErrorCode } from "../../utils/errors/error_codes";
+import CourseGroup from "./course_group";
 
 /**
  * Class represents a course. Multiple courses can exist per user.
@@ -36,11 +37,7 @@ export default class Course {
             name: this._name,
             sections: this._sections
         }
-        const created = await CourseGroupModel.findOneAndUpdate(
-            { _id: this._courseGroupId }, 
-            { $push: { courses: newCourse } },
-            { new: true }
-        );
+        await CourseGroup.updateCourse(newCourse, this._courseGroupId);
         return { courseId: this._id }
     }
 

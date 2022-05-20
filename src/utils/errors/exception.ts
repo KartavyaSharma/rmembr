@@ -35,12 +35,12 @@ export class Exception extends Error {
         const errorOutput: string[] = [
             "Error handler called", '\n',
             `Path: ${req.path}`, '\n',
-            `Error occured: ${err}`, '\n'
+            `Error occured: ${err}`, '\n',
         ]
         console.log(errorOutput.join(""));
         if (err instanceof Exception) {
-            console.log("Error is known.")
-            res.status(err.status).send(err);
+            console.log(`Error is known.\n Meta: ${err.meta}`)
+            res.status(err.status).send(`Error: ${err}`);
         } else {
             /** For unhandled errors in system. */
             res.status(500).send(ErrorCode.UnknownError as ErrorModel);

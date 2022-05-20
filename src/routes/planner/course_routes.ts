@@ -38,14 +38,16 @@ export default class CourseRoutes extends Routes {
     protected createRoutes(): void {
         /** ========== GET ========== */
         this._routes.get(`/`, async (req: Request, res: Response, next: NextFunction) => {
-            const newUser: User = await User.getUser(req.body.tokenData.email);
+            validateObject(req.body, 'user');
+            const newUser = req.body.user;
             const userCourseGroup: CourseGroup = new CourseGroup(newUser);
             const courseList: ICourse[] = await userCourseGroup.courseList();
             res.send({ ...courseList });
         });
         this._routes.get(`/:courseId`, async (req: Request, res: Response, next: NextFunction) => {
             validateObject(req.params, 'courseId');
-            const newUser: User = await User.getUser(req.body.tokenData.email);
+            validateObject(req.body, 'user');
+            const newUser: User = req.body.user;
             const course: ICourse = await Course.getCourse(req.params.courseId, newUser.id);
             res.send(course);
         });
@@ -53,11 +55,11 @@ export default class CourseRoutes extends Routes {
         /** ========== POST ========== */
         this._routes.post('/new', async (req: Request, res: Response, next: NextFunction) => {
             validateObject(req.body, 'name');
-            const newUser: User = await User.getUser(req.body.tokenData.email);
-            const userCourseGroup: CourseGroup = new CourseGroup(newUser);
+            validateObject(req.body, 'user');
+            const newUser: User = req.body.user;
             const newCourse: Course = new Course({
                 _id: null,
-                _courseGroupId: userCourseGroup.id,
+                _courseGroupId: newUser.courseGroupId,
                 name: req.body.name,
                 sections: []
             });
