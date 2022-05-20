@@ -15,6 +15,7 @@ import { ICourseGroupResponse } from "../models/response/response_models";
  *  - Email
  *  - Name
  *  - Password
+ *  - Course Group ID
  */
 export class User {
 
@@ -27,6 +28,7 @@ export class User {
         this._name = userObj.name;
         this._password = userObj.password;
         this._Id = userObj._id == null ? nanoid() : userObj._id;
+        this._courseGroupId = userObj.courseGroupId != null ? userObj.courseGroupId : null;
     }
 
     /**
@@ -43,12 +45,19 @@ export class User {
             _id: this._Id,
             email: this._email,
             name: this._name,
-            password: passwordHash
+            password: passwordHash,
+            courseGroupId: this._courseGroupId
         }
         const created = await UserModel.create(newUser);
         const newUserToken = Auth.generateToken(this);
         /** Creating a new course group for the user. */
         const newGroup: CourseGroup = new CourseGroup(this);
+        this._courseGroupId = newGroup.id;
+        const updated = await UserModel.findOneAndUpdate(
+            { _id: this._Id },
+            { $set: { courseGroupId: this._courseGroupId } },
+            { new: true }
+        );
         const courseGroupInfo: ICourseGroupResponse = await newGroup.initialize();
         this._resObj.send({ ...courseGroupInfo, token: newUserToken });
     }
@@ -120,6 +129,14 @@ export class User {
         return this._name;
     }
 
+    /**
+     * Returns the course group ID associated with this user.
+     * @return course group ID field
+     */
+    public get courseGroupId() {
+        return this._courseGroupId;
+    }
+
     /** User's ID */
     private _Id: string;
 
@@ -134,5 +151,8 @@ export class User {
 
     /** res object with which all user functions respond to. */
     private _resObj: Response;
+
+    /** ID associated with user's course group */
+    private _courseGroupId: string;
 
 }

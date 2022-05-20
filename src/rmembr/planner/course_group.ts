@@ -21,7 +21,7 @@ export default class CourseGroup {
      */
     constructor(userObj: User) {
         this._userId = userObj.id;
-        this._id = nanoid(10);
+        this._id = userObj.courseGroupId == null ? nanoid(10) : userObj.courseGroupId;
         this.name = `${userObj.name}'s Courses`
     }
 
@@ -67,8 +67,16 @@ export default class CourseGroup {
      * Sets the response object for course group functions.
      * @param res Response object from the route caller.
      * */
-     public set resObj(res: Response) {
+    public set resObj(res: Response) {
         this._resObj = res;
+    }
+
+    /**
+     * Return the course group ID.
+     * @return this course group's ID
+     */
+    public get id() {
+        return this._id;
     }
 
     /** res object with which all course group functions respond to. */

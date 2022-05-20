@@ -8,6 +8,7 @@ export interface IUser {
     email: string;
     password?: string;
     name?: string;
+    courseGroupId?: string;
 }
 
 /**
@@ -30,7 +31,8 @@ const IUserSchema = new Schema<IUser>(
             unique: true
         },
         name: { type: String, required: true },
-        password: { type: String, required: true }
+        password: { type: String, required: true },
+        courseGroupId:  { type: String, default: null}
     },
     { collection: 'users', timestamps: true }
 )

@@ -7,7 +7,7 @@ import { ISection, ISectionSchema } from "./sections";
  */
 export interface ICourse {
     _id: string;
-    _courseGroupId: ICourseGroup['_id'];
+    _courseGroupId: string;
     name: string;
     sections: ISection[];
 }
@@ -19,13 +19,8 @@ export interface ICourse {
 export const ICourseSchema = new Schema<ICourse>(
     {
         _id: { type: String, required: true },
-        _courseGroupId: { type: Schema.Types.ObjectId, required: true },
+        _courseGroupId: { type: String, required: true },
         name: { type: String, required: true },
         sections: {type: [ISectionSchema], required: false, default: null}
     }
 )
-
-// export const CoursesModel: Model<ICourse> = model(
-//     'course-group', 
-//     ICourseSchema
-// )

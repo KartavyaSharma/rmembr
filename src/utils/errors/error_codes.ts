@@ -14,16 +14,6 @@ export class ErrorCode {
      */
     public static readonly defStatus: number = 400;
 
-    /** 
-     * Do not modify/delete this error declaration,
-     * this will be used in case the error encountered does not
-     * fit into any of the above categories.
-     */
-    public static readonly UnknownError: ErrorModel = {
-        code: "UnknownError",
-        status: 500,
-    }
-
     /** ================== Add new errors below ================== */
 
     public static readonly Unauthenticated: ErrorModel = {
@@ -38,4 +28,18 @@ export class ErrorCode {
         code: 'AsyncError',
         status: ErrorCode.defStatus,
     };
+    public static readonly ValidationError: ErrorModel = {
+        code: 'ValidationError',
+        status: ErrorCode.defStatus,
+    }
+
+    /** 
+     * Do not modify/delete this error declaration,
+     * this will be used in case the error encountered does not
+     * fit into any of the above categories.
+     */
+     public static readonly UnknownError: ErrorModel = {
+        code: "UnknownError",
+        status: 500,
+    }
 }
