@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { Routes } from "../routes";
-import { User } from "../../rmembr/user";
+import { User } from "../../rmembr/user/user";
 import SectionRoutes from "./section_routes";
 import CourseGroup from "../../rmembr/planner/course_group";
 import { ICourse } from "../../models/db/planner_models/course";
 import Course from "../../rmembr/planner/course";
 import { Utils } from "../../utils/server_utils";
+import { ICreateCourseResponse } from "../../models/response/response_models";
 
 export default class CourseRoutes extends Routes {
 
@@ -42,27 +43,25 @@ export default class CourseRoutes extends Routes {
             let userCourseGroup: CourseGroup;
             let courseList: ICourse[];
             try {
-                Utils.validateObject(req.body, 'user');
                 newUser = req.body.user;
                 userCourseGroup = new CourseGroup(newUser);
                 courseList = await userCourseGroup.courseList();
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, courseList);
+            Utils.sendRes(res, courseList as ICourse[]);
         });
         this._routes.get(`/:courseId`, async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
             let course: ICourse;
             try {
                 Utils.validateObject(req.params, 'courseId');
-                Utils.validateObject(req.body, 'user');
                 newUser = req.body.user;
                 course = await Course.getCourse(req.params.courseId, newUser.id);
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, course);
+            Utils.sendRes(res, course as ICourse);
         });
 
         /** ========== POST ========== */
@@ -71,7 +70,6 @@ export default class CourseRoutes extends Routes {
             let newCourse: Course;
             try {
                 Utils.validateObject(req.body, 'name');
-                Utils.validateObject(req.body, 'user');
                 newUser = req.body.user;
                 newCourse = new Course({
                     _id: null,
@@ -82,7 +80,7 @@ export default class CourseRoutes extends Routes {
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, await newCourse.register());
+            Utils.sendRes(res, await newCourse.register() as ICreateCourseResponse);
         });
 
         /** ========== DELETE ========== */
@@ -100,7 +98,17 @@ export default class CourseRoutes extends Routes {
 
         /** ========== PATCH ========== */
         this._routes.patch('/:courseId', async (req: Request, res: Response, next: NextFunction) => {
-            res.send({ "updating...": `${req.params.courseId}` });
+            let newUser: User;
+            let newCourse: ICourse
+            try {
+                Utils.validateObject(req.params, 'courseId');
+                Utils.validateObject(req.body, 'course');
+                newUser = req.body.params;
+                newCourse = await Course.updateCourse(req.params.courseId, req.body.course, newUser);
+            } catch (err) {
+                return next(err);
+            }
+            Utils.sendRes(res, newCourse as ICourse);
         });
     }
 }

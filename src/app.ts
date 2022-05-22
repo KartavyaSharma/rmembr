@@ -13,7 +13,7 @@ import routes from './routes/home';
 import AuthRoutes from './routes/auth/auth_routes';
 import PlannerRoutes from './routes/planner/planner_routes';
 import { Auth } from './rmembr/auth/auth_engine';
-import { User } from './rmembr/user';
+import { User } from './rmembr/user/user';
 
 
 class App {

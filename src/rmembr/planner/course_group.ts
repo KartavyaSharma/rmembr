@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { ICourse } from "../../models/db/planner_models/course";
-import { User } from "../user";
+import { User } from "../user/user";
 import { nanoid } from "nanoid";
 import { CourseGroupModel, ICourseGroup } from "../../models/db/planner_models/course_group";
 import { Exception } from "../../utils/errors/exception";
@@ -51,7 +51,15 @@ export default class CourseGroup {
      */
     public async courseList(): Promise<ICourse[]> {
         await this.refreshCourses();
-        return this.courses;
+        return this.courses.sort((a: ICourse, b: ICourse) => {
+            if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {
+                return -1;
+            }
+            if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) {
+                return 1;
+            }
+            return 0;
+        });;
     }
 
     /**
@@ -69,12 +77,13 @@ export default class CourseGroup {
      * @param courseObj object representing course to be added to Mongo.
      * @param courseGroupId id for the course group where the new course will up put.
      */
-    public static async updateCourse(courseObj: ICourse, courseGroupId: string): Promise<void> {
-        const created = await CourseGroupModel.findOneAndUpdate(
+    public static async updateCourse(courseObj: ICourse, courseGroupId: string): Promise<ICourse> {
+        const created: ICourse = await CourseGroupModel.findOneAndUpdate(
             { _id: courseGroupId }, 
             { $push: { courses: courseObj } },
             { new: true }
         );
+        return created;
     }
 
     /** 

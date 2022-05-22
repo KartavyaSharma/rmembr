@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { Exception } from "../utils/errors/exception";
-import { ErrorCode } from "../utils/errors/error_codes";
+import { Exception } from "../../utils/errors/exception";
+import { ErrorCode } from "../../utils/errors/error_codes";
 import { nanoid } from "nanoid";
-import { IUser, UserModel } from "../models/db/user";
-import { Auth } from "./auth/auth_engine";
-import CourseGroup from "./planner/course_group";
-import { ICourseGroupResponse, ILoginResponse } from "../models/response/response_models";
+import { IUser, UserModel } from "../../models/db/user";
+import { Auth } from "../auth/auth_engine";
+import CourseGroup from "../planner/course_group";
+import { ICourseGroupResponse, ILoginResponse } from "../../models/response/response_models";
 
 /**
  * Class representing a user.

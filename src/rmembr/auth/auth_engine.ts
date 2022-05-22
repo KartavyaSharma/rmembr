@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt = require('jsonwebtoken');
 import { hashSync, compareSync } from 'bcryptjs';
-import { User } from '../user';
+import { User } from '../user/user';
 import { IUser } from '../../models/db/user';
 import { Exception } from '../../utils/errors/exception';
 import { ErrorCode } from '../../utils/errors/error_codes';

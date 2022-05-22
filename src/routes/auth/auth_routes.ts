@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Routes } from '../routes';
-import { User } from '../../rmembr/user';
+import { User } from '../../rmembr/user/user';
 import { Auth } from '../../rmembr/auth/auth_engine';
 import { IAuthRequest } from '../../models/request/request_models';
 import { Utils } from '../../utils/server_utils';
