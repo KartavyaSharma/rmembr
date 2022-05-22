@@ -1,9 +1,10 @@
+import { ICourse } from "../db/planner_models/course";
+
 /**
  * Contains all response models for rmembr.
  */
 
-import { ICourse } from "../db/planner_models/course";
-
+/** ========== Course Group ========== */
 export interface ICourseGroupResponse {
     name: string;
     courses: ICourseGroupCourseInfo[];
@@ -13,6 +14,7 @@ export interface ICourseGroupCourseInfo {
     _id: string;
     name: string;
 }
+/** =================================== */
 
 /** ========== Auth ========== */
 /** GET /create-user */
@@ -33,6 +35,11 @@ export interface ILoginResponse {
 /** ========================== */
 
 /** ========== Course ========== */
+/** GET / */
+export interface IGetCourseListResponse {
+    /** Returns course group and course list */
+    courseGroup: ICourseGroupResponse
+}
 /** POST / */
 export interface ICreateCourseResponse {
     /** Returns created course object. */
@@ -44,3 +51,7 @@ export interface IUpdateCourseResponse {
     course: ICourse;
 }
 /** ============================ */
+
+/** ========== Section ========== */
+
+/** ============================= */

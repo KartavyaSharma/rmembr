@@ -4,8 +4,7 @@ import { User } from '../../rmembr/user/user';
 import { Auth } from '../../rmembr/auth/auth_engine';
 import { IAuthRequest } from '../../models/request/request_models';
 import { Utils } from '../../utils/server_utils';
-import { 
-    ICreateUser, 
+import {
     ICourseGroupResponse, 
     ICreateUserResponse, 
     ILoginResponse
@@ -53,7 +52,7 @@ export default class AuthRoutes extends Routes {
         /**
         * Adds a route for loggin in an existing user. Route is at /login.
         */
-        this._routes.post(`/login`, async (req: Request, res: Response, next: NextFunction) => {
+        this._routes.get(`/login`, async (req: Request, res: Response, next: NextFunction) => {
             const loginReq: IAuthRequest = req.body;
             let user: User;
             try {

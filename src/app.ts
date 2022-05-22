@@ -9,7 +9,6 @@ import { Exception } from './utils/errors/exception'
 import { Utils } from './utils/server_utils'
 import { Db } from './utils/database/db';
 
-import routes from './routes/home';
 import AuthRoutes from './routes/auth/auth_routes';
 import PlannerRoutes from './routes/planner/planner_routes';
 import { Auth } from './rmembr/auth/auth_engine';
@@ -40,7 +39,6 @@ class App {
     }
 
     routes() {
-        this.server.use(routes);
         Utils.addRoute(this.server, new AuthRoutes());
         Utils.addRoute(this.server, new PlannerRoutes(), Auth.authMid, User.setUser);
     }

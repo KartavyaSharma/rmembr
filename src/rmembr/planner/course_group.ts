@@ -49,17 +49,21 @@ export default class CourseGroup {
      * Returns a list of all courses inside a course group.
      * @return list of courses in this course group.
      */
-    public async courseList(): Promise<ICourse[]> {
+    public async courseList(): Promise<ICourseGroupResponse> {
         await this.refreshCourses();
-        return this.courses.sort((a: ICourse, b: ICourse) => {
-            if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {
-                return -1;
-            }
-            if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) {
-                return 1;
-            }
-            return 0;
-        });;
+        const resObj: ICourseGroupResponse = {
+            name: this.name,
+            courses: this.courses.sort((a: ICourse, b: ICourse) => {
+                if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {
+                    return -1;
+                }
+                if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) {
+                    return 1;
+                }
+                return 0;
+            })
+        }
+        return resObj; 
     }
 
     /**
@@ -78,12 +82,12 @@ export default class CourseGroup {
      * @param courseGroupId id for the course group where the new course will up put.
      */
     public static async updateCourse(courseObj: ICourse, courseGroupId: string): Promise<ICourse> {
-        const created: ICourse = await CourseGroupModel.findOneAndUpdate(
+        const created: ICourseGroup = await CourseGroupModel.findOneAndUpdate(
             { _id: courseGroupId }, 
             { $push: { courses: courseObj } },
             { new: true }
         );
-        return created;
+        return created.courses.find((obj) => { return obj._id == courseObj._id });;
     }
 
     /** 

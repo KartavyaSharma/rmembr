@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { Routes } from "../routes";
 import { User } from "../../rmembr/user/user";
+import { ICourse } from "../../models/db/planner_models/course";
+import { Utils } from "../../utils/server_utils";
+import { ICourseGroupResponse, ICreateCourseResponse } from "../../models/response/response_models";
 import SectionRoutes from "./section_routes";
 import CourseGroup from "../../rmembr/planner/course_group";
-import { ICourse } from "../../models/db/planner_models/course";
 import Course from "../../rmembr/planner/course";
-import { Utils } from "../../utils/server_utils";
-import { ICreateCourseResponse } from "../../models/response/response_models";
 
 export default class CourseRoutes extends Routes {
 
@@ -41,15 +41,15 @@ export default class CourseRoutes extends Routes {
         this._routes.get(`/`, async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
             let userCourseGroup: CourseGroup;
-            let courseList: ICourse[];
+            let courseGroupObj: ICourseGroupResponse;
             try {
                 newUser = req.body.user;
                 userCourseGroup = new CourseGroup(newUser);
-                courseList = await userCourseGroup.courseList();
+                courseGroupObj = await userCourseGroup.courseList();
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, courseList as ICourse[]);
+            Utils.sendRes(res, courseGroupObj as ICourseGroupResponse);
         });
         this._routes.get(`/:courseId`, async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
@@ -103,7 +103,7 @@ export default class CourseRoutes extends Routes {
             try {
                 Utils.validateObject(req.params, 'courseId');
                 Utils.validateObject(req.body, 'course');
-                newUser = req.body.params;
+                newUser = req.body.user;
                 newCourse = await Course.updateCourse(req.params.courseId, req.body.course, newUser);
             } catch (err) {
                 return next(err);

@@ -1,4 +1,3 @@
-import { NextFunction, Request, Response } from "express";
 import { Routes } from "../routes";
 import CourseRoutes from "./course_routes";
 
@@ -29,8 +28,6 @@ export default class PlannerRoutes extends Routes {
     }
 
     protected createRoutes(): void {
-        this._routes.get('/', (req: Request, res: Response, next: NextFunction) => {
-            res.send({"Hello world": "planner here"});
-        });
+        return;
     }
 }
