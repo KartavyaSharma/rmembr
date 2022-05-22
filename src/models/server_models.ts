@@ -3,7 +3,9 @@
  * in the model subdir.
  */
 
-export interface ErrorModel {
+import { ICourseGroupResponse, ICreateUserResponse, ILoginResponse } from "./response/response_models";
+
+export interface IErrorModel {
     /**
      * Unique error code which identifies the error.
      */
@@ -19,4 +21,19 @@ export interface ErrorModel {
      * string describing the error.
      */
     meta?: string;
+}
+
+export interface ISuccessModel {
+    /**
+     * Code indicating response was a success.
+     */
+    readonly code: number;
+
+    /**
+     * Payload of the API response, contains objects.
+     */
+    payload: 
+        ICreateUserResponse     | 
+        ICourseGroupResponse    | 
+        ILoginResponse;
 }

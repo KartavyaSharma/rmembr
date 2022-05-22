@@ -42,20 +42,35 @@ export default class Course {
     }
 
     /**
+     * Returns a course object based on the course and user ID.
      * @param courseId id of the course to search for.
      * @param userId id of the user requesting the course.
      * @return course object.
      */
     public static async getCourse(courseId: string, userId: string): Promise<ICourse> {
         const course: ICourseGroup = await CourseGroupModel.findOne({ _userId: userId });
-        for (let i = 0; i < course.courses.length; i++) {
-            if (course.courses[i]._id == courseId) {
-                return course.courses[i];
-            }
+        const courseObj = course.courses.find((obj) => { return obj._id == courseId });
+        if (courseObj == undefined) {
+            throw new Exception(ErrorCode.NotFound, `Cannot find course with id: ${courseId}`);
         }
-        throw new Exception(ErrorCode.NotFound, `Cannot find course with id: ${courseId}`);
+        return courseObj;
     }
-    
+
+    /**
+     * Deletes a course object from the courses array in CourseGroup.
+     * @param courseId course identifier.
+     * @param userId user identifier.
+     */
+    public static async deleteCourse(courseId: string, userId: string) {
+        const course: ICourse = await Course.getCourse(courseId, userId);
+        const deleted: ICourse = await CourseGroupModel.findOneAndUpdate(
+            { _id: course._courseGroupId },
+            { $pull: { courses: { _id: courseId } } },
+            { new: true }
+        );
+        console.log(deleted);
+    }
+
     /** Course ID. */
     private _id: string;
 

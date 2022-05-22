@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ErrorCode } from "./error_codes";
-import { ErrorModel } from "../../models/server_models";
+import { IErrorModel } from "../../models/server_models";
 
 /**
  * The exception class. Chooses correct error from the
@@ -15,7 +15,7 @@ export class Exception extends Error {
      * @param error contains the status and code details for the error.
      * @param meta is an helpful error description.
      */
-    constructor(error: ErrorModel = ErrorCode.UnknownError, meta = "No description.") {
+    constructor(error: IErrorModel = ErrorCode.UnknownError, meta = "No description.") {
         super(error.code);
         this.name = error.code;
         this.status = error.status;
@@ -40,10 +40,10 @@ export class Exception extends Error {
         console.log(errorOutput.join(""));
         if (err instanceof Exception) {
             console.log(`Error is known.\n Meta: ${err.meta}`)
-            res.status(err.status).send(`Error: ${err}`);
+            res.status(err.status).send({ error: err });
         } else {
             /** For unhandled errors in system. */
-            res.status(500).send(ErrorCode.UnknownError as ErrorModel);
+            res.status(ErrorCode.UnknownError.status).send(ErrorCode.UnknownError as IErrorModel);
         }
     }
 

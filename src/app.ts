@@ -6,7 +6,7 @@ import cors = require('cors');
 import dotenv = require('dotenv');
 
 import { Exception } from './utils/errors/exception'
-import { addRoute } from './utils/server_utils'
+import { Utils } from './utils/server_utils'
 import { Db } from './utils/database/db';
 
 import routes from './routes/home';
@@ -41,8 +41,8 @@ class App {
 
     routes() {
         this.server.use(routes);
-        addRoute(this.server, new AuthRoutes());
-        addRoute(this.server, new PlannerRoutes(), Auth.authMid, User.setUser);
+        Utils.addRoute(this.server, new AuthRoutes());
+        Utils.addRoute(this.server, new PlannerRoutes(), Auth.authMid, User.setUser);
     }
 
     middleware() {

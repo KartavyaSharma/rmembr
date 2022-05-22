@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { IUser, UserModel } from "../models/db/user";
 import { Auth } from "./auth/auth_engine";
 import CourseGroup from "./planner/course_group";
-import { ICourseGroupResponse } from "../models/response/response_models";
+import { ICourseGroupResponse, ILoginResponse } from "../models/response/response_models";
 
 /**
  * Class representing a user.
@@ -34,7 +34,7 @@ export class User {
     /**
      * Create new user and hash password (done by the Auth module).
      */
-    public async createUser(): Promise<void> {
+    public async createUser(): Promise<ILoginResponse> {
         // Check if user exists
         const userExists: IUser = await UserModel.findOne({ email: this._email });
         if (userExists) {
@@ -50,6 +50,11 @@ export class User {
         }
         const created = await UserModel.create(newUser);
         const newUserToken = Auth.generateToken(this);
+        
+        return { token: newUserToken }
+    }
+
+    public async createNewCourseGroup(): Promise<ICourseGroupResponse> {
         /** Creating a new course group for the user. */
         const newGroup: CourseGroup = new CourseGroup(this);
         this._courseGroupId = newGroup.id;
@@ -59,7 +64,7 @@ export class User {
             { new: true }
         );
         const courseGroupInfo: ICourseGroupResponse = await newGroup.initialize();
-        this._resObj.send({ ...courseGroupInfo, token: newUserToken });
+        return courseGroupInfo;
     }
 
     /**

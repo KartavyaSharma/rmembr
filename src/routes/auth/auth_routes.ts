@@ -3,6 +3,13 @@ import { Routes } from '../routes';
 import { User } from '../../rmembr/user';
 import { Auth } from '../../rmembr/auth/auth_engine';
 import { IAuthRequest } from '../../models/request/request_models';
+import { Utils } from '../../utils/server_utils';
+import { 
+    ICreateUser, 
+    ICourseGroupResponse, 
+    ICreateUserResponse, 
+    ILoginResponse
+} from '../../models/response/response_models';
 
 /**
  * Class defining authentication routes and associated functions.
@@ -30,17 +37,17 @@ export default class AuthRoutes extends Routes {
          * Creates a new user in the DB.
          */
         this._routes.post(`/create-user`, async (req: Request, res: Response, next: NextFunction) => {
-            const newUser = new User(User.extractUser(req));
-            newUser.resObj = res;
+            let newUser: User;
+            let token: ILoginResponse;
+            let courseGroup: ICourseGroupResponse;
             try {
-                await newUser.createUser();
+                newUser = new User(User.extractUser(req));
+                token = await newUser.createUser();
+                courseGroup = await newUser.createNewCourseGroup();
             } catch (err) {
                 return next(err);
             }
-            /**
-             * Need to send user to course list from here. Redirect from here to the
-             * course list route.
-             */
+            Utils.sendRes(res, { courseGroup: courseGroup, token: token.token } as ICreateUserResponse);
         });
 
         /**
@@ -54,11 +61,7 @@ export default class AuthRoutes extends Routes {
             } catch (err) {
                 return next(err);
             }
-            return res.send({ jwt: Auth.generateToken(user) })
-            /**
-             * Need to send user to course list from here. Redirect from here to the
-             * course list route.
-             */
+            Utils.sendRes(res, { token: Auth.generateToken(user) } as ILoginResponse);
         });
     }
 }
