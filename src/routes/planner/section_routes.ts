@@ -13,15 +13,21 @@ export default class SectionRoutes extends Routes {
     }
 
     protected createRoutes(): void {
+        /** ========== GET ========== */
+        this._routes.get('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {
 
-        this._routes.get(`/`, async (req: Request, res: Response, next: NextFunction) => {
-            res.send({"this is": "sections"});
         });
+        /** ========== POST ========== */
+        this._routes.post('/', async (req: Request, res: Response, next: NextFunction) => {
 
-        this._routes.get(`/:sectionId`, async (req: Request, res: Response, next: NextFunction) => {
-            res.send({"course-id": req.params.courseId, "section-id": req.params.sectionId});
+        })
+        /** ========== DELETE ========== */
+        this._routes.delete('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {
+
+        })
+        /** ========== PATCH ========== */
+        this._routes.patch('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {
+
         })
     }
-
-
 }
