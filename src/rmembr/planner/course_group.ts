@@ -87,7 +87,7 @@ export default class CourseGroup {
             { $push: { courses: courseObj } },
             { new: true }
         );
-        return created.courses.find((obj) => { return obj._id == courseObj._id });;
+        return created.courses.find((obj) => { return obj._id == courseObj._id });
     }
 
     /**

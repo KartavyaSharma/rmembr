@@ -17,6 +17,7 @@ export default class Course {
 
     /**
      * Initializes a new Course object.
+     * @param courseObj optional course object. Use existing fields if provided.
      */
     constructor(courseObj?: ICourse) {
         if (courseObj._id == null) {
@@ -31,6 +32,7 @@ export default class Course {
 
     /**
      * Creates a new course entry document in Mongo DB.
+     * @returns the Course object associated with the new entry.
      */
     public async register(): Promise<ICreateCourseResponse> {
         const newCourse: ICourse = {
@@ -46,6 +48,7 @@ export default class Course {
 
     /**
      * Deletes a course object from the courses array in CourseGroup.
+     * @return the deleted course as a Course object.
      */
     public async deleteCourse(): Promise<Course> {
         const deleted: ICourse = await CourseGroupModel.findOneAndUpdate(
@@ -61,10 +64,11 @@ export default class Course {
      * in the array and adds the new course given by the request object.
      * @param courseobj new object which will replace the old one.
      * @param user user object to provide with the courseGroupId.
+     * @return a new Course object which was just added.
      */
-    public async updateCourse(courseobj: Course, user: User): Promise<Course> {
+    public async updateCourse(courseObj: Course, user: User): Promise<Course> {
         await this.deleteCourse();
-        const newCourse: ICourse = await CourseGroup.addCourse(courseobj.object, user.courseGroupId);
+        const newCourse: ICourse = await CourseGroup.addCourse(courseObj.object, user.courseGroupId);
         return new Course(newCourse);
     }
 
@@ -104,21 +108,21 @@ export default class Course {
     }
 
     /**
-     * @returns the _courseGroupId field.
+     * @return the _courseGroupId field.
      */
     public get courseGroupId() {
         return this._courseGroupId;
     }
 
     /**
-     * @returns the _name field.
+     * @return the _name field.
      */
     public get name() {
         return this._name;
     }
 
     /**
-     * @returns the _sections field.
+     * @return the _sections field.
      */
     public get sections() {
         return this._sections;

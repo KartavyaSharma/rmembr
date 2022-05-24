@@ -108,8 +108,9 @@ export default class CourseRoutes extends Routes {
                 Utils.validateObject(req.body, 'course');
                 newUser = req.body.user;
                 course = await Course.getCourse(req.params.courseId, newUser.id);
-                newCourse = await course.updateCourse(req.body.course, newUser);
+                newCourse = await course.updateCourse(new Course(req.body.course), newUser);
             } catch (err) {
+                console.log(err);
                 return next(err);
             }
             Utils.sendRes(res, newCourse.object as ICourse);
