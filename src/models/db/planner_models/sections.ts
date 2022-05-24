@@ -1,5 +1,4 @@
-import { model, Model, Schema } from "mongoose";
-import { ICourse } from "./course";
+import { Schema } from "mongoose";
 import { ISubSection, ISubSectionSchema } from "./subsections";
 
 /**
@@ -7,7 +6,7 @@ import { ISubSection, ISubSectionSchema } from "./subsections";
  */
 export interface ISection {
     _id: string;
-    _courseId: ICourse['_id'];
+    _courseId: string;
     name: string;
     subsections: ISubSection[];
 }
@@ -19,13 +18,8 @@ export interface ISection {
 export const ISectionSchema = new Schema<ISection>(
     {
         _id: { type: String, required: true },
-        _courseId: { type: Schema.Types.ObjectId, required: true },
+        _courseId: { type: String, required: true },
         name: { type: String, required: true },
-        subsections: {type: [ISubSectionSchema], required: false, default: null},
+        subsections: { type: [ISubSectionSchema], required: false, default: null },
     }
-)
-
-// export const SectionModel: Model<ISection> = model(
-//     'course-group',
-//     ISectionSchema
-// )
+);

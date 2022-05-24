@@ -86,9 +86,4 @@ export const ISubSectionSchema = new Schema<ISubSection>(
             required: false
         }
     }
-)
-
-// export const subsectionModel: Model<ISubSection> = model(
-//     'course-group',
-//     ISubSectionSchema
-// )
+);

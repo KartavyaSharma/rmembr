@@ -11,7 +11,7 @@ import { ICourseGroupResponse, ILoginResponse } from "../../models/response/resp
  * Class representing a user.
  * 
  * A user has a:
- *  - Id (primary key)
+ *  - Id
  *  - Email
  *  - Name
  *  - Password
@@ -105,14 +105,6 @@ export class User {
         next();
     }
 
-    /** 
-     * Sets the response object for User functions.
-     * @param res Response object from the route caller.
-     * */
-    public set resObj(res: Response) {
-        this._resObj = res;
-    }
-
     /**
      * Returns the User's email.
      * @return this User's email field.
@@ -164,9 +156,6 @@ export class User {
 
     /** User's Password */
     private _password: string;
-
-    /** res object with which all user functions respond to. */
-    private _resObj: Response;
 
     /** ID associated with user's course group */
     private _courseGroupId: string;

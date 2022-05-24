@@ -15,7 +15,7 @@ export default class SectionRoutes extends Routes {
     protected createRoutes(): void {
         /** ========== GET ========== */
         this._routes.get('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {
-
+            
         });
         /** ========== POST ========== */
         this._routes.post('/', async (req: Request, res: Response, next: NextFunction) => {

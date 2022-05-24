@@ -81,21 +81,13 @@ export default class CourseGroup {
      * @param courseObj object representing course to be added to Mongo.
      * @param courseGroupId id for the course group where the new course will up put.
      */
-    public static async updateCourse(courseObj: ICourse, courseGroupId: string): Promise<ICourse> {
+    public static async addCourse(courseObj: ICourse, courseGroupId: string): Promise<ICourse> {
         const created: ICourseGroup = await CourseGroupModel.findOneAndUpdate(
             { _id: courseGroupId }, 
             { $push: { courses: courseObj } },
             { new: true }
         );
         return created.courses.find((obj) => { return obj._id == courseObj._id });;
-    }
-
-    /** 
-     * Sets the response object for course group functions.
-     * @param res Response object from the route caller.
-     * */
-    public set resObj(res: Response) {
-        this._resObj = res;
     }
 
     /**
@@ -105,9 +97,6 @@ export default class CourseGroup {
     public get id() {
         return this._id;
     }
-
-    /** res object with which all course group functions respond to. */
-    private _resObj: Response;
 
     /** Course group user's ID. */
     private _userId: string;

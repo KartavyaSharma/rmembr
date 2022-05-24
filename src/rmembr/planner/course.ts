@@ -4,9 +4,9 @@ import { nanoid } from "nanoid";
 import { CourseGroupModel, ICourseGroup } from "../../models/db/planner_models/course_group";
 import { Exception } from "../../utils/errors/exception";
 import { ErrorCode } from "../../utils/errors/error_codes";
-import CourseGroup from "./course_group";
 import { ICreateCourseResponse } from "../../models/response/response_models";
 import { User } from "../user/user";
+import CourseGroup from "./course_group";
 
 /**
  * Class represents a course. Multiple courses can exist per user.
@@ -39,8 +39,46 @@ export default class Course {
             name: this._name,
             sections: this._sections
         }
-        const updatedCourse: ICourse = await CourseGroup.updateCourse(newCourse, this._courseGroupId);
+        const updatedCourse: ICourse = await CourseGroup.addCourse(newCourse, this._courseGroupId);
         return { course: updatedCourse };
+    }
+
+
+    /**
+     * Deletes a course object from the courses array in CourseGroup.
+     */
+    public async deleteCourse(): Promise<Course> {
+        const deleted: ICourse = await CourseGroupModel.findOneAndUpdate(
+            { _id: this._courseGroupId },
+            { $pull: { courses: { _id: this._id } } },
+            { new: true }
+        );
+        return new Course(deleted);
+    }
+
+    /**
+     * Updates a course in the courses array. Deletes the existing course
+     * in the array and adds the new course given by the request object.
+     * @param courseobj new object which will replace the old one.
+     * @param user user object to provide with the courseGroupId.
+     */
+    public async updateCourse(courseobj: Course, user: User): Promise<Course> {
+        await this.deleteCourse();
+        const newCourse: ICourse = await CourseGroup.addCourse(courseobj.object, user.courseGroupId);
+        return new Course(newCourse);
+    }
+
+    /**
+     * Returns this course's fields as an ICourse object.
+     * @return ICourse object type from this._[field].
+     */
+    public get object(): ICourse {
+        return {
+            _id: this._id, 
+            _courseGroupId: this.courseGroupId, 
+            name: this.name, 
+            sections: this.sections
+        }
     }
 
     /**
@@ -49,40 +87,41 @@ export default class Course {
      * @param userId id of the user requesting the course.
      * @return course object.
      */
-    public static async getCourse(courseId: string, userId: string): Promise<ICourse> {
+    public static async getCourse(courseId: string, userId: string): Promise<Course> {
         const course: ICourseGroup = await CourseGroupModel.findOne({ _userId: userId });
         const courseObj = course.courses.find((obj) => { return obj._id == courseId });
         if (courseObj == undefined) {
             throw new Exception(ErrorCode.NotFound, `Cannot find course with id: ${courseId}`);
         }
-        return courseObj;
+        return new Course(courseObj);
     }
 
     /**
-     * Deletes a course object from the courses array in CourseGroup.
-     * @param courseId course identifier.
-     * @param userId user identifier.
+     * @return the _id field.
      */
-    public static async deleteCourse(courseId: string, userId: string): Promise<ICourse> {
-        const course: ICourse = await Course.getCourse(courseId, userId);
-        const deleted: ICourse = await CourseGroupModel.findOneAndUpdate(
-            { _id: course._courseGroupId },
-            { $pull: { courses: { _id: courseId } } },
-            { new: true }
-        );
-        return deleted;
+    public get id() {
+        return this._id;
     }
 
     /**
-     * Updates a course in the courses array. Deletes the existing course
-     * in the array and adds the new course given by the request object.
-     * @param courseId id of the course being replaced.
-     * @param courseObj object of the new course being added.
+     * @returns the _courseGroupId field.
      */
-    public static async updateCourse(courseId: string, courseobj: any, user: User): Promise<ICourse> {
-        await Course.deleteCourse(courseId, user.id);
-        const newCourse: ICourse = await CourseGroup.updateCourse(courseobj, user.courseGroupId);
-        return newCourse;
+    public get courseGroupId() {
+        return this._courseGroupId;
+    }
+
+    /**
+     * @returns the _name field.
+     */
+    public get name() {
+        return this._name;
+    }
+
+    /**
+     * @returns the _sections field.
+     */
+    public get sections() {
+        return this._sections;
     }
 
     /** Course ID. */

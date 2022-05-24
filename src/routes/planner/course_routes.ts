@@ -53,7 +53,7 @@ export default class CourseRoutes extends Routes {
         });
         this._routes.get(`/:courseId`, async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
-            let course: ICourse;
+            let course: Course;
             try {
                 Utils.validateObject(req.params, 'courseId');
                 newUser = req.body.user;
@@ -61,7 +61,7 @@ export default class CourseRoutes extends Routes {
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, course as ICourse);
+            Utils.sendRes(res, course.object as ICourse);
         });
 
         /** ========== POST ========== */
@@ -86,10 +86,12 @@ export default class CourseRoutes extends Routes {
         /** ========== DELETE ========== */
         this._routes.delete('/:courseId', async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
+            let course: Course;
             try {
                 Utils.validateObject(req.params, 'courseId');
                 newUser = req.body.user;
-                await Course.deleteCourse(req.params.courseId, newUser.id);
+                course = await Course.getCourse(req.params.courseId, newUser.id);
+                await course.deleteCourse();
             } catch (err) {
                 return next(err);
             }
@@ -99,16 +101,18 @@ export default class CourseRoutes extends Routes {
         /** ========== PATCH ========== */
         this._routes.patch('/:courseId', async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
-            let newCourse: ICourse
+            let course: Course;
+            let newCourse: Course;
             try {
                 Utils.validateObject(req.params, 'courseId');
                 Utils.validateObject(req.body, 'course');
                 newUser = req.body.user;
-                newCourse = await Course.updateCourse(req.params.courseId, req.body.course, newUser);
+                course = await Course.getCourse(req.params.courseId, newUser.id);
+                newCourse = await course.updateCourse(req.body.course, newUser);
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, newCourse as ICourse);
+            Utils.sendRes(res, newCourse.object as ICourse);
         });
     }
 }
