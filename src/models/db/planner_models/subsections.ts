@@ -6,7 +6,7 @@ import { ISection } from "./sections";
  */
 export interface ISubSection {
     _id: string,
-    _sectionId: ISection['_id'],
+    _sectionId: string,
     name: string;
     inClass: Date,
     status: IStatus,
@@ -52,7 +52,7 @@ export interface IQuestions {
 export const ISubSectionSchema = new Schema<ISubSection>(
     {
         _id: { type: String, required: true },
-        _sectionId: { type: Schema.Types.ObjectId, required: true },
+        _sectionId: { type: String, required: true },
         inClass: { type: Date, required: true },
         name: { type: String, required: true },
         status: {

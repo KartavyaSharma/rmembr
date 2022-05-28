@@ -21,7 +21,7 @@ export default class Section {
      * @param sectionObj ISection object with all fields filled.
      */
     constructor(sectionObj?: ISection) {
-        if (sectionObj == null) {
+        if (sectionObj._id == null) {
             this._id = nanoid();
         }
         this._courseId = sectionObj._courseId;
@@ -32,6 +32,7 @@ export default class Section {
     /**
      * Adds new section entry to a course in database.
      * @param userId for user associated with this section.
+     * @returns Section object wrapped in a ICreateSectionResponse object.
      */
     public async register(userId: string): Promise<ICreateSectionResponse> {
         const newSection: ISection = {
@@ -50,10 +51,11 @@ export default class Section {
      * @param userId associated with the section.
      * @param courseId in which section resides.
      * @param sectionId of the section.
+     * @returns a section object associated with the input parameters.
      */
     public static async getSection(userId: string, courseId: string, sectionId: string): Promise<Section> {
         const course: Course = await Course.getCourse(courseId, userId);
-        const sectionObj: ISection = course.sections.find((obj) => {obj._id == sectionId});
+        const sectionObj: ISection = course.sections.find((obj) => { return obj._id == sectionId });
         if (sectionObj == undefined) {
             throw new Exception(ErrorCode.NotFound, `Cannot find section with id: ${sectionId}`);
         }
@@ -62,7 +64,7 @@ export default class Section {
 
     /**
      * Returns this sections fields as an ISection object.
-     * @return ISection object type from this._[field].
+     * @returns ISection object type from this._[field].
      */
     public get object(): ISection {
         return {
@@ -74,7 +76,7 @@ export default class Section {
     }
 
     /**
-     * @return this sections's ID.
+     * @returns this sections's ID.
      */
     public get id() {
         return this._id;
@@ -100,7 +102,7 @@ export default class Section {
     public get subsections() {
         return this._subsections;
     }
-    
+
     /** Section ID. */
     private _id: string;
 

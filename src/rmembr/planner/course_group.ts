@@ -28,7 +28,7 @@ export default class CourseGroup {
      * Creates a new entry in Mongo DB for a course group. This function
      * should only be called when a new user is created. There can only be
      * one course group per user.
-     * @return an ICourseGroupResponse object with the course group details.
+     * @returns an ICourseGroupResponse object with the course group details.
      */
     public async initialize(): Promise<ICourseGroupResponse> {
         // check if another course group already exists for this user.
@@ -47,7 +47,7 @@ export default class CourseGroup {
 
     /**
      * Returns a list of all courses inside a course group.
-     * @return list of courses in this course group.
+     * @returns list of courses in this course group.
      */
     public async courseList(): Promise<ICourseGroupResponse> {
         await this.refreshCourses();
@@ -80,7 +80,7 @@ export default class CourseGroup {
      * a new course object.
      * @param courseObj object representing course to be added to Mongo.
      * @param courseGroupId id for the course group where the new course will up put.
-     * @return the course that was just added to the course group with the id courseObj._id.
+     * @returns the course that was just added to the course group with the id courseObj._id.
      */
     public static async addCourse(courseObj: ICourse, courseGroupId: string): Promise<ICourse> {
         const created: ICourseGroup = await CourseGroupModel.findOneAndUpdate(
@@ -93,7 +93,7 @@ export default class CourseGroup {
 
     /**
      * Return the course group ID.
-     * @return this course group's ID
+     * @returns this course group's ID
      */
     public get id() {
         return this._id;

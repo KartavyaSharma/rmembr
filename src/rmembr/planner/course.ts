@@ -32,7 +32,7 @@ export default class Course {
 
     /**
      * Creates a new course entry document in Mongo DB.
-     * @returns the Course object associated with the new entry.
+     * @returnss the Course object associated with the new entry.
      */
     public async register(): Promise<ICreateCourseResponse> {
         const newCourse: ICourse = {
@@ -48,7 +48,7 @@ export default class Course {
 
     /**
      * Deletes a course object from the courses array in CourseGroup.
-     * @return the deleted course as a Course object.
+     * @returns the deleted course as a Course object.
      */
     public async deleteCourse(): Promise<Course> {
         const deleted: ICourse = await CourseGroupModel.findOneAndUpdate(
@@ -64,7 +64,7 @@ export default class Course {
      * in the array and adds the new course given by the request object.
      * @param courseObj new object which will replace the old one.
      * @param user user object to provide with the courseGroupId.
-     * @return a new Course object which was just added.
+     * @returns a new Course object which was just added.
      */
     public async updateCourse(courseObj: Course, user: User): Promise<Course> {
         await this.deleteCourse();
@@ -76,6 +76,7 @@ export default class Course {
      * Adds a section to the sections array in the database.
      * @param sectionObj object of type ISection to be inserted.
      * @param userId associated with this section.
+     * @returns an ISection object of the new entry.
      */
     public static async addSection(sectionObj: ISection, userId: string): Promise<ISection> {
         const associatedCourse: Course = await Course.getCourse(sectionObj._courseId, userId);
@@ -90,13 +91,13 @@ export default class Course {
             }
         );
         return created.courses.find(
-            (obj) => { obj._id == associatedCourse.id }
-        ).sections.find((obj) => { obj._id == sectionObj._id });
+            (course: ICourse) => { return course._id == associatedCourse.id }
+        ).sections.find((section: ISection) => { return section._id == sectionObj._id });
     }
 
     /**
      * Returns this course's fields as an ICourse object.
-     * @return ICourse object type from this._[field].
+     * @returns ICourse object type from this._[field].
      */
     public get object(): ICourse {
         return {
@@ -111,7 +112,7 @@ export default class Course {
      * Returns a course object based on the course and user ID.
      * @param courseId id of the course to search for.
      * @param userId id of the user requesting the course.
-     * @return course object.
+     * @returns course object.
      */
     public static async getCourse(courseId: string, userId: string): Promise<Course> {
         const course: ICourseGroup = await CourseGroupModel.findOne({ _userId: userId });
@@ -123,28 +124,28 @@ export default class Course {
     }
 
     /**
-     * @return the _id field.
+     * @returns the _id field.
      */
     public get id() {
         return this._id;
     }
 
     /**
-     * @return the _courseGroupId field.
+     * @returns the _courseGroupId field.
      */
     public get courseGroupId() {
         return this._courseGroupId;
     }
 
     /**
-     * @return the _name field.
+     * @returns the _name field.
      */
     public get name() {
         return this._name;
     }
 
     /**
-     * @return the _sections field.
+     * @returns the _sections field.
      */
     public get sections() {
         return this._sections;

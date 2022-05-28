@@ -54,6 +54,7 @@ export default class SectionRoutes extends Routes {
                 });
                 resSection = await newSection.register(newUser.id);
             } catch (err) {
+                console.log(err);
                 next(err);
             }
             Utils.sendRes(res, resSection);
