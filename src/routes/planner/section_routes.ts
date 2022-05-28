@@ -1,6 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { Routes } from "../routes";
+import { User } from "../../rmembr/user/user";
+import { Utils } from "../../utils/server_utils";
+import { ISection } from "../../models/db/planner_models/sections";
 import SubsectionRoutes from "./subsection_routes";
+import Section from "../../rmembr/planner/section";
+import { ICreateSectionResponse } from "../../models/response/response_models";
 
 export default class SectionRoutes extends Routes {
     
@@ -15,11 +20,43 @@ export default class SectionRoutes extends Routes {
     protected createRoutes(): void {
         /** ========== GET ========== */
         this._routes.get('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {
-            
+            let newUser: User;
+            let sectionObj: Section;
+            try {
+                Utils.validateObject(req.params, 'sectionId');
+                Utils.validateObject(req.params, 'courseId');
+                newUser = req.body.user;
+                sectionObj = await Section.getSection(
+                    newUser.id, 
+                    req.params.courseId, 
+                    req.params.sectionId
+                );
+            } catch (err) {
+                return next(err);
+            }
+            Utils.sendRes(res, sectionObj.object as ISection);
         });
+
         /** ========== POST ========== */
         this._routes.post('/', async (req: Request, res: Response, next: NextFunction) => {
-
+            let newUser: User;
+            let newSection: Section;
+            let resSection: ICreateSectionResponse;
+            try {
+                Utils.validateObject(req.body, 'name');
+                Utils.validateObject(req.params, 'courseId');
+                newUser = req.body.user;
+                newSection = new Section({
+                    _id: null,
+                    _courseId: req.params.courseId,
+                    name: req.body.name,
+                    subsections: null
+                });
+                resSection = await newSection.register(newUser.id);
+            } catch (err) {
+                next(err);
+            }
+            Utils.sendRes(res, resSection);
         })
         /** ========== DELETE ========== */
         this._routes.delete('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {

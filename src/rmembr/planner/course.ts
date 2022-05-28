@@ -62,7 +62,7 @@ export default class Course {
     /**
      * Updates a course in the courses array. Deletes the existing course
      * in the array and adds the new course given by the request object.
-     * @param courseobj new object which will replace the old one.
+     * @param courseObj new object which will replace the old one.
      * @param user user object to provide with the courseGroupId.
      * @return a new Course object which was just added.
      */
@@ -73,14 +73,36 @@ export default class Course {
     }
 
     /**
+     * Adds a section to the sections array in the database.
+     * @param sectionObj object of type ISection to be inserted.
+     * @param userId associated with this section.
+     */
+    public static async addSection(sectionObj: ISection, userId: string): Promise<ISection> {
+        const associatedCourse: Course = await Course.getCourse(sectionObj._courseId, userId);
+        const created: ICourseGroup = await CourseGroupModel.findOneAndUpdate(
+            { _id: associatedCourse.courseGroupId },
+            { $push: { 'courses.$[element].sections': sectionObj } },
+            {
+                arrayFilters: [
+                    { 'element._id': associatedCourse.id }
+                ],
+                new: true
+            }
+        );
+        return created.courses.find(
+            (obj) => { obj._id == associatedCourse.id }
+        ).sections.find((obj) => { obj._id == sectionObj._id });
+    }
+
+    /**
      * Returns this course's fields as an ICourse object.
      * @return ICourse object type from this._[field].
      */
     public get object(): ICourse {
         return {
-            _id: this._id, 
-            _courseGroupId: this.courseGroupId, 
-            name: this.name, 
+            _id: this._id,
+            _courseGroupId: this.courseGroupId,
+            name: this.name,
             sections: this.sections
         }
     }

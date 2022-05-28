@@ -1,4 +1,5 @@
 import { ICourse } from "../db/planner_models/course";
+import { ISection } from "../db/planner_models/sections";
 
 /**
  * Contains all response models for rmembr.
@@ -53,5 +54,9 @@ export interface IUpdateCourseResponse {
 /** ============================ */
 
 /** ========== Section ========== */
-
+/** POST */
+export interface ICreateSectionResponse {
+    /** Returns created Section object */
+    section: ISection;
+}
 /** ============================= */

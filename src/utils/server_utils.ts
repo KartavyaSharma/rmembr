@@ -17,14 +17,19 @@ export class Utils {
      * */
     static readonly EMPTY_OBJECT = new Utils("EMPTY", {});
 
-    /** Constructor used to make new enums for objects. */
+    /** 
+     * Constructor used to make new enums for objects.
+     * @param key the name of the enum entry.
+     * @param value the value associated with the enum entry.
+     */
     constructor(private readonly key: string, public readonly value: any) {}
 
     /**
      * Adds a new Router middleware for given server instance with a
-     * route class BASE property.
+     * Route class BASE property.
      * @param expressApp instance of the current server.
      * @param routerClass instance of the particular router being used.
+     * @param middleware collection of middleware to be used before req is forwarded to the router.
      */
     public static addRoute(expressApp: Express, routerClass: Routes, ...middleware: RequestHandler[]): void {
         expressApp.use(routerClass.getBase, ...middleware, routerClass.getRouter);
@@ -32,7 +37,7 @@ export class Utils {
 
     /**
      * Validates object by verifying that it contains field FIELD, and that
-     * it is not null of undefined. Throws an ValidationError if the field does
+     * it is not null or undefined. Throws an ValidationError if the field does
      * not exist.
      * @param targetObj object that is to be validated
      * @param field that the object must contain.

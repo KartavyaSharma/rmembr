@@ -4,13 +4,11 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cors = require('cors');
 import dotenv = require('dotenv');
-
+import AuthRoutes from './routes/auth/auth_routes';
+import PlannerRoutes from './routes/planner/planner_routes';
 import { Exception } from './utils/errors/exception'
 import { Utils } from './utils/server_utils'
 import { Db } from './utils/database/db';
-
-import AuthRoutes from './routes/auth/auth_routes';
-import PlannerRoutes from './routes/planner/planner_routes';
 import { Auth } from './rmembr/auth/auth_engine';
 import { User } from './rmembr/user/user';
 

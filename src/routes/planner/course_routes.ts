@@ -68,6 +68,7 @@ export default class CourseRoutes extends Routes {
         this._routes.post('/', async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
             let newCourse: Course;
+            let resCourse: ICreateCourseResponse;
             try {
                 Utils.validateObject(req.body, 'name');
                 newUser = req.body.user;
@@ -77,10 +78,11 @@ export default class CourseRoutes extends Routes {
                     name: req.body.name,
                     sections: []
                 });
+                resCourse = await newCourse.register();
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, await newCourse.register() as ICreateCourseResponse);
+            Utils.sendRes(res, resCourse);
         });
 
         /** ========== DELETE ========== */
@@ -110,7 +112,6 @@ export default class CourseRoutes extends Routes {
                 course = await Course.getCourse(req.params.courseId, newUser.id);
                 newCourse = await course.updateCourse(new Course(req.body.course), newUser);
             } catch (err) {
-                console.log(err);
                 return next(err);
             }
             Utils.sendRes(res, newCourse.object as ICourse);
