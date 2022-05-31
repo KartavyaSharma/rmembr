@@ -19,7 +19,9 @@ export default class CourseRoutes extends Routes {
 
     /**
      * Initializes the routes object from the routes abstract class.
-     * New routes can be added using super().routes.[CRUD OP]();
+     * New routes can be added using super().routes.[CRUD OP]().
+     * Adds routers for all nested routes. For instance:
+     * - /courses/:courseId/[...]
      */
     constructor() {
         super();

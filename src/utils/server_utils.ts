@@ -58,6 +58,8 @@ export class Utils {
      * @returns boolean value for if object implements <ObjectType>.
      */
     public static validateObjectDeep<ObjectType>(object: ObjectType): void {
+        // cast object as <ObjectType>
+        object = object as ObjectType;
         const propertyNames: string[] = Object.getOwnPropertyNames(object);
         for (var propName of propertyNames) {
             Utils.validateObject(object, propName);

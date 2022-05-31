@@ -46,7 +46,7 @@ export default class AuthRoutes extends Routes {
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, { courseGroup: courseGroup, token: token.token } as ICreateUserResponse);
+            Utils.sendRes<ICreateUserResponse>(res, { courseGroup: courseGroup, token: token.token } as ICreateUserResponse);
         });
 
         /**
@@ -60,7 +60,7 @@ export default class AuthRoutes extends Routes {
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, { token: Auth.generateToken(user) } as ILoginResponse);
+            Utils.sendRes<ILoginResponse>(res, { token: Auth.generateToken(user) } as ILoginResponse);
         });
     }
 }

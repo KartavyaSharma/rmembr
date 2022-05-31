@@ -27,10 +27,13 @@ export class Db {
         }
         try {
             if (mongoose.connection.readyState !== 1 && mongoose.connection.readyState !== 2) {
-                const dbConnection = await mongoose.connect(process.env.MONGO_URI, {
-                    autoIndex: true,
-                    serverSelectionTimeoutMS: 5000,
-                });
+                const dbConnection = await mongoose.connect(
+                    process.env.MONGO_URI,
+                    {
+                        autoIndex: true,
+                        serverSelectionTimeoutMS: 5000,
+                    }
+                );
                 this._connection = dbConnection.connection;
             }
         } catch (error) {
