@@ -3,9 +3,9 @@ import { Routes } from "../routes";
 import { User } from "../../rmembr/user/user";
 import { Utils } from "../../utils/server_utils";
 import { ISection } from "../../models/db/planner_models/sections";
+import { ICreateSectionResponse, IDeleteSectionResponse } from "../../models/response/response_models";
 import SubsectionRoutes from "./subsection_routes";
 import Section from "../../rmembr/planner/section";
-import { ICreateSectionResponse } from "../../models/response/response_models";
 
 export default class SectionRoutes extends Routes {
     
@@ -34,7 +34,7 @@ export default class SectionRoutes extends Routes {
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes(res, sectionObj.object as ISection);
+            Utils.sendRes<ISection>(res, sectionObj.object as ISection);
         });
 
         /** ========== POST ========== */
@@ -54,18 +54,42 @@ export default class SectionRoutes extends Routes {
                 });
                 resSection = await newSection.register(newUser.id);
             } catch (err) {
-                console.log(err);
                 next(err);
             }
-            Utils.sendRes(res, resSection);
+            Utils.sendRes<ICreateSectionResponse>(res, resSection);
         })
         /** ========== DELETE ========== */
         this._routes.delete('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {
-
+            let newUser: User;
+            let section: Section;
+            let sectionList: IDeleteSectionResponse;
+            try {
+                Utils.validateObject(req.params, 'sectionId');
+                Utils.validateObject(req.params, 'courseId');
+                newUser = req.body.user;
+                section = await Section.getSection(newUser.id, req.params.courseId, req.params.sectionId);
+                sectionList = await section.delete(newUser.id);
+            } catch (err) {
+                next(err);
+            }
+            Utils.sendRes<IDeleteSectionResponse>(res, sectionList)
         })
         /** ========== PATCH ========== */
         this._routes.patch('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {
-
+            let newUser: User;
+            let section: Section;
+            let newSection: Section;
+            try {
+                Utils.validateObject(req.params, "sectionId");
+                Utils.validateObject(req.body, "section");
+                Utils.validateObjectDeep<ISection>(req.body.section);
+                newUser = req.body.user;
+                section = await Section.getSection(newUser.id, req.body.section._courseId, req.params.sectionId);
+                newSection = await section.update(new Section(req.body.section), newUser);
+            } catch (err) {
+                next(err);
+            }
+            Utils.sendRes<ISection>(res, newSection.object as ISection);
         })
     }
 }

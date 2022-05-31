@@ -51,12 +51,25 @@ export class Utils {
         }
     }
 
+    /**
+     * Validation function to check if any objects implements
+     * the <ObjectType> interface properly at runtime.
+     * @param object to be validated.
+     * @returns boolean value for if object implements <ObjectType>.
+     */
+    public static validateObjectDeep<ObjectType>(object: ObjectType): void {
+        const propertyNames: string[] = Object.getOwnPropertyNames(object);
+        for (var propName of propertyNames) {
+            Utils.validateObject(object, propName);
+        }
+    }
+
     /** 
      * Sends res object to the client.
      * @param resObj response object from api route sending the response.
      * @param payloadObj object requested by the client.
      */
-    public static sendRes(resObj: Response, payloadObj: any): void {
-        resObj.send({ code: Success.code, payload: payloadObj } as ISuccessModel);
+    public static sendRes<ResponseType>(resObj: Response, payloadObj: ResponseType): void {
+        resObj.send({ code: Success.code, payload: payloadObj } as ISuccessModel<ResponseType>);
     }
 }

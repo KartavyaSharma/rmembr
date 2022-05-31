@@ -46,6 +46,11 @@ export interface ICreateCourseResponse {
     /** Returns created course object. */
     course: ICourse;
 }
+/** DELETE /courses/:courseId */
+export interface IDeleteCourseResponse {
+    /** Returns refreshed course list w/o deleted course. */
+    courses: ICourse[];
+}
 /** PATCH /courses/:courseId */
 export interface IUpdateCourseResponse {
     /** Returns created course object. */
@@ -54,9 +59,18 @@ export interface IUpdateCourseResponse {
 /** ============================ */
 
 /** ========== Section ========== */
-/** POST */
+/** POST /sections/:sectionId */
 export interface ICreateSectionResponse {
     /** Returns created Section object */
+    section: ISection;
+}
+/** DELETE /sections/:sectionId */
+export interface IDeleteSectionResponse {
+    /** Returns refreshed section list w/o deleted section. */
+    sections: ISection[];
+}
+/** PATCH /sections/:sectionId */
+export interface IUpdateSectionResponse {
     section: ISection;
 }
 /** ============================= */

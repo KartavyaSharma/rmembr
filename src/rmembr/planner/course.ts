@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { CourseGroupModel, ICourseGroup } from "../../models/db/planner_models/course_group";
 import { Exception } from "../../utils/errors/exception";
 import { ErrorCode } from "../../utils/errors/error_codes";
-import { ICreateCourseResponse } from "../../models/response/response_models";
+import { ICreateCourseResponse, IDeleteCourseResponse } from "../../models/response/response_models";
 import { User } from "../user/user";
 import CourseGroup from "./course_group";
 
@@ -50,13 +50,13 @@ export default class Course {
      * Deletes a course object from the courses array in CourseGroup.
      * @returns the deleted course as a Course object.
      */
-    public async deleteCourse(): Promise<Course> {
-        const deleted: ICourse = await CourseGroupModel.findOneAndUpdate(
+    public async delete(): Promise<IDeleteCourseResponse> {
+        const deleted: ICourseGroup = await CourseGroupModel.findOneAndUpdate(
             { _id: this._courseGroupId },
             { $pull: { courses: { _id: this._id } } },
             { new: true }
         );
-        return new Course(deleted);
+        return { courses: deleted.courses };
     }
 
     /**
@@ -66,8 +66,8 @@ export default class Course {
      * @param user user object to provide with the courseGroupId.
      * @returns a new Course object which was just added.
      */
-    public async updateCourse(courseObj: Course, user: User): Promise<Course> {
-        await this.deleteCourse();
+    public async update(courseObj: Course, user: User): Promise<Course> {
+        await this.delete();
         const newCourse: ICourse = await CourseGroup.addCourse(courseObj.object, user.courseGroupId);
         return new Course(newCourse);
     }

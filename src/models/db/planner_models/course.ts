@@ -1,5 +1,5 @@
-import { model, Model, Schema } from "mongoose";
-import { ICourseGroup } from "./course_group";
+import { Model, Schema } from "mongoose";
+import { Utils } from "../../../utils/server_utils";
 import { ISection, ISectionSchema } from "./sections";
 
 /**
