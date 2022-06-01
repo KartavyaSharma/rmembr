@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
+import config from 'config';
 import { hashSync, compareSync } from 'bcryptjs';
 import { User } from '../user/user';
 import { IUser } from '../../models/db/user';
@@ -47,8 +48,8 @@ export class Auth {
      * @return JWT token to pass with each request to the API.
      */
     public static generateToken(user: User): string {
-        const token = jwt.sign({_id: user.id, email: user.email}, process.env.TOKEN_SECRET, {
-            expiresIn: "24h"
+        const token = jwt.sign({_id: user.id, email: user.email}, config.get('token.secret'), {
+            expiresIn: config.get('token.expiresIn')
         });
         return token;
     }
@@ -58,7 +59,7 @@ export class Auth {
      */
     public static verifyToken(token: string): IUser {
         try {
-            const tokenData = jwt.verify(token, process.env.TOKEN_SECRET);
+            const tokenData = jwt.verify(token, config.get('token.secret'));
             return tokenData as {_id: string, email: string};
         } catch (error) {
             throw new Exception(ErrorCode.Unauthenticated, "Request does not contain token, or an incorect one.");

@@ -63,7 +63,7 @@ export default class CourseRoutes extends Routes {
             try {
                 Utils.validateObject(req.params, 'courseId');
                 newUser = req.body.user;
-                course = await Course.getCourse(req.params.courseId, newUser.id);
+                course = await Course.get(req.params.courseId, newUser.id);
             } catch (err) {
                 return next(err);
             }
@@ -99,7 +99,7 @@ export default class CourseRoutes extends Routes {
             try {
                 Utils.validateObject(req.params, 'courseId');
                 newUser = req.body.user;
-                course = await Course.getCourse(req.params.courseId, newUser.id);
+                course = await Course.get(req.params.courseId, newUser.id);
                 newCourseList = await course.delete();
             } catch (err) {
                 return next(err);
@@ -118,7 +118,7 @@ export default class CourseRoutes extends Routes {
                 Utils.validateObjectDeep<ICourse>(req.body.course);
                 newUser = req.body.user;
                 req.body.course._courseGroupId = newUser.courseGroupId;
-                course = await Course.getCourse(req.params.courseId, newUser.id);
+                course = await Course.get(req.params.courseId, newUser.id);
                 newCourse = await course.update(new Course(req.body.course), newUser);
             } catch (err) {
                 return next(err);

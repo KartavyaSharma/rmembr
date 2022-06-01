@@ -26,7 +26,7 @@ export default class SectionRoutes extends Routes {
                 Utils.validateObject(req.params, 'sectionId');
                 Utils.validateObject(req.params, 'courseId');
                 newUser = req.body.user;
-                sectionObj = await Section.getSection(
+                sectionObj = await Section.get(
                     newUser.id, 
                     req.params.courseId, 
                     req.params.sectionId
@@ -67,7 +67,7 @@ export default class SectionRoutes extends Routes {
                 Utils.validateObject(req.params, 'sectionId');
                 Utils.validateObject(req.params, 'courseId');
                 newUser = req.body.user;
-                section = await Section.getSection(newUser.id, req.params.courseId, req.params.sectionId);
+                section = await Section.get(newUser.id, req.params.courseId, req.params.sectionId);
                 sectionList = await section.delete(newUser.id);
             } catch (err) {
                 next(err);
@@ -84,7 +84,7 @@ export default class SectionRoutes extends Routes {
                 Utils.validateObject(req.body, "section");
                 Utils.validateObjectDeep<ISection>(req.body.section);
                 newUser = req.body.user;
-                section = await Section.getSection(newUser.id, req.body.section._courseId, req.params.sectionId);
+                section = await Section.get(newUser.id, req.body.section._courseId, req.params.sectionId);
                 newSection = await section.update(new Section(req.body.section), newUser);
             } catch (err) {
                 next(err);

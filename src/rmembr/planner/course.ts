@@ -79,7 +79,7 @@ export default class Course {
      * @returns an ISection object of the new entry.
      */
     public static async addSection(sectionObj: ISection, userId: string): Promise<ISection> {
-        const associatedCourse: Course = await Course.getCourse(sectionObj._courseId, userId);
+        const associatedCourse: Course = await Course.get(sectionObj._courseId, userId);
         const created: ICourseGroup = await CourseGroupModel.findOneAndUpdate(
             { _id: associatedCourse.courseGroupId },
             { $push: { 'courses.$[element].sections': sectionObj } },
@@ -114,7 +114,7 @@ export default class Course {
      * @param userId id of the user requesting the course.
      * @returns course object.
      */
-    public static async getCourse(courseId: string, userId: string): Promise<Course> {
+    public static async get(courseId: string, userId: string): Promise<Course> {
         const course: ICourseGroup = await CourseGroupModel.findOne({ _userId: userId });
         const courseObj = course.courses.find((obj) => { return obj._id == courseId });
         if (courseObj == undefined) {

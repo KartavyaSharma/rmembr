@@ -91,8 +91,8 @@ export default class Section {
      * @param sectionId of the section.
      * @returns a section object associated with the input parameters.
      */
-    public static async getSection(userId: string, courseId: string, sectionId: string): Promise<Section> {
-        const course: Course = await Course.getCourse(courseId, userId);
+    public static async get(userId: string, courseId: string, sectionId: string): Promise<Section> {
+        const course: Course = await Course.get(courseId, userId);
         const sectionObj: ISection = course.sections.find((obj) => { return obj._id == sectionId });
         if (sectionObj == undefined) {
             throw new Exception(ErrorCode.NotFound, `Cannot find section with id: ${sectionId}`);
