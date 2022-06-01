@@ -3,6 +3,7 @@ import { Routes } from "../routes";
 import { User } from "../../rmembr/user/user";
 import { ICourse } from "../../models/db/planner_models/course";
 import { Utils } from "../../utils/server_utils";
+import { IUpdateCourseRequest } from "../../models/request/request_models";
 import { 
     ICourseGroupResponse, 
     ICreateCourseResponse, 
@@ -115,7 +116,7 @@ export default class CourseRoutes extends Routes {
             try {
                 Utils.validateObject(req.params, 'courseId');
                 Utils.validateObject(req.body, "course");
-                Utils.validateObjectDeep<ICourse>(req.body.course);
+                Utils.validateObjectDeep<IUpdateCourseRequest>(req.body);
                 newUser = req.body.user;
                 req.body.course._courseGroupId = newUser.courseGroupId;
                 course = await Course.get(req.params.courseId, newUser.id);

@@ -32,7 +32,7 @@ export default class Section {
         }
         this._courseId = sectionObj._courseId;
         this._name = sectionObj.name;
-        this._subsections = sectionObj.subsections;
+        this._subsections = sectionObj.subsections == null ? this._subsections : sectionObj.subsections;
     }
 
     /**

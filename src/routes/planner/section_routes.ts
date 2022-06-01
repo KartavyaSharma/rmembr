@@ -4,6 +4,7 @@ import { User } from "../../rmembr/user/user";
 import { Utils } from "../../utils/server_utils";
 import { ISection } from "../../models/db/planner_models/sections";
 import { ICreateSectionResponse, IDeleteSectionResponse } from "../../models/response/response_models";
+import { IUpdateSectionRequest } from "../../models/request/request_models";
 import SubsectionRoutes from "./subsection_routes";
 import Section from "../../rmembr/planner/section";
 
@@ -82,7 +83,7 @@ export default class SectionRoutes extends Routes {
             try {
                 Utils.validateObject(req.params, "sectionId");
                 Utils.validateObject(req.body, "section");
-                Utils.validateObjectDeep<ISection>(req.body.section);
+                Utils.validateObjectDeep<IUpdateSectionRequest>(req.body);
                 newUser = req.body.user;
                 section = await Section.get(newUser.id, req.body.section._courseId, req.params.sectionId);
                 newSection = await section.update(new Section(req.body.section), newUser);
