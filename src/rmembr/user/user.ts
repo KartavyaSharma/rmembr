@@ -5,8 +5,9 @@ import { nanoid } from "nanoid";
 import { IUser, UserModel } from "../../models/db/user";
 import { Auth } from "../auth/auth_engine";
 import CourseGroup from "../planner/course_group";
-import { ICourseGroupResponse, ILoginResponse } from "../../models/response/response_models";
+import { ICourseGroupResponse, IDeleteUserResponse, ILoginResponse } from "../../models/response/response_models";
 import { Utils } from "../../utils/server_utils";
+import { CourseGroupModel } from "../../models/db/planner_models/course_group";
 
 /**
  * Class representing a user.
@@ -51,7 +52,7 @@ export class User {
         }
         const created = await UserModel.create(newUser);
         const newUserToken = Auth.generateToken(this);
-        
+
         return { token: newUserToken }
     }
 
@@ -82,6 +83,24 @@ export class User {
     }
 
     /**
+     * Deletes the user object from the database, along with the course group.
+     * @param user object.
+     * @returns true if deletion was successful, returns Error instance otherwise.
+     */
+    public static async delete(user: User): Promise<IDeleteUserResponse> {
+        try {
+            await UserModel.deleteOne({ _id: user.id })
+            await CourseGroupModel.deleteOne({ _userId: user.id })
+        } catch (err) {
+            return err;
+        }
+        return { 
+            user: ` User ${user.name} deleted.`, 
+            courseGroup: `Course group ${user.name}'s courses deleted.`
+        }
+    }
+
+    /**
      * Extract Email, Name, and Password from the body of the request object.
      * @param req request object from the client side, with nothing changed.
      * @return { email, name, password } as an object.
@@ -108,6 +127,7 @@ export class User {
         req.body.user = newUser;
         next();
     }
+
 
     /**
      * Returns the User's email.

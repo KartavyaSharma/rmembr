@@ -1,9 +1,19 @@
 import { ICourse } from "../db/planner_models/course";
 import { ISection } from "../db/planner_models/sections";
+import { ICourseGroup } from "../db/planner_models/course_group";
+import { IUser } from "../db/user";
 
 /**
  * Contains all response models for rmembr.
  */
+
+/** ========== User ========== */
+/** DELETE /planner */
+export interface IDeleteUserResponse {
+    user: string;
+    courseGroup: string;
+}
+/** ========================== */
 
 /** ========== Course Group ========== */
 export interface ICourseGroupResponse {

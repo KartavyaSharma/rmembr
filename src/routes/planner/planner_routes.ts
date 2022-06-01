@@ -1,4 +1,8 @@
+import { Request, Response, NextFunction } from 'express';
 import { Routes } from "../routes";
+import { User } from '../../rmembr/user/user';
+import { Utils } from '../../utils/server_utils';
+import { IDeleteUserResponse } from '../../models/response/response_models';
 import CourseRoutes from "./course_routes";
 
 /**
@@ -28,6 +32,19 @@ export default class PlannerRoutes extends Routes {
     }
 
     protected createRoutes(): void {
-        return;
+        /**
+         * Deletes a user, and the corresponding course group.
+         */
+         this._routes.delete(`/`, async (req: Request, res: Response, next: NextFunction) => {
+            let newUser: User;
+            let deleteRes: IDeleteUserResponse;
+            try {
+                newUser = req.body.user;
+                deleteRes = await User.delete(newUser);
+            } catch (err) {
+                next(err);
+            }
+            Utils.sendRes<IDeleteUserResponse>(res, deleteRes)
+        });
     }
 }
