@@ -74,4 +74,14 @@ export class Utils {
     public static sendRes<ResponseType>(resObj: Response, payloadObj: ResponseType): void {
         resObj.send({ code: Success.code, payload: payloadObj } as ISuccessModel<ResponseType>);
     }
+
+    /** 
+     * Validates email based on RegEx. 
+     * @param email to validate.
+     * @returns if email is valid.
+    */
+    public static checkEmail(email: string): boolean {
+        const validator = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        return new RegExp(validator).test(email);
+    }
 }

@@ -6,6 +6,7 @@ import { IUser, UserModel } from "../../models/db/user";
 import { Auth } from "../auth/auth_engine";
 import CourseGroup from "../planner/course_group";
 import { ICourseGroupResponse, ILoginResponse } from "../../models/response/response_models";
+import { Utils } from "../../utils/server_utils";
 
 /**
  * Class representing a user.
@@ -88,6 +89,9 @@ export class User {
     public static extractUser(req: Request): IUser {
         try {
             const { email, name, password } = req.body;
+            if (!Utils.checkEmail(email)) {
+                throw new Exception(ErrorCode.ValidationError, "Email not formatted correctly.");
+            }
             return { email, name, password };
         } catch (err) {
             throw new Exception(ErrorCode.NotFound, "Request didn't contain all User credentials.");
