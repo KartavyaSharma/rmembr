@@ -61,8 +61,8 @@ export class Utils {
         // cast object as <ObjectType>
         object = object as ObjectType;
         const propertyNames: string[] = Object.getOwnPropertyNames(object);
-        for (var propName of propertyNames) {
-            Utils.validateObject(object, propName);
+        for (let i = 0; i < propertyNames.length; i++) {
+            Utils.validateObject(object, propertyNames[i]);
         }
     }
 
