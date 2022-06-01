@@ -18,22 +18,24 @@ class App {
 
     constructor() {
         this._server = express();
-        this.setup();
-        this.routes();
-        this.middleware();
+        this.setup().then(() => {
+            this.routes();
+            this.middleware();
+        });
     }
 
-    setup() {
+    async setup() {
         // Sets up server to use process.env.[...]
         dotenv.config();
         // Connects to the database
         const newDb = new Db();
-        newDb.connect(config.get('database'));
+        await newDb.connect(config.get('database'));
         // Other middleware required to be setup before the routes
         this._server.use(express.json());
         this._server.use(helmet());
         this._server.use(bodyParser.json());
         this._server.use(express.urlencoded({ extended: true }))
+        this._server.use(cors());
     }
 
     routes() {
@@ -42,7 +44,6 @@ class App {
     }
 
     middleware() {
-        this._server.use(cors());
         this._server.use(morgan('combined'));
 
         /** Custom middlware */

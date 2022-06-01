@@ -8,7 +8,7 @@
     "start:dev": "nodemon src/server.ts",
     "start:prod": "node dist/server.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --config eslintrc.js",
-    "test": "jest"
+    "test": "jest --watchAll --coverage"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "@types/dotenv": "^8.2.0",
     "@types/jest": "^27.5.1",
     "@types/morgan": "^1.9.3",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "babel-jest": "^28.1.0",
