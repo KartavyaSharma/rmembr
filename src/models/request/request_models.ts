@@ -6,7 +6,14 @@
  * corresponding functions from inside ../rmembr directory.
  */
 
-export interface IAuthRequest {
+/** ========== Auth ========== */
+export interface ICreateUserRequest {
+    name: string;
     email: string;
     password: string;
 }
+export interface ILoginRequest {
+    email: string;
+    password: string;
+}
+/** ========================== */

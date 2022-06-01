@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Routes } from '../routes';
 import { User } from '../../rmembr/user/user';
 import { Auth } from '../../rmembr/auth/auth_engine';
-import { IAuthRequest } from '../../models/request/request_models';
+import { ILoginRequest, ICreateUserRequest } from '../../models/request/request_models';
 import { Utils } from '../../utils/server_utils';
 import {
     ICourseGroupResponse, 
@@ -40,6 +40,7 @@ export default class AuthRoutes extends Routes {
             let token: ILoginResponse;
             let courseGroup: ICourseGroupResponse;
             try {
+                Utils.validateObjectDeep<ICreateUserRequest>(req.body);
                 newUser = new User(User.extractUser(req));
                 token = await newUser.createUser();
                 courseGroup = await newUser.createNewCourseGroup();
@@ -53,9 +54,11 @@ export default class AuthRoutes extends Routes {
         * Adds a route for loggin in an existing user. Route is at /login.
         */
         this._routes.get(`/login`, async (req: Request, res: Response, next: NextFunction) => {
-            const loginReq: IAuthRequest = req.body;
+            let loginReq: ILoginRequest;
             let user: User;
             try {
+                Utils.validateObjectDeep<ILoginRequest>(req.body);
+                loginReq = req.body;
                 user = await Auth.authUser(loginReq.email, loginReq.password)
             } catch (err) {
                 return next(err);
