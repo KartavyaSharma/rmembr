@@ -17,3 +17,9 @@ export interface ILoginRequest {
     password: string;
 }
 /** ========================== */
+
+/** ========== Section ========== */
+export interface ICreateSectionRequest {
+    name: string;
+}
+/** ============================= */

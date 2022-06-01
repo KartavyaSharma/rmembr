@@ -43,7 +43,7 @@ export default class SectionRoutes extends Routes {
             let newSection: Section;
             let resSection: ICreateSectionResponse;
             try {
-                Utils.validateObject(req.body, 'name');
+                Utils.validateObjectDeep<ICreateSectionResponse>(req.body);
                 Utils.validateObject(req.params, 'courseId');
                 newUser = req.body.user;
                 newSection = new Section({
