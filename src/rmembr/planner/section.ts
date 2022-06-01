@@ -13,7 +13,7 @@ import { User } from "../user/user";
 /**
  * Class represents a section. Multiple sections can exist
  * for one user. A user can add, read, update and delete any
- * particular section. Sections are stored within coureses.
+ * particular section. Sections are stored within courses.
  */
 
 export default class Section {
@@ -27,6 +27,8 @@ export default class Section {
     constructor(sectionObj?: ISection) {
         if (sectionObj._id == null) {
             this._id = nanoid();
+        } else {
+            this._id = sectionObj._id;
         }
         this._courseId = sectionObj._courseId;
         this._name = sectionObj.name;
@@ -57,7 +59,7 @@ export default class Section {
     public async delete(userId: string): Promise<IDeleteSectionResponse> {
         const deleted: ICourseGroup = await CourseGroupModel.findOneAndUpdate(
             { _userId: userId },
-            { $pull: { 'courses.$[element].sections._id': this._id } },
+            { $pull: { 'courses.$[element].sections': { _id: this._id } } },
             {
                 arrayFilters: [
                     { 'element._id': this._courseId }
