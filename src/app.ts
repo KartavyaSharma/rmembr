@@ -34,8 +34,7 @@ class App {
         this._server.use(express.json());
         this._server.use(helmet());
         this._server.use(bodyParser.json());
-        this._server.use(express.urlencoded({ extended: true }))
-        this._server.use(cors());
+        
     }
 
     routes() {
@@ -44,10 +43,13 @@ class App {
     }
 
     middleware() {
+        
+        /** Standard middleware */
         this._server.use(morgan('combined'));
+        this._server.use(express.urlencoded({ extended: true }))
+        this._server.use(cors());
 
         /** Custom middlware */
-
         this._server.use(Exception.handler);
     }
 
