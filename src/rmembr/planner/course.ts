@@ -162,5 +162,4 @@ export default class Course {
 
     /** Sections stored under this course. */
     private _sections: ISection[] = [];
-
 }

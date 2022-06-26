@@ -2,7 +2,6 @@ import { nanoid } from "nanoid";
 import { Exception } from "../../utils/errors/exception";
 import { ErrorCode } from "../../utils/errors/error_codes";
 import { ISection } from "../../models/db/planner_models/sections";
-import { ISubSection } from "../../models/db/planner_models/subsections";
 import { ICreateSectionResponse, IDeleteSectionResponse } from "../../models/response/response_models";
 import { CourseGroupModel } from "../../models/db/planner_models/course_group";
 import { ICourseGroup } from "../../models/db/planner_models/course_group";
@@ -153,5 +152,5 @@ export default class Section {
     private _name: string;
 
     /** List of subsections stored inside the course. */
-    private _subsections: ISubSection[] = [];
+    private _subsections: string[] = [];
 }

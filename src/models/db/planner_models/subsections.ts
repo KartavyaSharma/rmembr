@@ -1,5 +1,4 @@
 import { model, Model, Schema } from "mongoose";
-import { ISection } from "./sections";
 
 /**
  * Defines a subsection's properties.
@@ -16,12 +15,21 @@ export interface ISubSection {
     reviewQuestions: IQuestions;
 }
 
+/** Properties a state field can contain. */
+export enum State {
+    PENDING = 'pending',
+    WIP = 'wip',
+    DONE = 'done',
+    OVERDUE = 'overdue'
+}
+
 /**
  * Properties for an arbitrary status indicator.
  */
 export interface IStatus {
     state: string;
     date: Date;
+    color: string;
 }
 
 /**
@@ -46,6 +54,15 @@ export interface IQuestions {
     questions: string[];
 }
 
+/** Reusable DB State schema. */
+export const IStatusSchema = new Schema<IStatus>(
+    {
+        state: { type: String, required: true },
+        date: { type: Date, required: true },
+        color: { type: String, required: true}
+    }
+);
+
 /**
  * Creates a new collection in the DB named 'subsections'.
  */
@@ -53,37 +70,32 @@ export const ISubSectionSchema = new Schema<ISubSection>(
     {
         _id: { type: String, required: true },
         _sectionId: { type: String, required: true },
-        inClass: { type: Date, required: true },
+        inClass: { type: Date, required: false, default: null },
         name: { type: String, required: true },
-        status: {
-            state: { type: String, required: true },
-            enum: ['pending', 'wip', 'done', 'overdue'],
-            date: { type: Date, required: true }
+        status: { 
+            type: IStatusSchema, 
+            required: false,
+            default: { state: "pending", date: null, color: null}
         },
         revisionSchedule: {
-            revs: [
-                {
-                    state: { type: String, required: true },
-                    enum: ['pending', 'wip', 'done', 'overdue'],
-                    date: { type: Date, required: true }
-                }
-            ]
+            revs: {type: [IStatusSchema], required: false, default: null}
         },
         officeHours: {
-            req: { type: Boolean, required: true },
+            req: { type: Boolean, required: true, default: false },
             questions: {
                 questions: { type: [String], required: false },
                 required: false
             }
         },
-        preReading: {
-            state: { type: String, required: true },
-            enum: ['pending', 'wip', 'done', 'overdue'],
-            date: { type: Date, required: true }
-        },
+        preReading: { type: IStatusSchema, required: false},
         reviewQuestions: {
             questions: { type: [String], required: false },
             required: false
         }
     }
+);
+
+export const SubsectionModel: Model<ISubSection> = model(
+    'subsections',
+    ISubSectionSchema  
 );
