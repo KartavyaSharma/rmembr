@@ -1,3 +1,8 @@
+import { Request, Response, NextFunction } from "express";
+import { IUser } from "./db/user/user";
+import { ILoginResponse, ICourseGroupResponse, IDeleteUserResponse } from "./response/response_models";
+import { User } from "../rmembr/user/user";
+
 /** 
  * Contains all server models other than the ones defined
  * in the model subdir.
@@ -31,4 +36,21 @@ export interface ISuccessModel<ResponseType> {
      * Payload of the API response, contains objects.
      */
     payload: ResponseType;
+}
+
+export interface IUserClass {
+    createUser(): Promise<ILoginResponse>;
+    createNewCourseGroup(): Promise<ICourseGroupResponse>
+    get email(): string
+    get id(): string
+    get password(): string
+    get name(): string
+    get courseGroupId(): string
+}
+
+export interface IUserClassStatic {
+    getUser(email: string): Promise<User>
+    delete(user: User): Promise<IDeleteUserResponse>
+    extractUser(req: Request): IUser
+    setUser(req: Request, res: Response, next: NextFunction): Promise<void>;
 }

@@ -84,4 +84,11 @@ export class Utils {
         const validator = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         return new RegExp(validator).test(email);
     }
+
+    /**
+     * Class decorator used to implement static methods in classes.
+     */
+    public static staticImplements<T>() {
+        return <U extends T>(constructor: U) => {constructor};
+    } 
 }

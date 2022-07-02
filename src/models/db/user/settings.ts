@@ -34,6 +34,3 @@ export const ISettingsSchema = new Schema<ISettings>(
         warning: { type: IWarningSchema, required: true }
     }
 );
-
-
-
