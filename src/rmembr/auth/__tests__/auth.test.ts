@@ -13,6 +13,7 @@ import {
  */
 
 describe("Test authentication", () => {
+    jest.setTimeout(100000);
     let testDb: Db;
     beforeAll(async () => {
         testDb = new Db();
@@ -31,8 +32,5 @@ describe("Test authentication", () => {
         expect(getUser.email).toBe(tests.create[0].email);
         expect(typeof deleted.user).toBe("string");
         expect(typeof deleted.courseGroup).toBe("string");
-    });
-    test("POST /login", async () => {
-
     });
 });

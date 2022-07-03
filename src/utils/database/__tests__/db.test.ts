@@ -9,6 +9,7 @@ import { IDeleteUserResponse, ILoginResponse } from '../../../models/response/re
  */
 
 describe("Test DB", () => {
+    jest.setTimeout(100000);
     let testDb: Db;
     beforeAll(async () => {
         testDb = new Db();

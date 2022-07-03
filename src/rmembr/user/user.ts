@@ -10,6 +10,7 @@ import { CourseGroupModel } from "../../models/db/planner_models/course_group";
 import CourseGroup from "../planner/course_group";
 import { defaultConf } from "../config_store/default_conf";
 import { IUserClass, IUserClassStatic } from "../../models/server_models";
+import { ISettings } from "../../models/db/user/settings";
 
 /**
  * Class representing a user.
@@ -35,6 +36,7 @@ export class User implements IUserClass {
         this._password = userObj.password;
         this._Id = userObj._id == null ? nanoid() : userObj._id;
         this._courseGroupId = userObj.courseGroupId != null ? userObj.courseGroupId : null;
+        this._settings = userObj.settings != null ? userObj.settings : defaultConf.settings;
     }
 
     /**
@@ -53,7 +55,7 @@ export class User implements IUserClass {
             name: this._name,
             password: passwordHash,
             courseGroupId: this._courseGroupId,
-            settings: defaultConf.settings,
+            settings: this._settings,
         }
         const created = await UserModel.create(newUser);
         const newUserToken = Auth.generateToken(this);
@@ -110,7 +112,7 @@ export class User implements IUserClass {
      * @param req request object from the client side, with nothing changed.
      * @return { email, name, password } as an object.
      */
-    public static extractUser(req: Request): IUser {
+    public static extractUser(req: { body: { email: "", name: "", password: ""} }): IUser {
         try {
             const { email, name, password } = req.body;
             if (!Utils.checkEmail(email)) {
@@ -174,6 +176,13 @@ export class User implements IUserClass {
         return this._courseGroupId;
     }
 
+    /**
+     * @returns user preferences. `defaultConf` by default.
+     */
+    public get settings(): ISettings {
+        return this._settings;
+    }
+
     /** User's ID */
     private _Id: string;
 
@@ -188,5 +197,8 @@ export class User implements IUserClass {
 
     /** ID associated with user's course group */
     private _courseGroupId: string;
+
+    /** Settings object for user. */
+    private _settings: ISettings;
 
 }
