@@ -17,6 +17,60 @@ import { User } from "../user/user";
 
 export default class Section {
 
+    /** Section ID. */
+    private _id: string;
+
+    /** Course ID corresponding to section. */
+    private _courseId: string;
+
+    /** Name of section. */
+    private _name: string;
+
+    /** List of subsections stored inside the course. */
+    private _subsections: string[] = [];
+
+
+    /**
+     * Returns this sections fields as an ISection object.
+     * @returns ISection object type from this._[field].
+     */
+     public get object(): ISection {
+        return {
+            _id: this._id,
+            _courseId: this._courseId,
+            name: this._name,
+            subsections: this._subsections,
+        }
+    }
+
+    /**
+     * @returns this sections's ID.
+     */
+    public get id() {
+        return this._id;
+    }
+
+    /**
+     * @returns this section's course ID.
+     */
+    public get courseId() {
+        return this._courseId;
+    }
+
+    /**
+     * @returns this section's name.
+     */
+    public get name() {
+        return this._name;
+    }
+
+    /**
+     * @returns this sections's list of subsections.
+     */
+    public get subsections() {
+        return this._subsections;
+    }
+
     /**
      * Initializes a new Section object. Can create a new section
      * either through the ISection interface (with filled fields),
@@ -100,57 +154,4 @@ export default class Section {
         }
         return new Section(sectionObj);
     }
-
-    /**
-     * Returns this sections fields as an ISection object.
-     * @returns ISection object type from this._[field].
-     */
-    public get object(): ISection {
-        return {
-            _id: this._id,
-            _courseId: this._courseId,
-            name: this._name,
-            subsections: this._subsections,
-        }
-    }
-
-    /**
-     * @returns this sections's ID.
-     */
-    public get id() {
-        return this._id;
-    }
-
-    /**
-     * @returns this section's course ID.
-     */
-    public get courseId() {
-        return this._courseId;
-    }
-
-    /**
-     * @returns this section's name.
-     */
-    public get name() {
-        return this._name;
-    }
-
-    /**
-     * @returns this sections's list of subsections.
-     */
-    public get subsections() {
-        return this._subsections;
-    }
-
-    /** Section ID. */
-    private _id: string;
-
-    /** Course ID corresponding to section. */
-    private _courseId: string;
-
-    /** Name of section. */
-    private _name: string;
-
-    /** List of subsections stored inside the course. */
-    private _subsections: string[] = [];
 }

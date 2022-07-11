@@ -26,6 +26,71 @@ import { ISettings } from "../../models/db/user/settings";
 @Utils.staticImplements<IUserClassStatic>()
 export class User implements IUserClass {
 
+    /** User's ID */
+    private _Id: string;
+
+    /** User's Email */
+    private _email: string;
+
+    /** User's Name */
+    private _name: string;
+
+    /** User's Password */
+    private _password: string;
+
+    /** ID associated with user's course group */
+    private _courseGroupId: string;
+
+    /** Settings object for user. */
+    private _settings: ISettings;
+
+    /**
+     * Returns the User's email.
+     * @return this User's email field.
+     */
+    public get email(): string {
+        return this._email;
+    }
+
+    /**
+     * Returns the User's ID.
+     * @return this User's ID field.
+     */
+    public get id(): string {
+        return this._Id;
+    }
+
+    /** 
+     * Returns the password field for this User.
+     * @return this User's password.
+     * */
+    public get password(): string {
+        return this._password;
+    }
+
+    /**
+     * Returns the name of the user.
+     * @return name of the user.
+     */
+    public get name(): string {
+        return this._name;
+    }
+
+    /**
+     * Returns the course group ID associated with this user.
+     * @return course group ID field
+     */
+    public get courseGroupId(): string {
+        return this._courseGroupId;
+    }
+
+    /**
+     * @returns user preferences. `defaultConf` by default.
+     */
+    public get settings(): ISettings {
+        return this._settings;
+    }
+
     /**
      * Initializes a new user with Id, Email, Name, and Password
      * @param userObj JS Object with all the IUser properties.
@@ -101,8 +166,8 @@ export class User implements IUserClass {
         } catch (err) {
             return err;
         }
-        return { 
-            user: ` User ${user.name} deleted.`, 
+        return {
+            user: ` User ${user.name} deleted.`,
             courseGroup: `Course group ${user.name}'s courses deleted.`
         }
     }
@@ -112,7 +177,7 @@ export class User implements IUserClass {
      * @param req request object from the client side, with nothing changed.
      * @return { email, name, password } as an object.
      */
-    public static extractUser(req: { body: { email: "", name: "", password: ""} }): IUser {
+    public static extractUser(req: Request): IUser {
         try {
             const { email, name, password } = req.body;
             if (!Utils.checkEmail(email)) {
@@ -134,71 +199,5 @@ export class User implements IUserClass {
         req.body.user = newUser;
         next();
     }
-
-
-    /**
-     * Returns the User's email.
-     * @return this User's email field.
-     */
-    public get email(): string {
-        return this._email;
-    }
-
-    /**
-     * Returns the User's ID.
-     * @return this User's ID field.
-     */
-    public get id(): string {
-        return this._Id;
-    }
-
-    /** 
-     * Returns the password field for this User.
-     * @return this User's password.
-     * */
-    public get password(): string {
-        return this._password;
-    }
-
-    /**
-     * Returns the name of the user.
-     * @return name of the user.
-     */
-    public get name(): string {
-        return this._name;
-    }
-
-    /**
-     * Returns the course group ID associated with this user.
-     * @return course group ID field
-     */
-    public get courseGroupId(): string {
-        return this._courseGroupId;
-    }
-
-    /**
-     * @returns user preferences. `defaultConf` by default.
-     */
-    public get settings(): ISettings {
-        return this._settings;
-    }
-
-    /** User's ID */
-    private _Id: string;
-
-    /** User's Email */
-    private _email: string;
-
-    /** User's Name */
-    private _name: string;
-
-    /** User's Password */
-    private _password: string;
-
-    /** ID associated with user's course group */
-    private _courseGroupId: string;
-
-    /** Settings object for user. */
-    private _settings: ISettings;
 
 }

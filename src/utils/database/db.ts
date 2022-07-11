@@ -7,6 +7,19 @@ import mongoose, { Connection } from 'mongoose';
 export class Db {
 
     /**
+     * Property of type Connection. Contains the state of the
+     * MongoDB connection.
+     */
+    private _connection: Connection;
+
+    /**
+     * @returns the connection object for this DB instance.
+     */
+    public get connector(): Connection {
+        return this._connection;
+    }
+
+    /**
      * States of MongoDB's connection status to the DB.
      */
     static readonly states = [
@@ -41,14 +54,4 @@ export class Db {
             console.log(`Error connecting to DB: ${error}`);
         }
     }
-
-    public get connector(): Connection {
-        return this._connection;
-    }
-
-    /**
-     * Property of type Connection. Contains the state of the
-     * MongoDB connection.
-     */
-    private _connection: Connection;
 }

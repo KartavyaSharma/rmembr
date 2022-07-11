@@ -14,6 +14,26 @@ import { ICourseGroupResponse } from "../../models/response/response_models";
 
 export default class CourseGroup {
 
+    /** Course group user's ID. */
+    private _userId: string;
+
+    /** Course group's ID. */
+    private _id: string;
+
+    /** List of courses in course group. */
+    private courses: ICourse[] = [];
+
+    /** Name of course group. */
+    private name: string;
+
+    /**
+     * Return the course group ID.
+     * @returns this course group's ID
+     */
+     public get id() {
+        return this._id;
+    }
+
     /**
      * Initializes a new course-group for a new user.
      * @param userObj object with IUser properties.
@@ -63,7 +83,7 @@ export default class CourseGroup {
                 return 0;
             })
         }
-        return resObj; 
+        return resObj;
     }
 
     /**
@@ -84,30 +104,10 @@ export default class CourseGroup {
      */
     public static async addCourse(courseObj: ICourse, courseGroupId: string): Promise<ICourse> {
         const created: ICourseGroup = await CourseGroupModel.findOneAndUpdate(
-            { _id: courseGroupId }, 
+            { _id: courseGroupId },
             { $push: { courses: courseObj } },
             { new: true }
         );
         return created.courses.find((obj) => { return obj._id == courseObj._id });
     }
-
-    /**
-     * Return the course group ID.
-     * @returns this course group's ID
-     */
-    public get id() {
-        return this._id;
-    }
-
-    /** Course group user's ID. */
-    private _userId: string;
-
-    /** Course group's ID. */
-    private _id: string;
-
-    /** List of courses in course group. */
-    private courses: ICourse[] = [];
-
-    /** Name of course group. */
-    private name: string;
 }

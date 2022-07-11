@@ -8,6 +8,12 @@ import bodyParser from 'body-parser';
 
 export abstract class Routes {
 
+    /** Route object containing any added routes. */
+    protected _routes;
+
+    // Enables server to parse application/x-www-form-urlencoded
+    protected urlencodedParser = bodyParser.urlencoded({ extended: true });
+
     /**
      * Property that contains the URL base for this route sublcass.
      */
@@ -52,10 +58,4 @@ export abstract class Routes {
             nestRoutes.getRouter
         );
     }
-
-    /** Route object containing any added routes. */
-    protected _routes;
-
-    // Enables server to parse application/x-www-form-urlencoded
-    protected urlencodedParser = bodyParser.urlencoded({ extended: true });
 }

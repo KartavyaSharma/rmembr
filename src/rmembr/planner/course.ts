@@ -15,6 +15,47 @@ import CourseGroup from "./course_group";
 
 export default class Course {
 
+    /** Course ID. */
+    private _id: string;
+
+    /** Course group ID associated with the course. */
+    private _courseGroupId: string;
+
+    /** Name of the course. */
+    private _name: string;
+
+    /** Sections stored under this course. */
+    private _sections: ISection[] = [];
+
+
+    /**
+     * @returns the _id field.
+     */
+     public get id() {
+        return this._id;
+    }
+
+    /**
+     * @returns the _courseGroupId field.
+     */
+    public get courseGroupId() {
+        return this._courseGroupId;
+    }
+
+    /**
+     * @returns the _name field.
+     */
+    public get name() {
+        return this._name;
+    }
+
+    /**
+     * @returns the _sections field.
+     */
+    public get sections() {
+        return this._sections;
+    }
+
     /**
      * Initializes a new Course object.
      * @param courseObj optional course object. Use existing fields if provided.
@@ -122,44 +163,4 @@ export default class Course {
         }
         return new Course(courseObj);
     }
-
-    /**
-     * @returns the _id field.
-     */
-    public get id() {
-        return this._id;
-    }
-
-    /**
-     * @returns the _courseGroupId field.
-     */
-    public get courseGroupId() {
-        return this._courseGroupId;
-    }
-
-    /**
-     * @returns the _name field.
-     */
-    public get name() {
-        return this._name;
-    }
-
-    /**
-     * @returns the _sections field.
-     */
-    public get sections() {
-        return this._sections;
-    }
-
-    /** Course ID. */
-    private _id: string;
-
-    /** Course group ID associated with the course. */
-    private _courseGroupId: string;
-
-    /** Name of the course. */
-    private _name: string;
-
-    /** Sections stored under this course. */
-    private _sections: ISection[] = [];
 }
