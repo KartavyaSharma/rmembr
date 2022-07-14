@@ -38,6 +38,7 @@ export interface ISuccessModel<ResponseType> {
     payload: ResponseType;
 }
 
+/** Set of interfaces defining the User class. */
 export interface IUserClass {
     createUser(): Promise<ILoginResponse>;
     createNewCourseGroup(): Promise<ICourseGroupResponse>

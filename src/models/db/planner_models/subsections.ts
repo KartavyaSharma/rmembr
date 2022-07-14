@@ -10,9 +10,6 @@ export interface ISubSection {
     inClass: Date,
     status: IStatus,
     revisionSchedule: IRevisionSchedule;
-    officeHours: IOfficeHours;
-    preReading: IStatus;
-    reviewQuestions: IQuestions;
 }
 
 /** Properties a state field can contain. */
@@ -79,18 +76,6 @@ export const ISubSectionSchema = new Schema<ISubSection>(
         },
         revisionSchedule: {
             revs: {type: [IStatusSchema], required: false, default: null}
-        },
-        officeHours: {
-            req: { type: Boolean, required: true, default: false },
-            questions: {
-                questions: { type: [String], required: false },
-                required: false
-            }
-        },
-        preReading: { type: IStatusSchema, required: false},
-        reviewQuestions: {
-            questions: { type: [String], required: false },
-            required: false
         }
     }
 );

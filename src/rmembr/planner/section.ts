@@ -29,7 +29,6 @@ export default class Section {
     /** List of subsections stored inside the course. */
     private _subsections: string[] = [];
 
-
     /**
      * Returns this sections fields as an ISection object.
      * @returns ISection object type from this._[field].

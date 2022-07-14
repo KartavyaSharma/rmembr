@@ -1,5 +1,6 @@
 import { ICourse } from "../db/planner_models/course";
 import { ISection } from "../db/planner_models/sections";
+import { ISubSection } from "../db/planner_models/subsections";
 
 /**
  * Contains all response models for rmembr.
@@ -82,3 +83,21 @@ export interface IUpdateSectionResponse {
     section: ISection;
 }
 /** ============================= */
+
+/** ========== Subsection ========== */
+/** POST /subsections/:subsectionId */
+export interface ICreateSubsectionResponse {
+    /** Returns created Subsection object. */
+    subsection: ISubSection;
+}
+/** DELETE /subsections/:subsectionId */
+export interface IDeleteSubsectionResponse {
+    /** Returns the refreshed subsection list w/o deleted subsection. */
+    subsections: ISubSection[];
+}
+/** PATCH /subsecitons/:subsectionId */
+export interface IUpdateSubsectionResponse {
+    /** Returns updated version for the section. */
+    subsection: ISubSection;
+}
+/** ================================ */
