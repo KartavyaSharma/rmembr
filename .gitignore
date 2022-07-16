@@ -105,3 +105,7 @@ dist
 
 .idea
 .DS_Store
+
+.cache/
+public
+src/gatsby-types.d.ts
