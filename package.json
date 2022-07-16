@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KartavyaSharma/rmembr-server.git"
+    "url": "git+https://github.com/KartavyaSharma/rmembr.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KartavyaSharma/rmembr-server/issues"
+    "url": "https://github.com/KartavyaSharma/rmembr/issues"
   },
-  "homepage": "https://github.com/KartavyaSharma/rmembr-server#readme"
+  "homepage": "https://github.com/KartavyaSharma/rmembr#readme"
 }
