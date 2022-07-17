@@ -1,6 +1,9 @@
 import * as React from "react";
 
 export default function indexPage() {
+
+  const content = "<div class=\"stack\" style=\"--stacks: 3;\"><span style=\"--index: 0;\">rmembr</span><span style=\"--index: 1;\">rmembr</span style=\"--index: 2;\"><span>rmembr</span></div>"
+
   return (
     <section>
       <div className="h-screen w-full bg-cover bg-fixed bg-black">
@@ -31,11 +34,9 @@ export default function indexPage() {
               >
                 <span
                   className="font-montserrat font-semibold"
-                  style={{ fontSize: "10vmin" }}
                 >
-                  {" "}
-                  rmembr{" "}
-                </span>{" "}
+                  <div style={{ fontSize: "10vmin"}} dangerouslySetInnerHTML={{__html: content}}/>
+                </span>
               </div>
             </div>
 
