@@ -40,7 +40,7 @@ export default function indexPage() {
             </div>
 
             <div className="grid grid-rows-1 justify-items-stretch">
-              <div className="font-montserrat text-2xl lg:text-3xl xl:5xl font-medium text-gray-500 p-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
+              <div className="font-montserrat text-2xl lg:text-3xl xl:5xl font-bold text-gray-500 p-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
                 <div
                   className="grid grid-rows-1 w-full justify-items-center h-full content-center"
                   data-sal="fade"
@@ -52,7 +52,7 @@ export default function indexPage() {
               </div>
             </div>
             <div className="grid grid-rows-1 justify-items-stretch">
-              <div className="font-montserrat text-md lg:text-lg 2xl:text-3xl font-light text-gray-500 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
+              <div className="font-montserrat text-md lg:text-lg 2xl:text-xl font-light text-gray-500 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
                 <div
                   className="flex w-full justify-center text-center"
                   data-sal="fade"
