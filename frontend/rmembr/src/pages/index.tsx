@@ -12,7 +12,7 @@ export default function indexPage() {
             </div>
           </div>
           <div className="grid grid-rows-1 justify-items-stretch">
-            <div className="font-montserrat text-2xl lg:text-3xl xl:5xl font-light text-gray-500 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
+            <div className="font-montserrat text-2xl lg:text-3xl xl:5xl font-medium text-gray-500 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
               <div className="flex w-full justify-center">Coming soon</div>
             </div>
           </div>
