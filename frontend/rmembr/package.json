@@ -2,7 +2,7 @@
   "name": "rmembr",
   "version": "1.0.0",
   "private": true,
-  "description": "rmembr",
+  "description": "Academic Scheduler",
   "author": "Kartavya Sharma",
   "keywords": [
     "gatsby"
@@ -18,22 +18,35 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
+    "autoprefixer": "^10.4.7",
     "gatsby": "^4.18.2",
     "gatsby-plugin-image": "^2.18.1",
     "gatsby-plugin-manifest": "^4.18.1",
     "gatsby-plugin-mdx": "^3.18.1",
+    "gatsby-plugin-postcss": "^5.18.0",
     "gatsby-plugin-react-helmet": "^5.18.0",
     "gatsby-plugin-sharp": "^4.18.1",
     "gatsby-source-filesystem": "^4.18.1",
     "gatsby-transformer-sharp": "^4.18.1",
+    "postcss": "^8.4.14",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "sal.js": "^0.8.5",
+    "tailwindcss": "^3.1.6"
   },
   "devDependencies": {
     "@types/node": "^17.0.45",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "typescript": "^4.7.4"
+  },
+  "default": "index.tsx",
+  "repository": "https://github.com/KartavyaSharma/rmembr",
+  "license": "MIT",
+  "alias": {
+    "process": {
+      "global": "process"
+    }
   }
 }
