@@ -15,21 +15,37 @@ const config: GatsbyConfig = {
       "icon": "src/images/icon.png"
     }
   }, "gatsby-plugin-mdx", "gatsby-plugin-sharp", "gatsby-transformer-sharp", {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "images",
-      "path": "./src/images/"
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        "name": "images",
+        "path": "./src/images/"
+      },
+      __key: "images"
+    }, {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        "name": "pages",
+        "path": "./src/pages/"
+      },
+      __key: "pages"
     },
-    __key: "images"
-  }, {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "pages",
-      "path": "./src/pages/"
+    'gatsby-plugin-postcss',
+    {
+      resolve: `gatsby-plugin-scroll-reveal`,
+      options: {
+        threshold: 0.1,
+        once: true,
+        disable: false,
+        selector: `[data-sal]`,
+        animateClassName: `sal-animate`,
+        disabledClassName: `sal-disabled`,
+        rootMargin: `0% 50%`,
+        enterEventName: `sal:in`,
+        exitEventName: `sal:out`,
+      }
     },
-    __key: "pages"
-  },
-  'gatsby-plugin-postcss']
+    `gatsby-plugin-sass`
+  ]
 };
 
 export default config;
