@@ -40,7 +40,7 @@ export default function indexPage() {
             </div>
 
             <div className="grid grid-rows-1 justify-items-stretch">
-              <div className="font-montserrat text-2xl lg:text-3xl xl:5xl font-bold text-gray-500 p-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
+              <div className="font-montserrat text-2xl lg:text-3xl xl:5xl font-bold text-neutral-600 p-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
                 <div
                   className="grid grid-rows-1 w-full justify-items-center h-full content-center"
                   data-sal="fade"
@@ -52,7 +52,7 @@ export default function indexPage() {
               </div>
             </div>
             <div className="grid grid-rows-1 justify-items-stretch">
-              <div className="font-montserrat text-md lg:text-lg 2xl:text-xl font-light text-gray-500 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
+              <div className="font-montserrat text-md lg:text-lg 2xl:text-xl font-light text-neutral-600 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
                 <div
                   className="flex w-full justify-center text-center"
                   data-sal="fade"
@@ -72,7 +72,7 @@ export default function indexPage() {
               data-sal-easing="ease"
               data-sal-duration="1900"
             >
-              <div className="font-montserrat text-md font-light text-gray-500 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2 mt-5 border-t-2 border-gray-500">
+              <div className="font-montserrat text-md font-light text-neutral-600 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2 mt-5 border-t-2 border-neutral-600">
                 <div className="flex flex-row w-full">
                   <div className="flex w-1/3 justify-start">
                     <a

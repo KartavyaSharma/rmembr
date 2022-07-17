@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
 module.exports = {
   content: [
     "./src/pages/**/*.{js,jsx,ts,tsx}",
@@ -12,6 +13,9 @@ module.exports = {
       fontFamily: {
         'mcursive': ['Bebas Neue', 'cursive'],
         'montserrat': ['Montserrat', 'sans-serif']
+      },
+      colors: {
+        "neutral": colors.neutral,
       }
     },
   },
