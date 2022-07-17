@@ -2,8 +2,8 @@ import * as React from "react";
 
 export default function indexPage() {
   return (
-    <div className="h-screen w-full bg-black">
-      <div className="px-8 py-32 w-full h-full">
+    <div className="h-screen w-full bg-cover bg-fixed bg-lanading-back">
+      <div className="px-8 py-32 w-full h-full backdrop-blur-3xl">
         <div className="grid justify-items-middle min-h-full">
           <div className="grid grid-rows-1 justify-items-stretch">
             <div className="font-montserrat text-6xl lg:text-9xl font-semibold text-white p-5 justify-self-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500 ">
