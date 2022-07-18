@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from "react-helmet";
 
 export default function indexPage() {
   const content =
@@ -6,6 +7,23 @@ export default function indexPage() {
 
   return (
     <section>
+      <Helmet
+        htmlAttributes={{"lang": "en"}}
+        title="rmembr - academic scheduler"
+        meta={[
+          {"name": "description", "content": "rmembr - academic scheduler"},
+          {"name": "title", "content": "rmembr - academic scheduler"},
+          {"property": "keywords", "content": "rmembr, academic scheduler, active recall, office hours"},
+          {"property": "author", "content": "Kartavya Sharma"},
+          {"property": "og:title", "content": "rmembr - academic scheduler"},
+          {"property": "og:description", "content": "rmembr - academic scheduler"},
+          {"property": "og:image", "content": "../images/bookmark-check-fill-white.png"},
+          {"property": "og:url", "content": "https://rmembr.kartavyas.com"},
+          {"property": "og:type", "content": "website"},
+        ]}
+      >
+        <link rel="icon" type="image/png" href="src/images/bookmark-check-fill-white.png" sizes="16x16" />
+      </Helmet>
       <div className="h-screen w-full bg-cover bg-fixed bg-black">
         <div className="px-8 py-32 w-full h-full">
           <div className="grid justify-items-middle min-h-full">
