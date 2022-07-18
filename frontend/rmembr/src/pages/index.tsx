@@ -1,8 +1,8 @@
 import * as React from "react";
 
 export default function indexPage() {
-
-  const content = "<div class=\"stack\" style=\"--stacks: 3;\"><span style=\"--index: 0;\">rmembr</span><span style=\"--index: 1;\">rmembr</span style=\"--index: 2;\"><span>rmembr</span></div>"
+  const content =
+    '<div class="stack" style="--stacks: 3;"><span style="--index: 0;">rmembr</span><span style="--index: 1;">rmembr</span style="--index: 2;"><span>rmembr</span></div>';
 
   return (
     <section>
@@ -17,13 +17,13 @@ export default function indexPage() {
                 data-sal-duration="1500"
                 id="hideMe"
               >
-                <h1 data-name="rmembr">
+                <div id="glitch" data-name="rmembr">
                   {" "}
                   <span className="font-montserrat font-semibold">
                     {" "}
                     rmembr{" "}
                   </span>{" "}
-                </h1>
+                </div>
               </div>
               <div
                 className="p-5 justify-self-center text-white absolut object-center"
@@ -32,10 +32,11 @@ export default function indexPage() {
                 data-sal-duration="1500"
                 id="showMe"
               >
-                <span
-                  className="font-montserrat font-semibold"
-                >
-                  <div style={{ fontSize: "10vmin"}} dangerouslySetInnerHTML={{__html: content}}/>
+                <span className="font-montserrat font-semibold">
+                  <div
+                    style={{ fontSize: "12vmin" }}
+                    dangerouslySetInnerHTML={{ __html: content }}
+                  />
                 </span>
               </div>
             </div>
@@ -65,6 +66,37 @@ export default function indexPage() {
                   your active recall progress, plan office hours, and record
                   practice questions. All in one place.
                 </div>
+              </div>
+            </div>
+            <div className="flex w-full my-5 justify-center">
+              <div className="">
+                <a
+                  className="relative inline-flex items-center px-8 py-2 2xl:py-3 overflow-hidden text-neutral-600 border-2 border-current rounded group active:text-neutral-500 focus:outline-none focus:none"
+                  href="https://github.com/KartavyaSharma/rmembr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="absolute right-0 transition-transform translate-x-full group-hover:-translate-x-4">
+                    <svg
+                      className="w-5 h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </span>
+
+                  <span className="font-montserrat text-md font-medium transition-all group-hover:mr-4">
+                    View source code
+                  </span>
+                </a>
               </div>
             </div>
             <div
