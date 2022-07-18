@@ -69,7 +69,12 @@ export default function indexPage() {
               </div>
             </div>
             <div className="flex w-full my-5 justify-center">
-              <div className="">
+              <div
+                className="flex w-full justify-center text-center"
+                data-sal="zoom-out"
+                data-sal-easing="ease"
+                data-sal-duration="1900"
+              >
                 <a
                   className="relative inline-flex items-center px-8 py-2 2xl:py-3 overflow-hidden text-neutral-600 border-2 border-current rounded group active:text-neutral-500 focus:outline-none focus:none"
                   href="https://github.com/KartavyaSharma/rmembr"
