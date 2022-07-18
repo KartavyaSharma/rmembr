@@ -60,7 +60,7 @@ export default function indexPage() {
             </div>
 
             <div className="grid grid-rows-1 justify-items-stretch">
-              <div className="font-montserrat text-2xl lg:text-3xl xl:5xl font-bold text-neutral-600 p-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
+              <div className="font-montserrat text-xl lg:text-3xl xl:5xl font-bold text-neutral-600 p-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
                 <div
                   className="grid grid-rows-1 w-full justify-items-center h-full content-center"
                   data-sal="fade"
@@ -91,7 +91,7 @@ export default function indexPage() {
                 className="flex w-full justify-center text-center"
                 data-sal="zoom-out"
                 data-sal-easing="ease"
-                data-sal-duration="1900"
+                data-sal-duration="2000"
               >
                 <a
                   className="relative inline-flex items-center px-8 py-2 2xl:py-3 overflow-hidden text-neutral-600 border-2 border-current rounded group active:text-neutral-500 focus:outline-none focus:none"
@@ -117,7 +117,7 @@ export default function indexPage() {
                   </span>
 
                   <span className="font-montserrat text-md font-medium transition-all group-hover:mr-4">
-                    View source code
+                    view source code
                   </span>
                 </a>
               </div>
@@ -152,14 +152,14 @@ export default function indexPage() {
                   <div className="flex w-1/3 justify-items-center justify-center font-mono">
                     <div className="hidden md:flex">
                       {" "}
-                      Developed&nbsp;by&nbsp;
+                      developed&nbsp;by&nbsp;
                       <a
                         href="https://www.kartavyas.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline"
                       >
-                        Kartavya
+                        kartavya
                       </a>
                     </div>
                   </div>
