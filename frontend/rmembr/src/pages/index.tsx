@@ -41,9 +41,9 @@ export default function indexPage() {
       <div className="h-screen w-full bg-cover bg-fixed bg-gray-900 relative">
         <div
           className="fixed top-0 w-full z-10"
-          data-sal="fade"
+          data-sal="slide-down"
           data-sal-easing="ease"
-          data-sal-duration="2000"
+          data-sal-duration="1800"
         >
           <svg
             id="visual"
@@ -79,9 +79,9 @@ export default function indexPage() {
         </div>
         <div
           className="fixed bottom-0 w-full z-10"
-          data-sal="fade"
+          data-sal="slide-up"
           data-sal-easing="ease"
-          data-sal-duration="2000"
+          data-sal-duration="1800"
         >
           <svg
             id="visual"
