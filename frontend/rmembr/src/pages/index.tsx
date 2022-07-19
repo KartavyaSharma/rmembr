@@ -65,7 +65,7 @@ export default function indexPage() {
                   className="grid grid-rows-1 w-full justify-items-center h-full content-center"
                   data-sal="fade"
                   data-sal-easing="ease"
-                  data-sal-duration="1900"
+                  data-sal-duration="2000"
                 >
                   Coming soon
                 </div>
@@ -75,9 +75,9 @@ export default function indexPage() {
               <div className="font-montserrat text-md lg:text-lg 2xl:text-xl font-light text-neutral-600 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
                 <div
                   className="flex w-full justify-center text-center"
-                  data-sal="fade"
+                  data-sal="slide-up"
                   data-sal-easing="ease"
-                  data-sal-duration="1900"
+                  data-sal-duration="2000"
                 >
                   rmembr is an academic scheduler designed to simplify your
                   coursework planning process. With rmembr you can keep track of
@@ -124,9 +124,9 @@ export default function indexPage() {
             </div>
             <div
               className="grid grid-rows-1 justify-items-stretch h-full content-end"
-              data-sal="fade"
+              data-sal="slide-down"
               data-sal-easing="ease"
-              data-sal-duration="1900"
+              data-sal-duration="2000"
             >
               <div className="font-montserrat text-md font-light text-neutral-600 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2 mt-5 border-t-2 border-neutral-600">
                 <div className="flex flex-row w-full">
