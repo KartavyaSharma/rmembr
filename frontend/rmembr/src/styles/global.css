@@ -97,7 +97,7 @@
   0% {
     opacity: 0;
     transform: translateX(-50%);
-    text-shadow: -2px 3px 0 red, 2px -3px 0 blue;
+    text-shadow: -2px 3px 0 #d1d5db, 2px -3px 0 #9ca3af;
   }
   60% {
     opacity: 0.5;
@@ -106,7 +106,7 @@
   80% {
     transform: none;
     opacity: 1;
-    text-shadow: 2px -3px 0 red, -2px 3px 0 blue;
+    text-shadow: 2px -3px 0 #d1d5db, -2px 3px 0 #9ca3af;
   }
   100% {
     text-shadow: none;
@@ -115,11 +115,11 @@
 
 @keyframes glitch {
   0% {
-    text-shadow: -2px 3px 0 red, 2px -3px 0 blue;
+    text-shadow: -2px 3px 0 #d1d5db, 2px -3px 0 #9ca3af;
     transform: translate(var(--glitch-translate));
   }
   2% {
-    text-shadow: 2px -3px 0 red, -2px 3px 0 blue;
+    text-shadow: 2px -3px 0 #d1d5db, -2px 3px 0 #9ca3af;
   }
   4%,
   100% {

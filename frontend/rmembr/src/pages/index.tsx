@@ -181,7 +181,7 @@ export default function indexPage() {
                 data-sal-duration="2000"
               >
                 <a
-                  className="relative inline-flex items-center px-4  xl:px-8 py-1/2 lg:py-2 2xl:py-3 overflow-hidden text-gray-600 border-2 border-current rounded group active:text-gray-600 focus:outline-none focus:none"
+                  className="relative inline-flex items-center px-4 xl:px-6 py-1/2 lg:py-2 overflow-hidden text-gray-600 border-2 border-current rounded group active:text-gray-600 focus:outline-none focus:none"
                   href="https://github.com/KartavyaSharma/rmembr"
                   target="_blank"
                   rel="noopener noreferrer"
