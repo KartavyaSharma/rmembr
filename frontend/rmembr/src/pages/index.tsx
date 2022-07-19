@@ -8,24 +8,52 @@ export default function indexPage() {
   return (
     <section>
       <Helmet
-        htmlAttributes={{"lang": "en"}}
+        htmlAttributes={{ lang: "en" }}
         title="rmembr - academic scheduler"
         meta={[
-          {"name": "description", "content": "rmembr - academic scheduler"},
-          {"name": "title", "content": "rmembr - academic scheduler"},
-          {"property": "keywords", "content": "rmembr, academic scheduler, active recall, office hours"},
-          {"property": "author", "content": "Kartavya Sharma"},
-          {"property": "og:title", "content": "rmembr - academic scheduler"},
-          {"property": "og:description", "content": "rmembr - academic scheduler"},
-          {"property": "og:image", "content": "../images/bookmark-check-fill-white.png"},
-          {"property": "og:url", "content": "https://rmembr.kartavyas.com"},
-          {"property": "og:type", "content": "website"},
+          { name: "description", content: "rmembr - academic scheduler" },
+          { name: "title", content: "rmembr - academic scheduler" },
+          {
+            property: "keywords",
+            content: "rmembr, academic scheduler, active recall, office hours",
+          },
+          { property: "author", content: "Kartavya Sharma" },
+          { property: "og:title", content: "rmembr - academic scheduler" },
+          {
+            property: "og:description",
+            content: "rmembr - academic scheduler",
+          },
+          {
+            property: "og:image",
+            content: "../images/bookmark-check-fill-white.png",
+          },
+          { property: "og:url", content: "https://rmembr.kartavyas.com" },
+          { property: "og:type", content: "website" },
         ]}
       >
-        <link rel="icon" type="image/png" href="src/images/bookmark-check-fill-white.png" sizes="16x16" />
+        <link
+          rel="icon"
+          type="image/png"
+          href="src/images/bookmark-check-fill-white.png"
+          sizes="16x16"
+        />
       </Helmet>
-      <div className="h-screen w-full bg-cover bg-fixed bg-black">
-        <div className="px-8 py-32 w-full h-full">
+      <div className="h-screen w-full bg-cover bg-fixed bg-black relative">
+        <div
+          className="fixed bottom-0 w-full z-10"
+          data-sal="fade"
+          data-sal-easing="ease"
+          data-sal-duration="2000"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="opacity-10">
+            <path
+              fill="#525252"
+              fill-opacity="1"
+              d="M0,160L120,186.7C240,213,480,267,720,266.7C960,267,1200,213,1320,186.7L1440,160L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+            ></path>
+          </svg>
+        </div>
+        <div className="px-8 py-32 w-full h-full z-50">
           <div className="grid justify-items-middle min-h-full">
             <div className="grid grid-rows-1 justify-items-stretch relative">
               <div
@@ -37,10 +65,7 @@ export default function indexPage() {
               >
                 <div id="glitch" data-name="rmembr">
                   {" "}
-                  <span className="scale-100">
-                    {" "}
-                    rmembr{" "}
-                  </span>{" "}
+                  <span className="scale-100"> rmembr </span>{" "}
                 </div>
               </div>
               <div
@@ -86,7 +111,7 @@ export default function indexPage() {
                 </div>
               </div>
             </div>
-            <div className="flex w-full my-5 justify-center">
+            <div className="flex w-full my-5 justify-center z-[100]">
               <div
                 className="flex w-full justify-center text-center"
                 data-sal="zoom-out"
@@ -123,7 +148,7 @@ export default function indexPage() {
               </div>
             </div>
             <div
-              className="grid grid-rows-1 justify-items-stretch h-full content-end"
+              className="grid grid-rows-1 justify-items-stretch h-full content-end z-[100]"
               data-sal="slide-down"
               data-sal-easing="ease"
               data-sal-duration="2000"
