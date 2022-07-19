@@ -29,7 +29,7 @@ export default function indexPage() {
           <div className="grid justify-items-middle min-h-full">
             <div className="grid grid-rows-1 justify-items-stretch relative">
               <div
-                className="p-5 justify-self-center absolute object-center"
+                className="p-5 justify-self-center absolute object-center font-montserrat font-semibold"
                 data-sal="zoom-in"
                 data-sal-easing="ease"
                 data-sal-duration="1500"
@@ -37,7 +37,7 @@ export default function indexPage() {
               >
                 <div id="glitch" data-name="rmembr">
                   {" "}
-                  <span className="font-montserrat font-semibold">
+                  <span className="scale-100">
                     {" "}
                     rmembr{" "}
                   </span>{" "}
@@ -50,9 +50,9 @@ export default function indexPage() {
                 data-sal-duration="1500"
                 id="showMe"
               >
-                <span className="font-montserrat font-semibold">
+                <span className="font-montserrat font-semibold scale-100">
                   <div
-                    style={{ fontSize: "12vmin" }}
+                    style={{ fontSize: "10vmin" }}
                     dangerouslySetInnerHTML={{ __html: content }}
                   />
                 </span>
