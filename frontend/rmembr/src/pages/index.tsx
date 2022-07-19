@@ -38,16 +38,34 @@ export default function indexPage() {
           sizes="16x16"
         />
       </Helmet>
-      <div className="h-screen w-full bg-cover bg-fixed bg-black relative">
+      <div className="h-screen w-full bg-cover bg-fixed bg-gray-900 relative">
+        <div
+          className="fixed top-0 w-full z-10"
+          data-sal="fade"
+          data-sal-easing="ease"
+          data-sal-duration="2000"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="opacity-50">
+            <path
+              fill="#000000"
+              fill-opacity="1"
+              d="M0,192L48,165.3C96,139,192,85,288,80C384,75,480,117,576,117.3C672,117,768,75,864,96C960,117,1056,203,1152,202.7C1248,203,1344,117,1392,74.7L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+            ></path>
+          </svg>
+        </div>
         <div
           className="fixed bottom-0 w-full z-10"
           data-sal="fade"
           data-sal-easing="ease"
           data-sal-duration="2000"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="opacity-10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 320"
+            className="opacity-50"
+          >
             <path
-              fill="#525252"
+              fill="#000000"
               fill-opacity="1"
               d="M0,160L120,186.7C240,213,480,267,720,266.7C960,267,1200,213,1320,186.7L1440,160L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
             ></path>
@@ -85,7 +103,7 @@ export default function indexPage() {
             </div>
 
             <div className="grid grid-rows-1 justify-items-stretch">
-              <div className="font-montserrat text-xl lg:text-3xl xl:5xl font-bold text-neutral-600 p-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
+              <div className="font-montserrat text-xl lg:text-3xl xl:5xl font-bold text-gray-600 p-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
                 <div
                   className="grid grid-rows-1 w-full justify-items-center h-full content-center"
                   data-sal="fade"
@@ -97,7 +115,7 @@ export default function indexPage() {
               </div>
             </div>
             <div className="grid grid-rows-1 justify-items-stretch">
-              <div className="font-montserrat text-md lg:text-lg 2xl:text-xl font-light text-neutral-600 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
+              <div className="font-montserrat text-md lg:text-lg 2xl:text-xl font-light text-gray-600 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2">
                 <div
                   className="flex w-full justify-center text-center"
                   data-sal="slide-up"
@@ -119,7 +137,7 @@ export default function indexPage() {
                 data-sal-duration="2000"
               >
                 <a
-                  className="relative inline-flex items-center px-8 py-2 2xl:py-3 overflow-hidden text-neutral-600 border-2 border-current rounded group active:text-neutral-500 focus:outline-none focus:none"
+                  className="relative inline-flex items-center px-8 py-2 2xl:py-3 overflow-hidden text-gray-600 border-2 border-current rounded group active:text-gray-600 focus:outline-none focus:none"
                   href="https://github.com/KartavyaSharma/rmembr"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -153,7 +171,7 @@ export default function indexPage() {
               data-sal-easing="ease"
               data-sal-duration="2000"
             >
-              <div className="font-montserrat text-md font-light text-neutral-600 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2 mt-5 border-t-2 border-neutral-600">
+              <div className="font-montserrat text-md font-light text-gray-600 p-3 pb-5 align-middle justify-self-center justify-center w-full lg:w-1/2 mt-5 border-t-2 border-gray-600">
                 <div className="flex flex-row w-full">
                   <div className="flex w-1/3 justify-start">
                     <a
