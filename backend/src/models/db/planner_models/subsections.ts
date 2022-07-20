@@ -10,6 +10,7 @@ export interface ISubSection {
     inClass: Date,
     status: IStatus,
     revisionSchedule: IRevisionSchedule;
+    plannedRevisionSchedule: Date[];
 }
 
 /** Properties a state field can contain. */
@@ -56,7 +57,7 @@ export const IStatusSchema = new Schema<IStatus>(
     {
         state: { type: String, required: true },
         date: { type: Date, required: true },
-        color: { type: String, required: true}
+        color: { type: String, required: true }
     }
 );
 
@@ -69,18 +70,19 @@ export const ISubSectionSchema = new Schema<ISubSection>(
         _sectionId: { type: String, required: true },
         inClass: { type: Date, required: false, default: null },
         name: { type: String, required: true },
-        status: { 
-            type: IStatusSchema, 
+        status: {
+            type: IStatusSchema,
             required: false,
-            default: { state: "pending", date: null, color: null}
+            default: { state: "pending", date: null, color: null }
         },
         revisionSchedule: {
-            revs: {type: [IStatusSchema], required: false, default: null}
-        }
+            revs: { type: [IStatusSchema], required: false, default: null }
+        },
+        plannedRevisionSchedule: { type: [Date], required: true, default: null }
     }
 );
 
 export const SubsectionModel: Model<ISubSection> = model(
     'subsections',
-    ISubSectionSchema  
+    ISubSectionSchema
 );
