@@ -181,7 +181,7 @@ export default function indexPage() {
                 data-sal-duration="2000"
               >
                 <a
-                  className="relative inline-flex items-center px-4 xl:px-6 py-1/2 lg:py-2 overflow-hidden text-gray-600 border-2 border-current rounded group active:text-gray-600 focus:outline-none focus:none"
+                  className="relative inline-flex items-center px-4 xl:px-6 py-2 2xl:py-0 overflow-hidden text-gray-600 border-2 border-current rounded group active:text-gray-600 focus:outline-none focus:none"
                   href="https://github.com/KartavyaSharma/rmembr"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -203,7 +203,7 @@ export default function indexPage() {
                     </svg>
                   </span>
 
-                  <span className="font-montserrat text-md font-medium transition-all group-hover:mr-4">
+                  <span className="font-montserrat text-md font-medium 2xl:text-lg transition-all group-hover:mr-4">
                     view source code
                   </span>
                 </a>
