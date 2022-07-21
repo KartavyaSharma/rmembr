@@ -1,4 +1,4 @@
-import { IRevisionSchedule } from "../../../models/db/planner_models/subsections";
+import { IRevisionSchedule, ISubSection } from "../../../models/db/planner_models/subsections";
 import { IStatus } from "../../../models/db/planner_models/subsections";
 import { defaultConf } from "../../../rmembr/config_store/default_conf";
 
@@ -36,5 +36,40 @@ export default class Subsection {
     /** Initialize a new subsection ojbect. */
     constructor() {
         
+    }
+
+    public create(): ISubSection {
+        // TODO: Implement
+        return {} as ISubSection;
+    }
+
+    private generateRevisionSchedule(): IRevisionSchedule {
+        // TODO: Implement
+        return {} as IRevisionSchedule;
+    }
+
+    public update(): ISubSection {
+        // TODO: Implement
+        return {} as ISubSection;
+    }
+    
+    public delete(): ISubSection {
+        // TODO: Implement
+        return {} as ISubSection;
+    }
+    
+    public static get(id: String): ISubSection {
+        // TODO: Implement
+        return {} as ISubSection;
+    }
+
+    public static determineStatus(subsection: ISubSection): IStatus {
+        // TODO: Implement
+        return {} as IStatus;
+    }
+
+    public static refreshSubsection(section: ISubSection): ISubSection {
+        // TODO: Implement
+        return {} as ISubSection;
     }
 }
