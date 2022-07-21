@@ -1,3 +1,5 @@
+import { defaultConf } from "../../../rmembr/config_store/default_conf";
+
 /**
  * Class represents a status. A status has a date
  * based on which the state of a status is determined.
@@ -14,8 +16,8 @@ export default class Status {
     }
 
     /** Determines the state of this status. */
-    private determine(): void {
-        
+    private determine(plannedRevisionSchedule: Date[] = null) {
+
     }
 
     /** State of the status object. */

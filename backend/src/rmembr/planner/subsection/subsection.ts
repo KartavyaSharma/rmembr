@@ -1,6 +1,8 @@
+import { IUpdateSubsectionResponse } from "../../../models/response/response_models";
+import { IDeleteSubsectionResponse } from "../../../models/response/response_models";
+import { ICreateSubsectionResponse } from "../../../models/response/response_models";
 import { IRevisionSchedule, ISubSection } from "../../../models/db/planner_models/subsections";
 import { IStatus } from "../../../models/db/planner_models/subsections";
-import { defaultConf } from "../../../rmembr/config_store/default_conf";
 
 /**
  * Class representing a subsection. Each course can have
@@ -75,35 +77,30 @@ export default class Subsection {
 
     /** Initialize a new subsection ojbect. */
     constructor() {
-        
+
     }
 
-    public create(): ISubSection {
+    public async create(): Promise<ICreateSubsectionResponse> {
         // TODO: Implement
-        return {} as ISubSection;
+        return {} as ICreateSubsectionResponse;
     }
 
-    private generateRevisionSchedule(): IRevisionSchedule {
+    private generateRevisionSchedule(): void {
         // TODO: Implement
-        return {} as IRevisionSchedule;
+        return;
     }
 
-    public update(newSubsection: ISubSection): ISubSection {
+    public async update(newSubsection: ISubSection): Promise<IUpdateSubsectionResponse> {
         // TODO: Implement
-        return {} as ISubSection;
+        return {} as IUpdateSubsectionResponse;
     }
-    
-    public delete(): ISubSection {
+
+    public async delete(): Promise<IDeleteSubsectionResponse> {
         // TODO: Implement
-        return {} as ISubSection;
+        return {} as IDeleteSubsectionResponse;
     }
-    
-    public determineStatus(): IStatus {
-        // TODO: Implement
-        return {} as IStatus;
-    }
-    
-    private refreshSubsection(section: ISubSection): void {
+
+    private refreshSubsection(): void {
         // TODO: Implement
         return;
     }
@@ -112,7 +109,7 @@ export default class Subsection {
         // TODO: Implement
         return {} as ISubSection;
     }
-    
+
     public static refreshAll(): void {
         // TODO: Implement
         return;
