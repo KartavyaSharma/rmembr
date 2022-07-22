@@ -16,6 +16,10 @@ import { User } from './rmembr/user/user';
 
 class App {
 
+    /** 
+     * Creats new express server and runs the setup, routes, 
+     * and middeware functions on it. 
+     * */
     constructor() {
         this._server = express();
         this.setup().then(() => {
@@ -24,7 +28,10 @@ class App {
         });
     }
 
-    async setup() {
+    /**
+     *  Setup middleware and establish database connection. 
+    */
+    async setup(): Promise<void> {
         // Sets up server to use process.env.[...]
         dotenv.config();
         // Connects to the database
@@ -34,16 +41,18 @@ class App {
         this._server.use(express.json());
         this._server.use(helmet());
         this._server.use(bodyParser.json());
-        
+
     }
 
-    routes() {
+    /** Setup routes on this._server. */
+    routes(): void {
         Utils.addRoute(this._server, new AuthRoutes());
         Utils.addRoute(this._server, new PlannerRoutes(), Auth.authMid, User.setUser);
     }
 
-    middleware() {
-        
+    /** Setup middlware functions on this._server. */
+    middleware(): void {
+
         /** Standard middleware */
         this._server.use(morgan('combined'));
         this._server.use(express.urlencoded({ extended: true }))
