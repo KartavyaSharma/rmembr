@@ -110,6 +110,15 @@ export default class Subsection {
 
     }
 
+    /**
+     * Initializes the subseciton schema from the database to create a new
+     * collection. This function is only called when a new section is created.
+     */
+     public async initialize(): Promise<void> {
+        /** Creates a new subsection store for this section. */
+        // TODO: Implement
+    }
+
     /** Adds new subsection to database collection.
      * @returns Promise that resolves to an API response containing a new subsection object.
     */
@@ -159,9 +168,9 @@ export default class Subsection {
      * @param id Subsection ID.
      * @returns Subsection object with matching ID from the database.
      */
-    public static get(id: String): ISubSection {
+    public static get(subsectionId: String, sectionId: String): Subsection {
         // TODO: Implement
-        return {} as ISubSection;
+        return {} as Subsection;
     }
 
     /**

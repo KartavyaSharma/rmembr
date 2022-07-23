@@ -33,7 +33,7 @@ export default class Section {
      * Returns this sections fields as an ISection object.
      * @returns ISection object type from this._[field].
      */
-     public get object(): ISection {
+    public get object(): ISection {
         return {
             _id: this._id,
             _courseId: this._courseId,
@@ -119,9 +119,11 @@ export default class Section {
                 new: true
             }
         );
-        return { sections: deleted.courses.find(
-            (course: ICourse) => { return course._id == this._courseId }
-        ).sections }
+        return {
+            sections: deleted.courses.find(
+                (course: ICourse) => { return course._id == this._courseId }
+            ).sections
+        }
     }
 
     /**
@@ -135,6 +137,16 @@ export default class Section {
         await this.delete(user.id);
         const newSection: ISection = await Course.addSection(sectionObj.object, user.id);
         return new Section(newSection);
+    }
+
+    /** 
+     * Register a subsection to a section. This happens when a new subsection
+     * is created under a section. This function adds the subsection ID to the
+     * section's subsection array.
+     * @param subsectionId of the subsection to be added.
+    */
+    public async addSubsection(subsectionId: string): Promise<void> {
+        this._subsections.push(subsectionId);
     }
 
     /**
