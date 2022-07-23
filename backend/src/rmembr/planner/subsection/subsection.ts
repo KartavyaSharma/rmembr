@@ -1,8 +1,3 @@
-import {
-    IUpdateSubsectionResponse,
-    IDeleteSubsectionResponse,
-    ICreateSubsectionResponse
-} from "../../../models/response/response_models";
 import { IRevisionSchedule, ISubSection } from "../../../models/db/planner_models/subsections";
 import { IStatus } from "../../../models/db/planner_models/subsections";
 import { defaultConf, IDefaultConf } from "../../../rmembr/config_store/default_conf";
@@ -110,21 +105,13 @@ export default class Subsection {
 
     }
 
-    /**
-     * Initializes the subseciton schema from the database to create a new
-     * collection. This function is only called when a new section is created.
-     */
-     public async initialize(): Promise<void> {
-        /** Creates a new subsection store for this section. */
-        // TODO: Implement
-    }
 
     /** Adds new subsection to database collection.
      * @returns Promise that resolves to an API response containing a new subsection object.
     */
-    public async create(): Promise<ICreateSubsectionResponse> {
+    public async create(): Promise<ISubSection> {
         // TODO: Implement
-        return {} as ICreateSubsectionResponse;
+        return {} as ISubSection;
     }
 
     /** 
@@ -141,20 +128,12 @@ export default class Subsection {
      * @param newSubsection Updated subsection object.
      * @returns Promise that resolves to an API response containing an updated subsection object.
      */
-    public async update(newSubsection: ISubSection): Promise<IUpdateSubsectionResponse> {
+    public async update(newSubsection: ISubSection): Promise<ISubSection> {
         // TODO: Implement
-        return {} as IUpdateSubsectionResponse;
+        return {} as ISubSection;
     }
 
-    /**
-     * Deletes a subsection from the database.
-     * @returns Promise that resolves to an API response containing a deleted subsection object.
-     */
-    public async delete(): Promise<IDeleteSubsectionResponse> {
-        // TODO: Implement
-        return {} as IDeleteSubsectionResponse;
-    }
-
+    
     /**
      * Updates the status of a subsection. Based on the current revision schedule.
      */
