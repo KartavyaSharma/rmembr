@@ -11,16 +11,21 @@ export default class SubsectionRoutes extends Routes {
     }
 
     protected createRoutes(): void {
-        this._routes.get('/', async (req: Request, res: Response, next: NextFunction) => {
-            res.send({"this is": "subsections"})
-        })
-
+        /** ========== GET ========== */
         this._routes.get('/:subsectionId', async (req: Request, res: Response, next: NextFunction) => {
-            res.send({
-                "course-id": req.params.courseId,
-                "section-id": req.params.sectionId,
-                "subsection-id": req.params.subsectionId
-            });
-        })
+
+        });
+        /** ========== POST ========== */
+        this._routes.post('/', async (req: Request, res: Response, next: NextFunction) => {
+
+        });
+        /** ========== DELETE ========== */
+        this._routes.delete('/:subsectionId', async (req: Request, res: Response, next: NextFunction) => {
+
+        });
+        /** ========== PATCH ========== */
+        this._routes.patch('/:subsectionId', async (req: Request, res: Response, next: NextFunction) => {
+            
+        });
     }
 }
