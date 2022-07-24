@@ -2,6 +2,9 @@ import { ISection } from "../../../models/db/planner_models/sections";
 import { nanoid } from "nanoid";
 import { ISubSection } from "../../../models/db/planner_models/subsections";
 import Subsection from "./subsection";
+import { ISubsectionGroup, SubsectionGroupModel } from "../../../models/db/planner_models/subsection_group";
+import { Exception } from "../../../utils/errors/exception";
+import { ErrorCode } from "../../../utils/errors/error_codes";
 import {
     IDeleteSubsectionResponse,
     ICreateSubsectionResponse,
@@ -64,9 +67,21 @@ export default class SubsectionGroup {
      * collection of subsections for each section. This function is 
      * only called when a new section is created.
      */
-    public async initialize(): Promise<void> {
+    public async initialize(): Promise<ISubsectionGroup> {
         /** Creates a new subsection store for this section. */
-        // TODO: Implement
+        /** Check if another subsection group already exists for this section. */
+        const groupExists: ISubsectionGroup = await SubsectionGroupModel.findOne({ _sectionId: this._sectionId });
+        if (groupExists) {
+            throw new Exception(ErrorCode.UnknownError, "Only one subsection group per section is allowed.");
+        }
+        /** Subsection group object. */
+        const newSubsectionGroup: ISubsectionGroup = {
+            _id: this._id,
+            _sectionId: this._sectionId,
+            subsections: []
+        }
+        const created = await SubsectionGroupModel.create(newSubsectionGroup);
+        return newSubsectionGroup;
     }
 
     /** 

@@ -3,13 +3,15 @@ import { Routes } from "../routes";
 import User from "../../rmembr/user/user";
 import { Utils } from "../../utils/server_utils";
 import { ISection } from "../../models/db/planner_models/sections";
-import { ICreateSectionResponse, IDeleteSectionResponse } from "../../models/response/response_models";
+import { ICreateSectionResponse, IDeleteSectionResponse, IGetSectionResponse } from "../../models/response/response_models";
 import { IUpdateSectionRequest } from "../../models/request/request_models";
+import SubsectionGroup from "../../rmembr/planner/subsection/subsection_group";
 import SubsectionRoutes from "./subsection_routes";
 import Section from "../../rmembr/planner/section";
+import { ISubsectionGroup } from "../../models/db/planner_models/subsection_group";
 
 export default class SectionRoutes extends Routes {
-    
+
     /** Base URL for all section routes */
     protected static readonly BASE = "/sections";
 
@@ -23,19 +25,26 @@ export default class SectionRoutes extends Routes {
         this._routes.get('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
             let sectionObj: Section;
+            let subsectionGroupObj: ISubsectionGroup;
             try {
                 Utils.validateObject(req.params, 'sectionId');
                 Utils.validateObject(req.params, 'courseId');
                 newUser = req.body.user;
                 sectionObj = await Section.get(
-                    newUser.id, 
-                    req.params.courseId, 
+                    newUser.id,
+                    req.params.courseId,
                     req.params.sectionId
                 );
+                subsectionGroupObj = await new SubsectionGroup(sectionObj.object).initialize();
             } catch (err) {
                 return next(err);
             }
-            Utils.sendRes<ISection>(res, sectionObj.object as ISection);
+            Utils.sendRes<IGetSectionResponse>(res,
+                {
+                    section: sectionObj.object,
+                    subsections: subsectionGroupObj
+                } as IGetSectionResponse
+            );
         });
 
         /** ========== POST ========== */

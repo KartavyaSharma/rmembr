@@ -1,6 +1,7 @@
 import { ICourse } from "../db/planner_models/course";
 import { ISection } from "../db/planner_models/sections";
 import { ISubSection } from "../db/planner_models/subsections";
+import { ISubsectionGroup } from "../db/planner_models/subsection_group";
 
 /**
  * Contains all response models for rmembr.
@@ -68,6 +69,12 @@ export interface IUpdateCourseResponse {
 /** ============================ */
 
 /** ========== Section ========== */
+/** GET /sections/:sectionId */
+export interface IGetSectionResponse {
+    /** Returns section object with subsection group. */
+    section: ISection;
+    subsections: ISubsectionGroup;
+}
 /** POST /sections/:sectionId */
 export interface ICreateSectionResponse {
     /** Returns created Section object */
