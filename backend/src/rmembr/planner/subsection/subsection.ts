@@ -145,7 +145,7 @@ export default class Subsection {
      * @param id Subsection ID.
      * @returns Subsection object with matching ID from the database.
      */
-    public static get(subsectionId: String, sectionId: String): Subsection {
+    public static get(subsectionId: string, sectionId: string): Subsection {
         // TODO: Implement
         return {} as Subsection;
     }

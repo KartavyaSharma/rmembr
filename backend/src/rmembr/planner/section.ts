@@ -6,8 +6,9 @@ import { ICreateSectionResponse, IDeleteSectionResponse } from "../../models/res
 import { CourseGroupModel } from "../../models/db/planner_models/course_group";
 import { ICourseGroup } from "../../models/db/planner_models/course_group";
 import { ICourse } from "../../models/db/planner_models/course";
-import Course from "./course";
 import { User } from "../user/user";
+import Course from "./course";
+import SubsectionGroup from "./subsection/subsection_group";
 
 /**
  * Class represents a section. Multiple sections can exist
@@ -91,12 +92,14 @@ export default class Section {
      * @returns Section object wrapped in a ICreateSectionResponse object.
      */
     public async register(userId: string): Promise<ICreateSectionResponse> {
+        const newSubsectionGroup: SubsectionGroup = new SubsectionGroup(this.object);
         const newSection: ISection = {
             _id: this._id,
             _courseId: this._courseId,
             name: this._name,
-            subsectionGroupId: this._subsectionGroupId,
+            subsectionGroupId: newSubsectionGroup.id,
         }
+        newSubsectionGroup.initialize();
         const updateSection: ISection = await Course.addSection(newSection, userId);
         return { section: updateSection } as ICreateSectionResponse
     }

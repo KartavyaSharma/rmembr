@@ -1,4 +1,4 @@
-import Section from "../section";
+import { ISection } from "../../../models/db/planner_models/sections";
 import { nanoid } from "nanoid";
 import { ISubSection } from "../../../models/db/planner_models/subsections";
 import Subsection from "./subsection";
@@ -14,28 +14,49 @@ import {
  * contains all the subsections in a section
  */
 
-
 export default class SubsectionGroup {
 
     /** Subsection group ID. */
-    private _id: String;
+    private _id: string;
 
     /** 
      * Section ID associated with this 
      * subsection group.
      */
-    private _sectionId: String;
+    private _sectionId: string;
 
     /** Set contianing IDs of all contained subsections. */
-    private _subsections: Set<String>;
+    private _subsections: Subsection[];
+
+    /**
+     * @returns this subsection group's ID.
+     */
+    public get id() {
+        return this._id;
+    }
+
+    /**
+     * @returns this subsection group's section ID.
+     */
+    public get sectionId() {
+        return this._sectionId;
+    }
+
+    /**
+     * @returns a list of all subsections in this subsection group.
+     */
+    public get subsections(): Subsection[] {
+        return this._subsections;
+    }
 
     /** 
      * Initializes new group with all relevent fields. 
      * @param sectionObj Section object associated with this group.
      */
-    constructor(sectionObj: Section = null) {
+    constructor(sectionObj: ISection) {
         this._id = nanoid();
-        this._sectionId = sectionObj.id;
+        this._sectionId = sectionObj._id;
+        this._subsections = [];
     }
 
     /**
@@ -64,7 +85,7 @@ export default class SubsectionGroup {
      * @param id Subsection ID.
      * @param sectionId Section ID.
      */
-    public static async get(id: String, sectionId: String): Promise<ISubSection> {
+    public static async get(id: string, sectionId: string): Promise<ISubSection> {
         return Subsection.get(id, sectionId).object;
     }
 
@@ -85,5 +106,4 @@ export default class SubsectionGroup {
         // TODO: Implement
         return {} as IDeleteSubsectionResponse;
     }
-
 }
