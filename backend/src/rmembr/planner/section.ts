@@ -27,7 +27,7 @@ export default class Section {
     private _name: string;
 
     /** List of subsections stored inside the course. */
-    private _subsections: string[] = [];
+    private _subsectionGroupId: string;
 
     /**
      * Returns this sections fields as an ISection object.
@@ -38,7 +38,7 @@ export default class Section {
             _id: this._id,
             _courseId: this._courseId,
             name: this._name,
-            subsections: this._subsections,
+            subsectionGroupId: this._subsectionGroupId,
         }
     }
 
@@ -63,11 +63,9 @@ export default class Section {
         return this._name;
     }
 
-    /**
-     * @returns this sections's list of subsections.
-     */
-    public get subsections() {
-        return this._subsections;
+    /** Returns subsection group ID associated with this section. */
+    public get subsectionGroupId(): string {
+        return this._subsectionGroupId;
     }
 
     /**
@@ -84,7 +82,7 @@ export default class Section {
         }
         this._courseId = sectionObj._courseId;
         this._name = sectionObj.name;
-        this._subsections = sectionObj.subsections == null ? this._subsections : sectionObj.subsections;
+        this._subsectionGroupId = sectionObj.subsectionGroupId == null ? nanoid() : sectionObj.subsectionGroupId;
     }
 
     /**
@@ -97,7 +95,7 @@ export default class Section {
             _id: this._id,
             _courseId: this._courseId,
             name: this._name,
-            subsections: this._subsections,
+            subsectionGroupId: this._subsectionGroupId,
         }
         const updateSection: ISection = await Course.addSection(newSection, userId);
         return { section: updateSection } as ICreateSectionResponse
@@ -137,16 +135,6 @@ export default class Section {
         await this.delete(user.id);
         const newSection: ISection = await Course.addSection(sectionObj.object, user.id);
         return new Section(newSection);
-    }
-
-    /** 
-     * Register a subsection to a section. This happens when a new subsection
-     * is created under a section. This function adds the subsection ID to the
-     * section's subsection array.
-     * @param subsectionId of the subsection to be added.
-    */
-    public async addSubsection(subsectionId: string): Promise<void> {
-        this._subsections.push(subsectionId);
     }
 
     /**

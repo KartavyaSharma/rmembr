@@ -51,7 +51,7 @@ export default class SectionRoutes extends Routes {
                     _id: null,
                     _courseId: req.params.courseId,
                     name: req.body.name,
-                    subsections: null
+                    subsectionGroupId: null
                 });
                 resSection = await newSection.register(newUser.id);
             } catch (err) {

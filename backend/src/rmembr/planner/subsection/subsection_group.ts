@@ -2,6 +2,7 @@ import Section from "../section";
 import { nanoid } from "nanoid";
 import { ISubSection } from "../../../models/db/planner_models/subsections";
 import { IDeleteSubsectionResponse, ICreateSubsectionResponse, IUpdateSubsectionResponse } from "../../../models/response/response_models";
+import Subsection from "./subsection";
 
 /**
  * Class represents a subsection group. Each section has a
@@ -18,7 +19,7 @@ export default class SubsectionGroup {
     /** 
      * Section ID associated with this 
      * subsection group.
-     * */
+     */
     private _sectionId: String;
 
     /** Set contianing IDs of all contained subsections. */
@@ -27,7 +28,7 @@ export default class SubsectionGroup {
     /** 
      * Initializes new group with all relevent fields. 
      * @param sectionObj Section object associated with this group.
-    */
+     */
     constructor(sectionObj: Section = null) {
         this._id = nanoid();
         this._sectionId = sectionObj.id;
@@ -47,7 +48,7 @@ export default class SubsectionGroup {
      * Add to this subsection groups subsection set. Calls the create
      * method from the subsection class
      * @param subsectionObj subsection with all fields filled.
-     * */
+     */
     public static async add(subsectionObj: ISubSection): Promise<ICreateSubsectionResponse> {
         // TODO: Implement
         return {} as ICreateSubsectionResponse;
@@ -57,10 +58,10 @@ export default class SubsectionGroup {
     /** 
      * Returns a subsection with a given ID.
      * @param id Subsection ID.
+     * @param sectionId Section ID.
      */
-    public async get(id: String): Promise<ISubSection> {
-        // TODO: Implement
-        return {} as ISubSection;
+    public static async get(id: String, sectionId: String): Promise<ISubSection> {
+        return Subsection.get(id, sectionId).object;
     }
 
     /** 

@@ -98,9 +98,8 @@ export default class Subsection {
     }
 
     /** 
-     * Initialize a new subsection ojbect. 
-     * Initializes all class fields.
-     * */
+     * Initialize a new subsection ojbect.
+     */
     constructor() {
 
     }
@@ -108,7 +107,7 @@ export default class Subsection {
 
     /** Adds new subsection to database collection.
      * @returns Promise that resolves to an API response containing a new subsection object.
-    */
+     */
     public async create(): Promise<ISubSection> {
         // TODO: Implement
         return {} as ISubSection;
@@ -117,7 +116,7 @@ export default class Subsection {
     /** 
      * Generates new revision schedule for revision dates based on config.
      * @param config Configuration object containing revision intervals.
-    */
+     */
     private generatePlannedRevisionSchedule(config: IDefaultConf): void {
         // TODO: Implement
         return;
@@ -133,7 +132,7 @@ export default class Subsection {
         return {} as ISubSection;
     }
 
-    
+
     /**
      * Updates the status of a subsection. Based on the current revision schedule.
      */

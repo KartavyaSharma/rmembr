@@ -7,7 +7,7 @@ export interface ISection {
     _id: string;
     _courseId: string;
     name: string;
-    subsections: string[];
+    subsectionGroupId: string;
 }
 
 /**
@@ -19,6 +19,6 @@ export const ISectionSchema = new Schema<ISection>(
         _id: { type: String, required: true },
         _courseId: { type: String, required: true },
         name: { type: String, required: true },
-        subsections: { type: [String], required: false, default: null },
+        subsectionGroupId: { type: String, required: false, default: null },
     }
 );
