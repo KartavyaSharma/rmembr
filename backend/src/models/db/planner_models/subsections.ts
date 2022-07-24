@@ -81,8 +81,3 @@ export const ISubSectionSchema = new Schema<ISubSection>(
         plannedRevisionSchedule: { type: [Date], required: true, default: null }
     }
 );
-
-export const SubsectionModel: Model<ISubSection> = model(
-    'subsections',
-    ISubSectionSchema
-);

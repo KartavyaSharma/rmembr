@@ -1,8 +1,12 @@
 import Section from "../section";
 import { nanoid } from "nanoid";
 import { ISubSection } from "../../../models/db/planner_models/subsections";
-import { IDeleteSubsectionResponse, ICreateSubsectionResponse, IUpdateSubsectionResponse } from "../../../models/response/response_models";
 import Subsection from "./subsection";
+import {
+    IDeleteSubsectionResponse,
+    ICreateSubsectionResponse,
+    IUpdateSubsectionResponse
+} from "../../../models/response/response_models";
 
 /**
  * Class represents a subsection group. Each section has a
@@ -39,7 +43,7 @@ export default class SubsectionGroup {
      * collection of subsections for each section. This function is 
      * only called when a new section is created.
      */
-     public async initialize(): Promise<void> {
+    public async initialize(): Promise<void> {
         /** Creates a new subsection store for this section. */
         // TODO: Implement
     }

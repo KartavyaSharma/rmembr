@@ -132,7 +132,6 @@ export default class Subsection {
         return {} as ISubSection;
     }
 
-
     /**
      * Updates the status of a subsection. Based on the current revision schedule.
      */
