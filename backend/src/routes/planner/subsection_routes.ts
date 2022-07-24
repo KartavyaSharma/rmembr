@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Routes } from "../routes";
-import { User } from "../../rmembr/user/user";
+import User from "../../rmembr/user/user";
 import { Utils } from "../../utils/server_utils";
 import { ISubSection } from "../../models/db/planner_models/subsections";
 import Subsection from "../../rmembr/planner/subsection/subsection";

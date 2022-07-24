@@ -1,5 +1,5 @@
 import { ICourse } from "../../models/db/planner_models/course";
-import { User } from "../user/user";
+import User from "../user/user";
 import { nanoid } from "nanoid";
 import { CourseGroupModel, ICourseGroup } from "../../models/db/planner_models/course_group";
 import { Exception } from "../../utils/errors/exception";

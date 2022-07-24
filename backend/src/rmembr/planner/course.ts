@@ -5,7 +5,7 @@ import { CourseGroupModel, ICourseGroup } from "../../models/db/planner_models/c
 import { Exception } from "../../utils/errors/exception";
 import { ErrorCode } from "../../utils/errors/error_codes";
 import { ICreateCourseResponse, IDeleteCourseResponse } from "../../models/response/response_models";
-import { User } from "../user/user";
+import User from "../user/user";
 import CourseGroup from "./course_group";
 
 /**

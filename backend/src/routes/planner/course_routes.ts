@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Routes } from "../routes";
-import { User } from "../../rmembr/user/user";
+import User from "../../rmembr/user/user";
 import { ICourse } from "../../models/db/planner_models/course";
 import { Utils } from "../../utils/server_utils";
 import { IUpdateCourseRequest } from "../../models/request/request_models";

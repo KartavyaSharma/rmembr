@@ -11,7 +11,7 @@ import { Exception } from './utils/errors/exception'
 import { Utils } from './utils/server_utils'
 import { Db } from './utils/database/db';
 import { Auth } from './rmembr/auth/auth_engine';
-import { User } from './rmembr/user/user';
+import User from './rmembr/user/user';
 
 
 class App {

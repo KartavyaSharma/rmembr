@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Routes } from "../routes";
-import { User } from '../../rmembr/user/user';
+import User from '../../rmembr/user/user';
 import { Utils } from '../../utils/server_utils';
 import { IDeleteUserResponse } from '../../models/response/response_models';
 import CourseRoutes from "./course_routes";

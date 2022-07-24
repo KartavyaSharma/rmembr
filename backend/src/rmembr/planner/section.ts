@@ -6,7 +6,7 @@ import { ICreateSectionResponse, IDeleteSectionResponse } from "../../models/res
 import { CourseGroupModel } from "../../models/db/planner_models/course_group";
 import { ICourseGroup } from "../../models/db/planner_models/course_group";
 import { ICourse } from "../../models/db/planner_models/course";
-import { User } from "../user/user";
+import User from "../user/user";
 import Course from "./course";
 import SubsectionGroup from "./subsection/subsection_group";
 

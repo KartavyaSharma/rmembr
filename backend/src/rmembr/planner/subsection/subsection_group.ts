@@ -79,7 +79,6 @@ export default class SubsectionGroup {
         return {} as ICreateSubsectionResponse;
     }
 
-
     /** 
      * Returns a subsection with a given ID.
      * @param id Subsection ID.

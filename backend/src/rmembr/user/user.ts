@@ -24,7 +24,7 @@ import { ISettings } from "../../models/db/user/settings";
  */
 
 @Utils.staticImplements<IUserClassStatic>()
-export class User implements IUserClass {
+export default class User implements IUserClass {
 
     /** User's ID */
     private _Id: string;
