@@ -13,10 +13,22 @@ export class Db {
     private _connection: Connection;
 
     /**
+     * Instance of this database.
+     */
+    private _instance: any;
+
+    /**
      * @returns the connection object for this DB instance.
      */
     public get connector(): Connection {
         return this._connection;
+    }
+
+    /**
+     * @returns the complete db connection state.
+     */
+    public get instance(): any {
+        return this._instance;
     }
 
     /**
@@ -41,14 +53,14 @@ export class Db {
         }
         try {
             if (mongoose.connection.readyState !== 1 && mongoose.connection.readyState !== 2) {
-                const dbConnection = await mongoose.connect(
+                this._instance = await mongoose.connect(
                     config.uri,
                     {
                         autoIndex: true,
                         serverSelectionTimeoutMS: 5000,
                     }
                 );
-                this._connection = dbConnection.connection;
+                this._connection = this.instance.connection;
             }
         } catch (error) {
             console.log(`Error connecting to DB: ${error}`);

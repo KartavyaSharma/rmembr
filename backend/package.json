@@ -2,15 +2,15 @@
   "name": "rmembr-server",
   "version": "1.0.0",
   "description": "Backend services supporting rmembr.",
-  "main": "src/index.js",
+  "main": "src/server.ts",
   "scripts": {
     "build": "tsc --project ./",
-    "start:dev": "NODE_ENV=development nodemon src/server.ts",
-    "start:prod": "NODE_ENV=production node dist/server.js",
-    "test": "NODE_ENV=test jest",
-    "test:watch": "NODE_ENV=test jest --watch",
-    "test:coverage": "NODE_ENV=testjest --coverage",
-    "test:coverage:watch": "NODE_ENV=test jest --coverage --watch",
+    "start:dev": "cross-env NODE_ENV=development nodemon src/server.ts",
+    "start:prod": "cross-env NODE_ENV=production node dist/server.js",
+    "test": "cross-env NODE_ENV=test && jest",
+    "test:watch": "cross-env NODE_ENV=test && jest --watch",
+    "test:coverage": "cross-env NODE_ENV=test jest --coverage",
+    "test:coverage:watch": "cross-env NODE_ENV=test jest --coverage --watch",
     "test:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --config eslintrc.js"
   },
   "repository": {

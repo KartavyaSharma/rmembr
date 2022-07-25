@@ -14,7 +14,7 @@ import { Auth } from './rmembr/auth/auth_engine';
 import User from './rmembr/user/user';
 
 
-class App {
+export default class App {
 
     /** 
      * Creats new express server and runs the setup, routes, 
@@ -34,14 +34,20 @@ class App {
     async setup(): Promise<void> {
         // Sets up server to use process.env.[...]
         dotenv.config();
-        // Connects to the database
-        const newDb = new Db();
-        await newDb.connect(config.get('database'));
+        // Sets up database connection
+        await this.setupDb();
         // Other middleware required to be setup before the routes
         this._server.use(express.json());
         this._server.use(helmet());
         this._server.use(bodyParser.json());
 
+    }
+
+    async setupDb(): Promise<void> {
+        // Connects to the database
+        const newDb = new Db();
+        await newDb.connect(config.get('database'));
+        this._db = newDb;
     }
 
     /** Setup routes on this._server. */
@@ -70,9 +76,19 @@ class App {
     }
 
     /**
+     * @returns this._db object.
+     */
+    public get db(): Db {
+        return this._db;
+    }
+
+    /**
      * Express server object.
      */
     private _server: Express;
-}
 
-export default new App();
+    /**
+     * DB instance.
+     */
+    private _db: Db;
+}

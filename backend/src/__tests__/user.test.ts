@@ -1,27 +1,40 @@
 import { IUser } from "../models/db/user/user";
 import { faker } from '@faker-js/faker';
-import { ILoginResponse } from "../models/response/response_models";
 import { Auth } from "../rmembr/auth/auth_engine";
-import app from "../app";
-import User from "../rmembr/user/user";
+import App from "../app";
 import supertest from "supertest";
-import mongoose from "mongoose";
 
-let supertestApp;
+let supertestApp: any;
+let serverInstance: App = new App();
 
-beforeAll(async () => {
-    supertestApp = supertest(app);
-})
 
 describe("Create users", () => {
-    it("Should return a 200 status code", async () => {
+    
+    beforeAll(() => {
+        supertestApp = supertest(serverInstance.server);
+        jest.setTimeout(100000);
+    }, 100000);
 
-    });
+    const modelUser: IUser = {
+        email: faker.internet.email(),
+        name: faker.name.findName(),
+        password: faker.internet.password()
+    }
+
     it("Should create a new user successfully", async () => {
-        
-    });
-});
-
-afterAll(async () => {
-    await mongoose.connection.close();
+        await supertestApp.
+            post("/auth/create-user/").
+            send(modelUser).
+            expect(200).
+            expect("Content-Type", /application\/json/).
+            expect((res: any) => {
+                const token = res.body.payload.token;
+                expect(token).toBeDefined();
+                expect(Auth.verifyToken(token).email).toEqual(modelUser.email);
+            });
+    }, 100000);
+    
+    afterAll(async () => {
+        await serverInstance.db.connector.close();
+    }, 100000);
 });
