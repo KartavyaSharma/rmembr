@@ -29,7 +29,7 @@ export default class SubsectionGroup {
     private _sectionId: string;
 
     /** Set contianing IDs of all contained subsections. */
-    private _subsections: Subsection[];
+    private _subsections: ISubSection[];
 
     /**
      * @returns this subsection group's ID.
@@ -48,8 +48,19 @@ export default class SubsectionGroup {
     /**
      * @returns a list of all subsections in this subsection group.
      */
-    public get subsections(): Subsection[] {
+    public get subsections(): ISubSection[] {
         return this._subsections;
+    }
+
+    /**
+     * @return this instance of SubsectionGroup as a JSON object.
+     */
+    public get object(): ISubsectionGroup {
+        return {
+            _id: this._id,
+            _sectionId: this._sectionId,
+            subsections: this._subsections
+        }
     }
 
     /** 
@@ -67,7 +78,7 @@ export default class SubsectionGroup {
      * collection of subsections for each section. This function is 
      * only called when a new section is created.
      */
-    public async initialize(): Promise<ISubsectionGroup> {
+    public async initialize(): Promise<SubsectionGroup> {
         /** Creates a new subsection store for this section. */
         /** Check if another subsection group already exists for this section. */
         const groupExists: ISubsectionGroup = await SubsectionGroupModel.findOne({ _sectionId: this._sectionId });
@@ -81,7 +92,7 @@ export default class SubsectionGroup {
             subsections: []
         }
         const created = await SubsectionGroupModel.create(newSubsectionGroup);
-        return newSubsectionGroup;
+        return this;
     }
 
     /** 
@@ -99,8 +110,9 @@ export default class SubsectionGroup {
      * @param id Subsection ID.
      * @param sectionId Section ID.
      */
-    public static async get(id: string, sectionId: string): Promise<ISubSection> {
-        return Subsection.get(id, sectionId).object;
+    public static async get(id: string, sectionId: string): Promise<SubsectionGroup> {
+        // TODO : Implement
+        return new SubsectionGroup({} as ISection);
     }
 
     /** 

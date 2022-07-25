@@ -18,10 +18,10 @@ describe("Create users", () => {
                 { token: testToken } as ILoginResponse
             );
         await testUser.createUser();
-        const spyCreatedUser = spy.mock.results[0].value;
-        console.log(typeof spyCreatedUser);
+        let spyCreatedUser: string = spy.mock.results[0].value.token;
+        console.log(spyCreatedUser);
         expect(spy).toHaveBeenCalledTimes(1);
-        expect(spyCreatedUser.token).toEqual(testToken);
+        expect(spyCreatedUser).toEqual(testToken);
         spy.mockReset();
     });
 });

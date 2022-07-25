@@ -3,12 +3,15 @@ import { Routes } from "../routes";
 import User from "../../rmembr/user/user";
 import { Utils } from "../../utils/server_utils";
 import { ISection } from "../../models/db/planner_models/sections";
-import { ICreateSectionResponse, IDeleteSectionResponse, IGetSectionResponse } from "../../models/response/response_models";
 import { IUpdateSectionRequest } from "../../models/request/request_models";
 import SubsectionGroup from "../../rmembr/planner/subsection/subsection_group";
 import SubsectionRoutes from "./subsection_routes";
 import Section from "../../rmembr/planner/section";
-import { ISubsectionGroup } from "../../models/db/planner_models/subsection_group";
+import {
+    ICreateSectionResponse,
+    IDeleteSectionResponse,
+    IGetSectionResponse
+} from "../../models/response/response_models";
 
 export default class SectionRoutes extends Routes {
 
@@ -25,7 +28,7 @@ export default class SectionRoutes extends Routes {
         this._routes.get('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
             let sectionObj: Section;
-            let subsectionGroupObj: ISubsectionGroup;
+            let subsectionGroupObj: SubsectionGroup;
             try {
                 Utils.validateObject(req.params, 'sectionId');
                 Utils.validateObject(req.params, 'courseId');
@@ -35,14 +38,14 @@ export default class SectionRoutes extends Routes {
                     req.params.courseId,
                     req.params.sectionId
                 );
-                subsectionGroupObj = await new SubsectionGroup(sectionObj.object).initialize();
+                subsectionGroupObj = await SubsectionGroup.get(sectionObj.subsectionGroupId, sectionObj.id);
             } catch (err) {
                 return next(err);
             }
             Utils.sendRes<IGetSectionResponse>(res,
                 {
                     section: sectionObj.object,
-                    subsections: subsectionGroupObj
+                    subsections: subsectionGroupObj.object,
                 } as IGetSectionResponse
             );
         });
@@ -51,7 +54,8 @@ export default class SectionRoutes extends Routes {
         this._routes.post('/', async (req: Request, res: Response, next: NextFunction) => {
             let newUser: User;
             let newSection: Section;
-            let resSection: ICreateSectionResponse;
+            let resSection: ISection;
+            let newSubsectionGroup: SubsectionGroup;
             try {
                 Utils.validateObjectDeep<ICreateSectionResponse>(req.body);
                 Utils.validateObject(req.params, 'courseId');
@@ -63,10 +67,14 @@ export default class SectionRoutes extends Routes {
                     subsectionGroupId: null
                 });
                 resSection = await newSection.register(newUser.id);
+                newSubsectionGroup = await new SubsectionGroup(newSection.object).initialize();
             } catch (err) {
                 next(err);
             }
-            Utils.sendRes<ICreateSectionResponse>(res, resSection);
+            Utils.sendRes<ICreateSectionResponse>(res, {
+                section: resSection,
+                subsections: newSubsectionGroup.object
+            } as ICreateSectionResponse);
         })
         /** ========== DELETE ========== */
         this._routes.delete('/:sectionId', async (req: Request, res: Response, next: NextFunction) => {

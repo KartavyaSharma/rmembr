@@ -5,10 +5,13 @@
   "main": "src/index.js",
   "scripts": {
     "build": "tsc --project ./",
-    "start:dev": "nodemon src/server.ts",
-    "start:prod": "node dist/server.js",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --config eslintrc.js",
-    "test": "jest --watchAll --coverage"
+    "start:dev": "NODE_ENV=development nodemon src/server.ts",
+    "start:prod": "NODE_ENV=production node dist/server.js",
+    "test": "NODE_ENV=test jest",
+    "test:watch": "NODE_ENV=test jest --watch",
+    "test:coverage": "NODE_ENV=testjest --coverage",
+    "test:coverage:watch": "NODE_ENV=test jest --coverage --watch",
+    "test:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --config eslintrc.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +40,7 @@
     "@typescript-eslint/parser": "^5.23.0",
     "babel-jest": "^28.1.0",
     "chai": "^4.3.6",
+    "cross-env": "^7.0.3",
     "eslint": "^8.15.0",
     "jest": "^28.1.0",
     "mocha": "^10.0.0",

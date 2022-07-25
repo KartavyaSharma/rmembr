@@ -79,6 +79,7 @@ export interface IGetSectionResponse {
 export interface ICreateSectionResponse {
     /** Returns created Section object */
     section: ISection;
+    subsections: ISubsectionGroup;
 }
 /** DELETE /sections/:sectionId */
 export interface IDeleteSectionResponse {

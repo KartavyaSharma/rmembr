@@ -91,7 +91,7 @@ export default class Section {
      * @param userId for user associated with this section.
      * @returns Section object wrapped in a ICreateSectionResponse object.
      */
-    public async register(userId: string): Promise<ICreateSectionResponse> {
+    public async register(userId: string): Promise<ISection> {
         const newSubsectionGroup: SubsectionGroup = new SubsectionGroup(this.object);
         const newSection: ISection = {
             _id: this._id,
@@ -101,7 +101,7 @@ export default class Section {
         }
         newSubsectionGroup.initialize();
         const updateSection: ISection = await Course.addSection(newSection, userId);
-        return { section: updateSection } as ICreateSectionResponse
+        return updateSection;
     }
 
     /** 
