@@ -22,7 +22,10 @@ export default class App {
      * */
     constructor() {
         this._server = express();
-        this.setup().then(() => {
+    }
+
+    async initialize(): Promise<void> {
+        await this.setup().then(() => {
             this.routes();
             this.middleware();
         });

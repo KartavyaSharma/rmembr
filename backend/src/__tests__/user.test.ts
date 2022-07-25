@@ -10,7 +10,8 @@ let serverInstance: App = new App();
 
 describe("Create users", () => {
     
-    beforeAll(() => {
+    beforeAll(async () => {
+        await serverInstance.initialize();
         supertestApp = supertest(serverInstance.server);
         jest.setTimeout(100000);
     }, 100000);
