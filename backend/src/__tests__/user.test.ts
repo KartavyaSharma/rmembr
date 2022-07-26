@@ -68,7 +68,7 @@ describe("User tests", () => {
             expect("Content-Type", /application\/json/);
     });
 
-    it("Check if user have valid course group", async () => {
+    it("Check if user has valid course group", async () => {
         const user: IUser = await UserModel.findOne({ email: modelUser.email });
         expect(user.courseGroupId).toBeDefined();
     });
