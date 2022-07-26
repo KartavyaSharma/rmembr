@@ -7,7 +7,7 @@ let supertestApp: any;
 let app: App;
 let userSetupBundle: { token: string, user: IUser };
 
-describe("Course group tests", () => {
+describe("Course Group Tests", () => {
 
     beforeAll(async () => {
         app = await TestUtils.setupServer();
