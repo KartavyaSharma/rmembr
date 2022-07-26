@@ -52,6 +52,7 @@ export class Db {
             });
         }
         try {
+            console.log(config.uri);
             if (mongoose.connection.readyState !== 1 && mongoose.connection.readyState !== 2) {
                 this._instance = await mongoose.connect(
                     config.uri,
