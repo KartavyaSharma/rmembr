@@ -2,6 +2,9 @@ import App from "../app";
 import TestUtils from "./utils/utils";
 import supertest from "supertest";
 import { IUser } from "../models/db/user/user";
+import { ICourse } from "../models/db/planner_models/course";
+import { faker } from "@faker-js/faker";
+import User from "../rmembr/user/user";
 
 let supertestApp: any;
 let app: App;
@@ -28,6 +31,28 @@ describe("Course Test", () => {
                 expect(payload.name).toEqual(`${userSetupBundle.user.name}'s Courses`);
                 expect(payload.courses).toBeDefined();
                 expect(payload.courses.length).toEqual(0);
+            });
+    });
+
+    it("User adds a course to their course group", async () => {
+        const course = {
+            name: faker.lorem.word(),
+        }
+        await supertestApp.
+            post("/planner/courses").
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            send(course).
+            expect(200).
+            expect("Content-Type", /application\/json/).
+            expect(async (res: any) => {
+                const payload: { course: ICourse } = res.body.payload;
+                expect(payload).toBeDefined();
+                expect(payload.course).toBeDefined();
+                expect(payload.course.name).toBeDefined();
+                expect(payload.course.name).toEqual(course.name);
+                expect(payload.course._courseGroupId).toEqual(
+                    (await User.getUser(userSetupBundle.user.email)).courseGroupId
+                );
             });
     });
 
