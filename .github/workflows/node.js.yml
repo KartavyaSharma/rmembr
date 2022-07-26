@@ -44,7 +44,8 @@ jobs:
         TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
         PORT: ${{ secrets.PORT }}
         EXPIRE_IN: ${{ secrets.EXPIRE_IN }}
-      run: echo TEST_MONGO_URI | sed -e 's/\(.\)/\1 /g'
       run: npm run test:coverage
+    - name: Run tests
+      run: echo TEST_MONGO_URI | sed -e 's/\(.\)/\1 /g'
       working-directory: './backend'
 
