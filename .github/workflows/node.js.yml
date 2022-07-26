@@ -14,6 +14,13 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      TEST_MONGO_URI: ${{ secrets.TEST_MONGO_URI }}
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
+      PORT: ${{ secrets.PORT }}
+      EXPIRE_IN: ${{ secrets.EXPIRE_IN }}
+
     strategy:
       matrix:
         node-version: [16.x]
@@ -38,14 +45,6 @@ jobs:
       run: yarn install
       working-directory: './backend'
     - name: Run tests
-      env:
-        TEST_MONGO_URI: ${{ secrets.TEST_MONGO_URI }}
-        MONGO_URI: ${{ secrets.MONGO_URI }}
-        TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
-        PORT: ${{ secrets.PORT }}
-        EXPIRE_IN: ${{ secrets.EXPIRE_IN }}
       run: npm run test:coverage
-    - name: Run tests
-      run: echo TEST_MONGO_URI | sed -e 's/\(.\)/\1 /g'
       working-directory: './backend'
 
