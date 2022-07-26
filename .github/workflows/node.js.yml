@@ -26,6 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: ''
+    - name: Install yarn
+      run: npm install -g yarn
     - run: yarn install --frozen-lockfile
       working-directory: './backend'
     - run: npm run test
