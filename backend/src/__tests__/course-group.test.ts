@@ -13,7 +13,6 @@ describe("Course Group Tests", () => {
         app = await TestUtils.setupServer();
         supertestApp = supertest(app.server);
         userSetupBundle = await TestUtils.setupUser(app);
-        jest.setTimeout(100000);
     });
 
     it("Check if the user has the correct course group", async () => {
@@ -30,11 +29,11 @@ describe("Course Group Tests", () => {
                 expect(payload.courses).toBeDefined();
                 expect(payload.courses.length).toEqual(0);
             });
-    }, 10000);
+    });
 
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);
         await app.db.connector.close();
-    }, 100000);
+    });
 })
 

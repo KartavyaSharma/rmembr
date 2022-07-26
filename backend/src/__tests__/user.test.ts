@@ -17,8 +17,7 @@ describe("User tests", () => {
     beforeAll(async () => {
         app = await TestUtils.setupServer();
         supertestApp = supertest(app.server);
-        jest.setTimeout(100000);
-    }, 100000);
+    });
 
     const modelUser: IUser = {
         email: faker.internet.email(),
@@ -37,7 +36,7 @@ describe("User tests", () => {
                 expect(token).toBeDefined();
                 expect(Auth.verifyToken(token).email).toEqual(modelUser.email);
             });
-    }, 100000);
+    });
 
     it("Login with a valid user", async() => {
         const validUser: IUser = {
@@ -98,5 +97,5 @@ describe("User tests", () => {
     
     afterAll(async () => {
         await app.db.connector.close();
-    }, 100000);
+    });
 });
