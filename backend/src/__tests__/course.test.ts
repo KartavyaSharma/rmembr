@@ -56,6 +56,15 @@ describe("Course Test", () => {
             });
     });
 
+    it("User adds an invalid course to their course group", async () => {
+        await supertestApp.
+            post("/planner/courses").
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            send({}).
+            expect(400).
+            expect("Content-Type", /application\/json/);
+    });
+
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);
         await app.db.connector.close();
