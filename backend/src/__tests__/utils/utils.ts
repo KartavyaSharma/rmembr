@@ -8,12 +8,21 @@ import { Auth } from "../../rmembr/auth/auth_engine";
  */
 export default class TestUtils {
 
+    /** 
+     * Initializes the server with all the routes and 
+     * the server instance. 
+     * */
     public static async setupServer(): Promise<App> {
         const app: App = new App();
         await app.initialize();
         return app;
     }
 
+    /**
+     * Sets up the user for tests.
+     * @param serverInstance current instance of the running server
+     * @returns the token for the generated user and the user object itself.
+     */
     public static async setupUser(serverInstance: App): Promise<{ token: string, user: IUser }> {
         const modelUser: IUser = {
             email: faker.internet.email(),
@@ -36,6 +45,12 @@ export default class TestUtils {
         return { token: resToken, user: modelUser };
     }
 
+    /**
+     * Logs in the user and returns the token.
+     * @param serverInstance current instance of the running server
+     * @param user user credential required for logic process
+     * @returns a token for the newly logged in user
+     */
     public static async loginUser(serverInstance: App, user: IUser): Promise<{ token: string }> {
         const supertestApp = supertest(serverInstance.server);
         let resToken: string;
@@ -56,6 +71,13 @@ export default class TestUtils {
         return { token: resToken };
     }
 
+    /**
+     * Destroys user from the server.
+     * @param serverInstance current instance of the running server
+     * @param user user credentials requried for identifying the user to be deleted
+     * @param token token required for deleting the user
+     * @returns a promise that resolves when the user is deleted
+     */
     public static async destroyUser(serverInstance: App, user: IUser, token: string): Promise<void> {
         const supertestApp = supertest(serverInstance.server);
         await supertestApp.
@@ -69,5 +91,17 @@ export default class TestUtils {
                 expect(deleteString).toBeDefined();
                 expect(deleteString).toEqual(`User ${user.name} deleted.`);
             });
+    }
+
+    public static async setupCourse(): Promise<void> {
+
+    }
+
+    public static async setupSection(): Promise<void> {
+
+    }
+
+    public static async setupSubsection(): Promise<void> {
+
     }
 }
