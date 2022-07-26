@@ -3,10 +3,11 @@ import { faker } from '@faker-js/faker';
 import { Auth } from "../rmembr/auth/auth_engine";
 import { UserModel } from "../models/db/user/user";
 import App from "../app";
+import TestUtils from "./utils/utils";
 import supertest from "supertest";
 
 let supertestApp: any;
-let serverInstance: App = new App();
+let app: App;
 
 
 describe("User tests", () => {
@@ -14,8 +15,8 @@ describe("User tests", () => {
     let accessToken: string;
     
     beforeAll(async () => {
-        await serverInstance.initialize();
-        supertestApp = supertest(serverInstance.server);
+        app = await TestUtils.setupServer();
+        supertestApp = supertest(app.server);
         jest.setTimeout(100000);
     }, 100000);
 
@@ -96,6 +97,6 @@ describe("User tests", () => {
     });
     
     afterAll(async () => {
-        await serverInstance.db.connector.close();
+        await app.db.connector.close();
     }, 100000);
 });
