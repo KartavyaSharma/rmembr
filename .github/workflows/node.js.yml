@@ -28,7 +28,7 @@ jobs:
         cache: ''
     - name: Install yarn
       run: npm install -g yarn
-    - run: yarn install --frozen-lockfile
+    - run: yarn install
       working-directory: './backend'
     - run: npm run test
       working-directory: './backend'
