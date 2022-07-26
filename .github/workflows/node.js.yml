@@ -38,7 +38,7 @@ jobs:
       run: yarn install
       working-directory: './backend'
     - name: check
-      run: echo MYSECRET | sed -e 's/\(.\)/\1 /g'
+      run: echo TEST_MONGO_URI | sed -e 's/\(.\)/\1 /g'
     - name: Run tests
       env:
         TEST_MONGO_URI: ${{ secrets.TEST_MONGO_URI }}
