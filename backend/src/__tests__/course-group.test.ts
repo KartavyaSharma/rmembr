@@ -30,10 +30,11 @@ describe("Course group tests", () => {
                 expect(payload.courses).toBeDefined();
                 expect(payload.courses.length).toEqual(0);
             });
-    });
+    }, 10000);
 
     afterAll(async () => {
+        await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);
         await app.db.connector.close();
-    }, 10000);
+    }, 100000);
 })
 
