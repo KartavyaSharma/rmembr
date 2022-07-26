@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import config from 'config';
 import { hashSync, compareSync } from 'bcryptjs';
-import User from '../user/user';
 import { IUser } from '../../models/db/user/user';
 import { Exception } from '../../utils/errors/exception';
 import { ErrorCode } from '../../utils/errors/error_codes';
+import jwt from 'jsonwebtoken';
+import config from 'config';
+import User from '../user/user';
 
 /**
  * Class contains all the methods used to initiate new user creation

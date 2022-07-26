@@ -167,7 +167,7 @@ export default class User implements IUserClass {
             return err;
         }
         return {
-            user: ` User ${user.name} deleted.`,
+            user: `User ${user.name} deleted.`,
             courseGroup: `Course group ${user.name}'s courses deleted.`
         }
     }

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { IUser } from "./db/user/user";
 import { ILoginResponse, ICourseGroupResponse, IDeleteUserResponse } from "./response/response_models";
-import { User } from "../rmembr/user/user";
+import User from "../rmembr/user/user";
 
 /** 
  * Contains all server models other than the ones defined

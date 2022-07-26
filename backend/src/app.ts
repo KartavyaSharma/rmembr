@@ -25,10 +25,9 @@ export default class App {
     }
 
     async initialize(): Promise<void> {
-        await this.setup().then(() => {
-            this.routes();
-            this.middleware();
-        });
+        await this.setup();
+        this.routes();
+        this.middleware();
     }
 
     /**
