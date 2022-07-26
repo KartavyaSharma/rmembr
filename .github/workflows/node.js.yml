@@ -44,8 +44,6 @@ jobs:
       if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
       working-directory: './backend'
-    - name: Test
-      run: echo $TEST_MONGO_URI | sed -e 's/\(.\)/\1 /g'
     - name: Run tests
       run: npm run test:coverage
       working-directory: './backend'
