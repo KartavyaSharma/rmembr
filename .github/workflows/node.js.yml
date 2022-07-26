@@ -37,6 +37,13 @@ jobs:
       if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
       working-directory: './backend'
+    - name: Set environment variables
+      env:
+        TEST_MONGO_URI: ${{ secrets.TEST_MONGO_URI }}
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
+        PORT: ${{ secrets.PORT }}
+        EXPIRE_IN: ${{ secrets.EXPIRE_IN }}
     - name: Run tests
       run: npm run test:coverage
       working-directory: './backend'
