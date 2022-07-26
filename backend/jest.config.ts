@@ -6,6 +6,8 @@ const config: Config.InitialOptions = {
 	verbose: true,
 	modulePathIgnorePatterns: [
 		'<rootDir>/config/',
+		'<rootDir>/node_modules/',
+		'<rootDir>/src/__tests__/utils/',
 	],
 	globalTeardown: '<rootDir>/test-teardown-globals.js'
 }
