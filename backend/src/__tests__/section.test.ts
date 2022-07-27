@@ -5,13 +5,16 @@ import { IUser } from "../models/db/user/user";
 import { ICourse } from "../models/db/planner_models/course";
 import { faker } from "@faker-js/faker";
 import { ICreateSectionResponse } from "../models/response/response_models";
+import { ISection } from "../models/db/planner_models/sections";
 
 let supertestApp: any;
 let app: App;
 let userSetupBundle: { token: string, user: IUser };
-let createdCourse: ICourse;
 
 describe("Section Test", () => {
+
+    let createdCourse: ICourse;
+    let createdSection: ISection;
 
     beforeAll(async () => {
         app = await TestUtils.setupServer();
@@ -46,14 +49,28 @@ describe("Section Test", () => {
             expect("Content-Type", /application\/json/).
             expect(async (res: any) => {
                 const payload: ICreateSectionResponse = res.body.payload;
+                createdSection = payload.section;
                 expect(payload).toBeDefined();
                 expect(payload.section).toBeDefined();
                 expect(payload.subsections).toBeDefined();
                 expect(payload.section.name).toBeDefined();
                 expect(payload.section.name).toEqual(newSection.name);
                 expect(payload.section._courseId).toEqual(createdCourse._id);
+                expect(payload.subsections.subsections.length).toEqual(0);
             });
     });
+
+    it.todo("User retrieves a section from their course");
+
+    it.todo("User updates a section from their course");
+
+    it.todo("User Deletes a section from their course");
+
+    it.todo("User tries to add an invalid section. (bad request)");
+
+    it.todo("User tries to retrieve a section that does not exist. (not found)");
+
+    it.todo("User tries to update a section that does not exist. (not found)");
 
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);
