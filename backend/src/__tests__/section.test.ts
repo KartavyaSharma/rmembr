@@ -20,7 +20,19 @@ describe("Section Test", () => {
         createdCourse = await TestUtils.setupCourse(app, userSetupBundle);
     });
 
-    test.todo("IMPLEMENT ME")
+    it("User's course should have an emply list of sections", async () => {
+        await supertestApp.
+            get(`/planner/courses/${createdCourse._id}`).
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            expect(200).
+            expect("Content-Type", /application\/json/).
+            expect((res: any) => {
+                const payload = res.body.payload;
+                expect(payload).toBeDefined();
+                expect(payload.sections).toBeDefined();
+                expect(payload.sections.length).toEqual(0);
+            });
+    });
 
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);
