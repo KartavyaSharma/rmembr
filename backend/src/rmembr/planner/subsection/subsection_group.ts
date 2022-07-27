@@ -78,10 +78,11 @@ export default class SubsectionGroup {
      * collection of subsections for each section. This function is 
      * only called when a new section is created.
      */
-    public async initialize(): Promise<SubsectionGroup> {
+    public async initialize(): Promise<void> {
         /** Creates a new subsection store for this section. */
         /** Check if another subsection group already exists for this section. */
         const groupExists: ISubsectionGroup = await SubsectionGroupModel.findOne({ _sectionId: this._sectionId });
+        console.log(groupExists);
         if (groupExists) {
             throw new Exception(ErrorCode.UnknownError, "Only one subsection group per section is allowed.");
         }
@@ -92,7 +93,6 @@ export default class SubsectionGroup {
             subsections: []
         }
         const created = await SubsectionGroupModel.create(newSubsectionGroup);
-        return this;
     }
 
     /** 

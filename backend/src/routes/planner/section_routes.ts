@@ -12,6 +12,7 @@ import {
     IDeleteSectionResponse,
     IGetSectionResponse
 } from "../../models/response/response_models";
+import { ISubsectionGroup } from "../../models/db/planner_models/subsection_group";
 
 export default class SectionRoutes extends Routes {
 
@@ -67,7 +68,7 @@ export default class SectionRoutes extends Routes {
                     subsectionGroupId: null
                 });
                 resSection = await newSection.register(newUser.id);
-                newSubsectionGroup = await new SubsectionGroup(newSection.object).initialize();
+                newSubsectionGroup = await SubsectionGroup.get(resSection.subsectionGroupId, resSection._id);
             } catch (err) {
                 next(err);
             }
