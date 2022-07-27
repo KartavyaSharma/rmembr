@@ -8,7 +8,7 @@ async function main() {
     app.server.listen(config.get('port'), () => {
         console.log(`Server is running on port ${config.get('port')}`);
     });
-};
+}
 
 /** Begin */
 main();

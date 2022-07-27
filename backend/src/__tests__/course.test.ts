@@ -1,14 +1,14 @@
 import App from "../app";
 import TestUtils from "./utils/utils";
 import supertest from "supertest";
-import { IUser } from "../models/db/user/user";
 import { ICourse } from "../models/db/planner_models/course";
 import { faker } from "@faker-js/faker";
 import User from "../rmembr/user/user";
+import { IUserSetupBundle } from "../models/server_models";
 
 let supertestApp: any;
 let app: App;
-let userSetupBundle: { token: string, user: IUser };
+let userSetupBundle: IUserSetupBundle;
 
 describe("Course Test", () => {
 

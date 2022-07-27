@@ -38,6 +38,11 @@ export interface ISuccessModel<ResponseType> {
     payload: ResponseType;
 }
 
+export interface IUserSetupBundle {
+    token: string, 
+    user: IUser
+}
+
 /** Set of interfaces defining the User class. */
 export interface IUserClass {
     createUser(): Promise<ILoginResponse>;

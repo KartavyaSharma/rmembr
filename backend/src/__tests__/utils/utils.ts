@@ -3,6 +3,8 @@ import { faker } from "@faker-js/faker";
 import { IUser } from "../../models/db/user/user";
 import supertest from "supertest";
 import { Auth } from "../../rmembr/auth/auth_engine";
+import { IUserSetupBundle } from "../../models/server_models";
+import { ICourse } from "../../models/db/planner_models/course";
 
 /**
  * Class containing helper function for tests.
@@ -86,16 +88,29 @@ export default class TestUtils {
             auth(token, { type: 'bearer' }).
             send(user).
             expect(200).
-            expect("Content-Type", /application\/json/).
-            expect((res: any) => {
-                const deleteString = res.body.payload.user;
-                expect(deleteString).toBeDefined();
-                expect(deleteString).toEqual(`User ${user.name} deleted.`);
-            });
+            expect("Content-Type", /application\/json/);
     }
 
-    public static async setupCourse(): Promise<void> {
-
+    /**
+     * Creates a course for the testing sequence.
+     * @param serverInstance current instance of the running server
+     * @param userSetupBundle bundle containing the user and token
+     * @returns a promise that resolves to the new course object
+     */
+    public static async setupCourse(serverInstance: App, userSetupBundle: IUserSetupBundle): Promise<ICourse> {
+        const newCourse = {
+            name: faker.lorem.word(),
+        }
+        let createdCourse: ICourse;
+        const supertestApp = supertest(serverInstance.server);
+        await supertestApp.
+            post("/planner/courses").
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            send(newCourse).
+            expect(async (res) => {
+                createdCourse = res.body.payload.course;
+            });
+        return createdCourse;
     }
 
     public static async setupSection(): Promise<void> {

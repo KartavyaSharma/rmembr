@@ -9,6 +9,7 @@ import User from "../rmembr/user/user";
 let supertestApp: any;
 let app: App;
 let userSetupBundle: { token: string, user: IUser };
+let createdCourse: ICourse;
 
 describe("Section Test", () => {
 
@@ -16,6 +17,7 @@ describe("Section Test", () => {
         app = await TestUtils.setupServer();
         supertestApp = supertest(app.server);
         userSetupBundle = await TestUtils.setupUser(app);
+        createdCourse = await TestUtils.setupCourse(app, userSetupBundle);
     });
 
     test.todo("IMPLEMENT ME")
