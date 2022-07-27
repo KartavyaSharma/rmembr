@@ -47,7 +47,5 @@ jobs:
     - name: Run tests
       run: npm run test:coverage
       working-directory: './backend'
-    - name: Test Reporter
-      uses: dorny/test-reporter@v1.5.0
 
 
