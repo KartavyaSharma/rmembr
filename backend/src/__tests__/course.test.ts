@@ -60,6 +60,35 @@ describe("Course Test", () => {
             });
     });
 
+    it("User requests a course", async () => {
+        await supertestApp.
+            get(`/planner/courses/${createdCourse._id}`).
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            expect(200).
+            expect("Content-Type", /application\/json/).
+            expect(async (res: any) => {
+                const payload = res.body.payload;
+                expect(payload).toBeDefined();
+                expect(payload.name).toBeDefined();
+                expect(payload.name).toEqual(createdCourse.name);
+                expect(payload._courseGroupId).toEqual(
+                    (await User.getUser(userSetupBundle.user.email)).courseGroupId
+                );
+                expect(payload._id).toEqual(createdCourse._id);
+            });
+    });
+
+    it("User requrest an invalid course", async () => {
+        await supertestApp.
+            get("/planner/courses/12345").
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            expect(404).
+            expect("Content-Type", /application\/json/).
+            expect((res: any) => {
+                console.log(res.body);
+            })
+    });
+
     it("User adds an invalid course to their course group", async () => {
         await supertestApp.
             post("/planner/courses").
@@ -92,6 +121,29 @@ describe("Course Test", () => {
                 expect(payload._id).toEqual(updatedCourse._id);
                 expect(payload._courseGroupId).toEqual(updatedCourse._courseGroupId);
             });
+    });
+
+    it("User tires to update an invalid course", async () => {
+        const invalidCourse: ICourse = {
+            _id: "12345",
+            _courseGroupId: null,
+            name: faker.lorem.words(),
+            sections: null,
+        }
+        await supertestApp.
+            patch("/planner/courses/12345").
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            send({ course: invalidCourse }).
+            expect(404).
+            expect("Content-Type", /application\/json/);
+    });
+
+    it("User tries to delete an invalid user", async () => {
+        await supertestApp.
+            delete("/planner/courses/12345").
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            expect(404).
+            expect("Content-Type", /application\/json/);
     });
 
     it("User deletes a course form their course group", async () => {
