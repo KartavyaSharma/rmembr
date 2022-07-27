@@ -40,6 +40,7 @@ export default class SectionRoutes extends Routes {
                     req.params.sectionId
                 );
                 subsectionGroupObj = await SubsectionGroup.get(sectionObj.subsectionGroupId, sectionObj.id);
+                console.log(subsectionGroupObj.object);
             } catch (err) {
                 return next(err);
             }
@@ -101,6 +102,7 @@ export default class SectionRoutes extends Routes {
             try {
                 Utils.validateObject(req.params, "sectionId");
                 Utils.validateObject(req.body, "section");
+                Utils.validateObject(req.body.section, "subsectionGroupId");
                 Utils.validateObjectDeep<IUpdateSectionRequest>(req.body);
                 newUser = req.body.user;
                 section = await Section.get(newUser.id, req.body.section._courseId, req.params.sectionId);

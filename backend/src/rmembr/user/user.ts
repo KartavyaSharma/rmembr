@@ -161,8 +161,8 @@ export default class User implements IUserClass {
      */
     public static async delete(user: User): Promise<IDeleteUserResponse> {
         try {
-            await UserModel.deleteOne({ _id: user.id })
-            await CourseGroupModel.deleteOne({ _userId: user.id })
+            await UserModel.deleteOne({ _id: user.id });
+            await CourseGroupModel.deleteOne({ _userId: user.id });
         } catch (err) {
             return err;
         }
