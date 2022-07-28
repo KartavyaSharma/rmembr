@@ -132,4 +132,12 @@ export default class SubsectionGroup {
         // TODO: Implement
         return {} as IDeleteSubsectionResponse;
     }
+
+    /**
+     * Destroys this subsection group.
+     * @param subsectionGroupId ID for subsection group being destroyed.
+     */
+    public static async destroy(subsectionGroupId: string): Promise<void> {
+        await SubsectionGroupModel.deleteOne({ _id: subsectionGroupId });
+    }
 }

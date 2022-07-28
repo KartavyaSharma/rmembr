@@ -12,6 +12,6 @@ export default {
         expiresIn: process.env.EXPIRE_IN
     },
     test: {
-        log: jest.fn()
+        log: console.log
     }
 }

@@ -1,6 +1,10 @@
+import dotenv from 'dotenv';
+import config from 'config';
+
+dotenv.config();
+
 global.console = {
-    log: jest.fn(),
-    // log: console.log,
+    log: config.get("test.log"),
     debug: console.debug,
     trace: console.trace
 }

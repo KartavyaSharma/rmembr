@@ -4,6 +4,7 @@ import { Exception } from "./errors/exception";
 import { ErrorCode } from "./errors/error_codes";
 import { Success } from "./success/success";
 import { ISuccessModel } from "../models/server_models";
+import { keys } from "ts-transformer-keys";
 
 /**
  * Utils containing frequently used methods.
@@ -57,10 +58,11 @@ export class Utils {
      * @param object to be validated.
      * @returns boolean value for if object implements <ObjectType>.
      */
-    public static validateObjectDeep<ObjectType>(object: ObjectType): void {
+    public static validateObjectDeep<ObjectType extends object>(object: ObjectType): void {
         // cast object as <ObjectType>
         object = object as ObjectType;
-        const propertyNames: string[] = Object.getOwnPropertyNames(object);
+        const propertyNames: any = keys<ObjectType>();
+        console.log(propertyNames);
         for (let i = 0; i < propertyNames.length; i++) {
             Utils.validateObject(object, propertyNames[i]);
         }

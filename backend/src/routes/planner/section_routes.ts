@@ -3,7 +3,7 @@ import { Routes } from "../routes";
 import User from "../../rmembr/user/user";
 import { Utils } from "../../utils/server_utils";
 import { ISection } from "../../models/db/planner_models/sections";
-import { IUpdateSectionRequest } from "../../models/request/request_models";
+import { ICreateSectionRequest, IUpdateSectionRequest } from "../../models/request/request_models";
 import SubsectionGroup from "../../rmembr/planner/subsection/subsection_group";
 import SubsectionRoutes from "./subsection_routes";
 import Section from "../../rmembr/planner/section";
@@ -12,7 +12,6 @@ import {
     IDeleteSectionResponse,
     IGetSectionResponse
 } from "../../models/response/response_models";
-import { ISubsectionGroup } from "../../models/db/planner_models/subsection_group";
 
 export default class SectionRoutes extends Routes {
 
@@ -59,7 +58,8 @@ export default class SectionRoutes extends Routes {
             let resSection: ISection;
             let newSubsectionGroup: SubsectionGroup;
             try {
-                Utils.validateObjectDeep<ICreateSectionResponse>(req.body);
+                console.log("req.body: ", req.body);
+                Utils.validateObjectDeep<ICreateSectionRequest>(req.body);
                 Utils.validateObject(req.params, 'courseId');
                 newUser = req.body.user;
                 newSection = new Section({

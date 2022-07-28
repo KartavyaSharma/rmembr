@@ -1,22 +1,20 @@
 {
   "compilerOptions": {
-      "module": "commonjs",
-      "esModuleInterop": true,
-      "target": "es6",
-      "noImplicitAny": true,
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "outDir": "dist",
-      "baseUrl": ".",
-      "experimentalDecorators": true,
-      "paths": {
-          "*": [
-              "node_modules/*"
-          ]
-      }
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "paths": {
+      "*": ["node_modules/*"]
+    },
+    "plugins": [
+      { "transform": "ts-transformer-keys/transformer" },
+    ]
   },
-  "include": [
-      "src/**/*",
-      "src/models/**/*"
-  ]
+  "include": ["src/**/*", "src/models/**/*"]
 }

@@ -6,6 +6,7 @@ import { ICourse } from "../models/db/planner_models/course";
 import { faker } from "@faker-js/faker";
 import { ICreateSectionResponse } from "../models/response/response_models";
 import { ISection } from "../models/db/planner_models/sections";
+import SubsectionGroup from "../rmembr/planner/subsection/subsection_group";
 
 let supertestApp: any;
 let app: App;
@@ -103,9 +104,28 @@ describe("Section Test", () => {
             });
     });
 
-    it.todo("User Deletes a section from their course");
+    it("User Deletes a section from their course", async () => {
+        await supertestApp.
+            delete(`/planner/courses/${createdCourse._id}/sections/${createdSection._id}`).
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            expect(200).
+            expect("Content-Type", /application\/json/).
+            expect(async (res: any) => {
+                const payload = res.body.payload;
+                expect(payload).toBeDefined();
+                expect(payload.sections).toBeDefined();
+                expect(payload.sections.length).toEqual(0);
+            });
+    });
 
-    it.todo("User tries to add an invalid section. (bad request)");
+    it("User tries to add an invalid section. (bad request)", async () => {
+        await supertestApp.
+            post(`/planner/courses/${createdCourse._id}/sections`).
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            send({}).
+            expect(400).
+            expect("Content-Type", /application\/json/);
+    });
 
     it.todo("User tries to retrieve a section that does not exist. (not found)");
 
@@ -113,6 +133,7 @@ describe("Section Test", () => {
 
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);
+        await SubsectionGroup.destroy(createdSection.subsectionGroupId);
         await app.db.connector.close();
     });
 });
