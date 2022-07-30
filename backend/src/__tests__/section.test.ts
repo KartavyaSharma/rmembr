@@ -51,7 +51,6 @@ describe("Section Test", () => {
             expect(async (res: any) => {
                 const payload: ICreateSectionResponse = res.body.payload;
                 createdSection = payload.section;
-                console.log(payload);
                 expect(payload).toBeDefined();
                 expect(payload.section).toBeDefined();
                 expect(payload.subsections).toBeDefined();
@@ -128,9 +127,9 @@ describe("Section Test", () => {
             expect("Content-Type", /application\/json/);
     });
 
-    // it.todo("User tries to retrieve a section that does not exist. (not found)");
+    it.todo("User tries to retrieve a section that does not exist. (not found)");
 
-    // it.todo("User tries to update a section that does not exist. (not found)");
+    it.todo("User tries to update a section that does not exist. (not found)");
 
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);

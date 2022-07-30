@@ -56,14 +56,13 @@ export class Utils {
      * Validation function to check if any objects implements
      * the <ObjectType> interface properly at runtime.
      * @param object to be validated.
+     * @param validator schema to validate the object with.
      * @returns boolean value for if object implements <ObjectType>.
      */
     public static async validateObjectDeep<ObjectType>(object: ObjectType, validator: ObjectSchema): Promise<void> {
         try {
-            console.log("Object was here: ", object);
             await validator.validateAsync(object);
         } catch (err) {
-            console.log("*********************************************")
             throw new Exception(
                 ErrorCode.ValidationError,
                 `${err}\nON OBJECT:\n${object}\nObject does not impelement proper interface.`

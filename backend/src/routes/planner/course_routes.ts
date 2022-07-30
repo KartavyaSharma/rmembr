@@ -117,7 +117,6 @@ export default class CourseRoutes extends Routes {
             try {
                 Utils.validateObject(req.params, 'courseId');
                 Utils.validateObject(req.body.payload, "course");
-                console.log("CourseID: ", req.params.courseId);
                 await Utils.validateObjectDeep<IUpdateCourseRequest>(req.body.payload, JUpdateCourseRequest);
                 newUser = req.body.user;
                 req.body.payload.course._courseGroupId = newUser.courseGroupId;

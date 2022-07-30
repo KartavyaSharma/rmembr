@@ -41,7 +41,6 @@ export default class SectionRoutes extends Routes {
                     req.params.sectionId
                 );
                 subsectionGroupObj = await SubsectionGroup.get(sectionObj.subsectionGroupId, sectionObj.id);
-                console.log(subsectionGroupObj.object);
             } catch (err) {
                 return next(err);
             }

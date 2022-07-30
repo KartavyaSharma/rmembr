@@ -105,7 +105,6 @@ describe("Course Test", () => {
             name: faker.lorem.words(),
             sections: createdCourse.sections
         }
-        console.log("Updated Course: ", updatedCourse);
         await supertestApp.
             patch(`/planner/courses/${createdCourse._id}`).
             auth(userSetupBundle.token, { type: 'bearer' }).

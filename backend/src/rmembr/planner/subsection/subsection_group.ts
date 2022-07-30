@@ -82,7 +82,6 @@ export default class SubsectionGroup {
         /** Creates a new subsection store for this section. */
         /** Check if another subsection group already exists for this section. */
         const groupExists: ISubsectionGroup = await SubsectionGroupModel.findOne({ _sectionId: this._sectionId });
-        console.log(groupExists);
         if (groupExists) {
             throw new Exception(ErrorCode.UnknownError, "Only one subsection group per section is allowed.");
         }
