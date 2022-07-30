@@ -157,6 +157,7 @@ export default class Course {
      */
     public static async get(courseId: string, userId: string): Promise<Course> {
         const course: ICourseGroup = await CourseGroupModel.findOne({ _userId: userId });
+        console.log("course: ", course);
         const courseObj = course.courses.find((obj) => { return obj._id == courseId });
         if (courseObj == undefined) {
             throw new Exception(ErrorCode.NotFound, `Cannot find course with id: ${courseId}`);

@@ -12,6 +12,8 @@ import {
     IDeleteSectionResponse,
     IGetSectionResponse
 } from "../../models/response/response_models";
+import { JCreateSectionRequest } from "../../models/request/request_validators";
+import { JUpdateSectionRequest } from "../../models/request/request_validators";
 
 export default class SectionRoutes extends Routes {
 
@@ -58,20 +60,19 @@ export default class SectionRoutes extends Routes {
             let resSection: ISection;
             let newSubsectionGroup: SubsectionGroup;
             try {
-                console.log("req.body: ", req.body);
-                Utils.validateObjectDeep<ICreateSectionRequest>(req.body);
                 Utils.validateObject(req.params, 'courseId');
+                await Utils.validateObjectDeep<ICreateSectionRequest>(req.body.payload, JCreateSectionRequest);
                 newUser = req.body.user;
                 newSection = new Section({
                     _id: null,
                     _courseId: req.params.courseId,
-                    name: req.body.name,
+                    name: req.body.payload.name,
                     subsectionGroupId: null
                 });
                 resSection = await newSection.register(newUser.id);
                 newSubsectionGroup = await SubsectionGroup.get(resSection.subsectionGroupId, resSection._id);
             } catch (err) {
-                next(err);
+                return next(err);
             }
             Utils.sendRes<ICreateSectionResponse>(res, {
                 section: resSection,
@@ -90,7 +91,7 @@ export default class SectionRoutes extends Routes {
                 section = await Section.get(newUser.id, req.params.courseId, req.params.sectionId);
                 sectionList = await section.delete(newUser.id);
             } catch (err) {
-                next(err);
+                return next(err);
             }
             Utils.sendRes<IDeleteSectionResponse>(res, sectionList)
         })
@@ -101,14 +102,15 @@ export default class SectionRoutes extends Routes {
             let newSection: Section;
             try {
                 Utils.validateObject(req.params, "sectionId");
-                Utils.validateObject(req.body, "section");
-                Utils.validateObject(req.body.section, "subsectionGroupId");
-                Utils.validateObjectDeep<IUpdateSectionRequest>(req.body);
+                Utils.validateObject(req.body.payload, "section");
+                Utils.validateObject(req.body.payload.section, "subsectionGroupId");
+                const payload: { section: ISection } = req.body.payload;
+                await Utils.validateObjectDeep<IUpdateSectionRequest>(payload, JUpdateSectionRequest);
                 newUser = req.body.user;
-                section = await Section.get(newUser.id, req.body.section._courseId, req.params.sectionId);
-                newSection = await section.update(new Section(req.body.section), newUser);
+                section = await Section.get(newUser.id, payload.section._courseId, req.params.sectionId);
+                newSection = await section.update(new Section(payload.section), newUser);
             } catch (err) {
-                next(err);
+                return next(err);
             }
             Utils.sendRes<ISection>(res, newSection.object as ISection);
         })

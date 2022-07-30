@@ -27,7 +27,7 @@ export const JCourseGroupCourseInfo: ObjectSchema = Joi.object<res_mods.ICourseG
     }
 );
 
-export const JCourseGroupResponse: ObjectSchema = Joi.object<res_mods.ICourseGroupResponse>(
+export const JCourseGroupResponse: ObjectSchema = Joi.object<res_mods.ICourseGroupResponse>().keys(
     {
         name: Joi.string().required(),
         courses: Joi.array().items(JCourseGroupCourseInfo).required(),
@@ -40,7 +40,7 @@ export const JCourseGroupResponse: ObjectSchema = Joi.object<res_mods.ICourseGro
 export const JCreateUser: ObjectSchema = Joi.object<res_mods.ICreateUser>(
     { token: Joi.string().required(), }
 );
-export const JCreateUserResponse: ObjectSchema = Joi.object<res_mods.ICreateUserResponse>(
+export const JCreateUserResponse: ObjectSchema = Joi.object<res_mods.ICreateUserResponse>().keys(
     {
         courseGroup: JCourseGroupResponse,
         token: Joi.string().required(),
@@ -54,25 +54,25 @@ export const JLoginResponse: ObjectSchema = Joi.object<res_mods.ILoginResponse>(
 
 /** ========== Course ========== */
 /** GET / */
-export const JGetCourseListResponse: ObjectSchema = Joi.object<res_mods.IGetCourseListResponse>(
+export const JGetCourseListResponse: ObjectSchema = Joi.object<res_mods.IGetCourseListResponse>().keys(
     {
         courseGroup: JCourseGroupResponse,
     }
 );
 /** POST / */
-export const JCreateCourseResponse: ObjectSchema = Joi.object<res_mods.ICreateCourseResponse>(
+export const JCreateCourseResponse: ObjectSchema = Joi.object<res_mods.ICreateCourseResponse>().keys(
     {
         course: Joi.object(JCourseSchema).required(),
     }
 );
 /** DELETE /courses/:courseId */
-export const JDeleteCourseResponse: ObjectSchema = Joi.object<res_mods.IDeleteCourseResponse>(
+export const JDeleteCourseResponse: ObjectSchema = Joi.object<res_mods.IDeleteCourseResponse>().keys(
     {
         courses: Joi.array().items(JCourseSchema).required(),
     }
 );
 /** PATCH /courses/:courseId */
-export const JUpdateCourseResponse: ObjectSchema = Joi.object<res_mods.IUpdateCourseResponse>(
+export const JUpdateCourseResponse: ObjectSchema = Joi.object<res_mods.IUpdateCourseResponse>().keys(
     {
         course: Joi.object(JCourseSchema).required(),
     }
@@ -81,27 +81,27 @@ export const JUpdateCourseResponse: ObjectSchema = Joi.object<res_mods.IUpdateCo
 
 /** ========== Section ========== */
 /** GET /sections/:sectionId */
-export const JGetSectionResponse: ObjectSchema = Joi.object<res_mods.IGetSectionResponse>(
+export const JGetSectionResponse: ObjectSchema = Joi.object<res_mods.IGetSectionResponse>().keys(
     {
         section: Joi.object(JSectionSchema).required(),
         subsections: Joi.object(JSubsectionGroupSchema).required(),
     }
 );
 /** POST /sections/:sectionId */
-export const JCreateSectionResponse: ObjectSchema = Joi.object<res_mods.ICreateSectionResponse>(
+export const JCreateSectionResponse: ObjectSchema = Joi.object<res_mods.ICreateSectionResponse>().keys(
     {
         section: Joi.object(JSectionSchema).required(),
         subsections: Joi.object(JSubsectionGroupSchema).required(),
     }
 );
 /** DELETE /sections/:sectionId */
-export const JDeleteSectionResponse: ObjectSchema = Joi.object<res_mods.IDeleteSectionResponse>(
+export const JDeleteSectionResponse: ObjectSchema = Joi.object<res_mods.IDeleteSectionResponse>().keys(
     {
         sections: Joi.array().items(JSectionSchema).required(),
     }
 );
 /** PATCH /sections/:sectionId */
-export const JUpdateSectionResponse: ObjectSchema = Joi.object<res_mods.IUpdateSectionResponse>(
+export const JUpdateSectionResponse: ObjectSchema = Joi.object<res_mods.IUpdateSectionResponse>().keys(
     {
         section: Joi.object(JSectionSchema).required(),
     }
@@ -110,19 +110,19 @@ export const JUpdateSectionResponse: ObjectSchema = Joi.object<res_mods.IUpdateS
 
 /** ========== Subsection ========== */
 /** POST /subsections/:subsectionId */
-export const JCreateSubsectionResponse: ObjectSchema = Joi.object<res_mods.ICreateSubsectionResponse>(
+export const JCreateSubsectionResponse: ObjectSchema = Joi.object<res_mods.ICreateSubsectionResponse>().keys(
     {
         subsection: Joi.object(JSubsectionSchema).required(),
     }
 );
 /** DELETE /subsections/:subsectionId */
-export const JDeleteSubsectionResponse: ObjectSchema = Joi.object<res_mods.IDeleteSubsectionResponse>(
+export const JDeleteSubsectionResponse: ObjectSchema = Joi.object<res_mods.IDeleteSubsectionResponse>().keys(
     {
         subsections: Joi.array().items(JSubsectionSchema).required(),
     }
 );
 /** PATCH /subsecitons/:subsectionId */
-export const JUpdateSubsectionResponse: ObjectSchema = Joi.object<res_mods.IUpdateSubsectionResponse>(
+export const JUpdateSubsectionResponse: ObjectSchema = Joi.object<res_mods.IUpdateSubsectionResponse>().keys(
     {
         subsection: Joi.object(JSubsectionSchema).required(),
     }

@@ -12,6 +12,7 @@ import {
 import SectionRoutes from "./section_routes";
 import CourseGroup from "../../rmembr/planner/course_group";
 import Course from "../../rmembr/planner/course";
+import { JUpdateCourseRequest } from "../../models/request/request_validators";
 
 export default class CourseRoutes extends Routes {
 
@@ -115,12 +116,13 @@ export default class CourseRoutes extends Routes {
             let newCourse: Course;
             try {
                 Utils.validateObject(req.params, 'courseId');
-                Utils.validateObject(req.body, "course");
-                Utils.validateObjectDeep<IUpdateCourseRequest>(req.body);
+                Utils.validateObject(req.body.payload, "course");
+                console.log("CourseID: ", req.params.courseId);
+                await Utils.validateObjectDeep<IUpdateCourseRequest>(req.body.payload, JUpdateCourseRequest);
                 newUser = req.body.user;
-                req.body.course._courseGroupId = newUser.courseGroupId;
+                req.body.payload.course._courseGroupId = newUser.courseGroupId;
                 course = await Course.get(req.params.courseId, newUser.id);
-                newCourse = await course.update(new Course(req.body.course), newUser);
+                newCourse = await course.update(new Course(req.body.payload.course), newUser);
             } catch (err) {
                 return next(err);
             }

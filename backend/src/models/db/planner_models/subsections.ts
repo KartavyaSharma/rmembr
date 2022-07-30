@@ -63,13 +63,13 @@ export const JStatusSchema: ObjectSchema = Joi.object<IStatus>(
     }
 );
 
-export const JRevisionScheduleSchema: ObjectSchema = Joi.object<IRevisionSchedule>(
+export const JRevisionScheduleSchema: ObjectSchema = Joi.object<IRevisionSchedule>().keys(
     {
         revs: Joi.array().items(JStatusSchema).required(),
     }
 );
 
-export const JSubsectionSchema: ObjectSchema = Joi.object<ISubSection>(
+export const JSubsectionSchema: ObjectSchema = Joi.object<ISubSection>().keys(
     {
         _id: Joi.string().required(),
         _sectionId: Joi.string().required(),
@@ -87,10 +87,10 @@ export const JQuestionsSchema: ObjectSchema = Joi.object<IQuestions>(
     }
 );
 
-export const JOfficeHoursSchema: ObjectSchema = Joi.object<IOfficeHours>(
+export const JOfficeHoursSchema: ObjectSchema = Joi.object<IOfficeHours>().keys(
     {
         req: Joi.boolean().required(),
-        questions: Joi.object(JQuestionsSchema).optional(),
+        questions: JQuestionsSchema.optional(),
     }
 );
 

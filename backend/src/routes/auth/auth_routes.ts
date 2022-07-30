@@ -9,6 +9,8 @@ import {
     ICreateUserResponse, 
     ILoginResponse
 } from '../../models/response/response_models';
+import { JCreateUserRequest } from '../../models/request/request_validators';
+import { JLoginRequest } from '../../models/request/request_validators';
 
 /**
  * Class defining authentication routes and associated functions.
@@ -40,7 +42,7 @@ export default class AuthRoutes extends Routes {
             let token: ILoginResponse;
             let courseGroup: ICourseGroupResponse;
             try {
-                Utils.validateObjectDeep<ICreateUserRequest>(req.body);
+                await Utils.validateObjectDeep<ICreateUserRequest>(req.body, JCreateUserRequest);
                 newUser = new User(User.extractUser(req));
                 token = await newUser.createUser();
                 courseGroup = await newUser.createNewCourseGroup();
@@ -57,7 +59,7 @@ export default class AuthRoutes extends Routes {
             let loginReq: ILoginRequest;
             let user: User;
             try {
-                Utils.validateObjectDeep<ILoginRequest>(req.body);
+                await Utils.validateObjectDeep<ILoginRequest>(req.body, JLoginRequest);
                 loginReq = req.body;
                 user = await Auth.authUser(loginReq.email, loginReq.password)
             } catch (err) {

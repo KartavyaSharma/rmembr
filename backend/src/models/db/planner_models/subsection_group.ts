@@ -11,7 +11,7 @@ export interface ISubsectionGroup {
     subsections: ISubSection[];
 }
 
-export const JSubsectionGroupSchema: ObjectSchema = Joi.object<ISubsectionGroup>(
+export const JSubsectionGroupSchema: ObjectSchema = Joi.object<ISubsectionGroup>().keys(
     {
         _id: Joi.string().required(),
         _sectionId: Joi.string().required(),

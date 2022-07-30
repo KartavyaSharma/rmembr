@@ -45,12 +45,13 @@ describe("Section Test", () => {
         await supertestApp.
             post(`/planner/courses/${createdCourse._id}/sections`).
             auth(userSetupBundle.token, { type: 'bearer' }).
-            send(newSection).
+            send({ payload: newSection }).
             expect(200).
             expect("Content-Type", /application\/json/).
             expect(async (res: any) => {
                 const payload: ICreateSectionResponse = res.body.payload;
                 createdSection = payload.section;
+                console.log(payload);
                 expect(payload).toBeDefined();
                 expect(payload.section).toBeDefined();
                 expect(payload.subsections).toBeDefined();
@@ -90,7 +91,7 @@ describe("Section Test", () => {
         await supertestApp.
             patch(`/planner/courses/${createdCourse._id}/sections/${createdSection._id}`).
             auth(userSetupBundle.token, { type: 'bearer' }).
-            send({ section: newSection }).
+            send({ payload: { section: newSection } }).
             expect(200).
             expect("Content-Type", /application\/json/).
             expect(async (res: any) => {
@@ -122,14 +123,14 @@ describe("Section Test", () => {
         await supertestApp.
             post(`/planner/courses/${createdCourse._id}/sections`).
             auth(userSetupBundle.token, { type: 'bearer' }).
-            send({}).
+            send({ payload: {} }).
             expect(400).
             expect("Content-Type", /application\/json/);
     });
 
-    it.todo("User tries to retrieve a section that does not exist. (not found)");
+    // it.todo("User tries to retrieve a section that does not exist. (not found)");
 
-    it.todo("User tries to update a section that does not exist. (not found)");
+    // it.todo("User tries to update a section that does not exist. (not found)");
 
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);

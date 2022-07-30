@@ -4,8 +4,7 @@ import { Exception } from "./errors/exception";
 import { ErrorCode } from "./errors/error_codes";
 import { Success } from "./success/success";
 import { ISuccessModel } from "../models/server_models";
-import { keys } from "ts-transformer-keys";
-import { is } from 'typescript-is';
+import { ObjectSchema } from "joi";
 
 /**
  * Utils containing frequently used methods.
@@ -59,28 +58,15 @@ export class Utils {
      * @param object to be validated.
      * @returns boolean value for if object implements <ObjectType>.
      */
-    public static validateObjectDeep<ObjectType>(object: ObjectType): void {
-        /**
-         * TRANSFORMER KEYS DON'T WORK ON GENERIC TYEPES, USING TYPESCRIPT-IS TO
-         * VALIDATE OBJECT DEEPER.
-         */
-        // interface wrapper {
-        //     main: ObjectType;
-        // }
-        // // cast object as <ObjectType>
-        // object = object as ObjectType;
-        // keys();
-        // const propertyNames: (keyof ObjectType)[] = keys<typeof object>();
-        // console.log("Deep validate: ", propertyNames);
-        // for (let i = 0; i < propertyNames.length; i++) {
-        //     Utils.validateObject(object, propertyNames[i].toString());
-        // }
-        console.log(is<ObjectType>(object));
-        const dummyObj: ObjectType = {} as ObjectType;
-        if (!is<ObjectType>(object)) {
+    public static async validateObjectDeep<ObjectType>(object: ObjectType, validator: ObjectSchema): Promise<void> {
+        try {
+            console.log("Object was here: ", object);
+            await validator.validateAsync(object);
+        } catch (err) {
+            console.log("*********************************************")
             throw new Exception(
                 ErrorCode.ValidationError,
-                `${object}\n does not impelement ${dummyObj.constructor.name}`
+                `${err}\nON OBJECT:\n${object}\nObject does not impelement proper interface.`
             );
         }
     }

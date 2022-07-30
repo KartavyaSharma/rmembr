@@ -105,10 +105,11 @@ describe("Course Test", () => {
             name: faker.lorem.words(),
             sections: createdCourse.sections
         }
+        console.log("Updated Course: ", updatedCourse);
         await supertestApp.
             patch(`/planner/courses/${createdCourse._id}`).
             auth(userSetupBundle.token, { type: 'bearer' }).
-            send({ course: updatedCourse }).
+            send({ payload: { course: updatedCourse } }).
             expect(200).
             expect("Content-Type", /application\/json/).
             expect(async (res: any) => {
@@ -126,14 +127,14 @@ describe("Course Test", () => {
     it("User tires to update an invalid course", async () => {
         const invalidCourse: ICourse = {
             _id: "12345",
-            _courseGroupId: null,
+            _courseGroupId: "lakjsd;lkja",
             name: faker.lorem.words(),
-            sections: null,
+            sections: [],
         }
         await supertestApp.
             patch("/planner/courses/12345").
             auth(userSetupBundle.token, { type: 'bearer' }).
-            send({ course: invalidCourse }).
+            send({ payload: { course: invalidCourse } }).
             expect(404).
             expect("Content-Type", /application\/json/);
     });

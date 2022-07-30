@@ -12,7 +12,7 @@ export interface ICourse {
     sections: ISection[];
 }
 
-export const JCourseSchema: ObjectSchema = Joi.object<ICourse>(
+export const JCourseSchema: ObjectSchema = Joi.object<ICourse>().keys(
     {
         _id: Joi.string().required(),
         _courseGroupId: Joi.string().required(),
