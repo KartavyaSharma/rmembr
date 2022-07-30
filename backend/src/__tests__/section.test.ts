@@ -127,9 +127,28 @@ describe("Section Test", () => {
             expect("Content-Type", /application\/json/);
     });
 
-    it.todo("User tries to retrieve a section that does not exist. (not found)");
+    it("User tries to retrieve a section that does not exist. (not found)", async () => {
+        await supertestApp.
+            get(`/planner/courses/${createdCourse._id}/sections/12345`).
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            expect(404).
+            expect("Content-Type", /application\/json/);
+    });
 
-    it.todo("User tries to update a section that does not exist. (not found)");
+    it("User tries to update a section that does not exist. (not found)", async () => {
+        const dummySection: ISection = {
+            name: faker.lorem.word(),
+            _id: "12345",
+            _courseId: "createdCourse._id",
+            subsectionGroupId: "createdSection.subsectionGroupId",
+        }
+        await supertestApp.
+            patch(`/planner/courses/${createdCourse._id}/sections/12345`).
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            send({ payload: { section: dummySection } }).
+            expect(404).
+            expect("Content-Type", /application\/json/);
+    });
 
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);
