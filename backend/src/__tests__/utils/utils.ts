@@ -1,10 +1,11 @@
 import App from "../../app";
+import supertest from "supertest";
 import { faker } from "@faker-js/faker";
 import { IUser } from "../../models/db/user/user";
-import supertest from "supertest";
 import { Auth } from "../../rmembr/auth/auth_engine";
 import { IUserSetupBundle } from "../../models/server_models";
 import { ICourse } from "../../models/db/planner_models/course";
+import { ISection } from "../../models/db/planner_models/sections";
 
 /**
  * Class containing helper function for tests.
@@ -81,7 +82,8 @@ export default class TestUtils {
      * @param token token required for deleting the user
      * @returns a promise that resolves when the user is deleted
      */
-    public static async destroyUser(serverInstance: App, user: IUser, token: string): Promise<void> {
+    public static async destroyUser(serverInstance: App, user: IUser, 
+        token: string): Promise<void> {
         const supertestApp = supertest(serverInstance.server);
         await supertestApp.
             delete("/planner/").
@@ -97,7 +99,8 @@ export default class TestUtils {
      * @param userSetupBundle bundle containing the user and token
      * @returns a promise that resolves to the new course object
      */
-    public static async setupCourse(serverInstance: App, userSetupBundle: IUserSetupBundle): Promise<ICourse> {
+    public static async setupCourse(serverInstance: App, 
+        userSetupBundle: IUserSetupBundle): Promise<ICourse> {
         const newCourse = {
             name: faker.lorem.word(),
         }
@@ -113,8 +116,23 @@ export default class TestUtils {
         return createdCourse;
     }
 
-    public static async setupSection(): Promise<void> {
-
+    public static async setupSection(serverInstance: App, userSetupBundle: IUserSetupBundle, 
+        courseId: string): Promise<ISection> {
+        const newSection = {
+            name: faker.lorem.word(),
+        }
+        let createdSection: ISection
+        const supertestApp = supertest(serverInstance.server);
+        await supertestApp.
+            post(`/planner/courses/${courseId}/sections`).
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            send({ payload: newSection }).
+            expect(200).
+            expect("Content-Type", /application\/json/).
+            expect(async (res: any) => {
+                createdSection = res.body.payload.section;
+            });
+        return createdSection;
     }
 
     public static async setupSubsection(): Promise<void> {
