@@ -1,5 +1,6 @@
 import { model, Model, Schema } from "mongoose";
-import { ISubSection, ISubSectionSchema } from "./subsections";
+import { ISubSection, ISubSectionSchema, JSubsectionSchema } from "./subsections";
+import Joi, { ObjectSchema } from "joi";
 
 /**
  * Defines the properties of a subsection group.
@@ -9,6 +10,14 @@ export interface ISubsectionGroup {
     _sectionId: string;
     subsections: ISubSection[];
 }
+
+export const JSubsectionGroupSchema: ObjectSchema = Joi.object<ISubsectionGroup>(
+    {
+        _id: Joi.string().required(),
+        _sectionId: Joi.string().required(),
+        subsections: Joi.array().items(JSubsectionSchema).required(),
+    }
+);
 
 /**
  * Defines a mongoose schema to store subsection groups. The

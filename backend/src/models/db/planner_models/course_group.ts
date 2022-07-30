@@ -1,5 +1,7 @@
 import { model, Model, Schema } from "mongoose";
 import { ICourse, ICourseSchema } from "./course";
+import { JCourseSchema } from "./course";
+import Joi, { ObjectSchema } from "joi";
 
 /**
  * Defines the properties of a course group.
@@ -10,6 +12,15 @@ export interface ICourseGroup {
     name: string;
     courses?: ICourse[];
 }
+
+export const JCourseGroupSchema: ObjectSchema = Joi.object<ICourseGroup>(
+    {
+        _id: Joi.string().required(),
+        _userId: Joi.string().required(),
+        name: Joi.string().required(),
+        courses: Joi.array().items(JCourseSchema).optional(),
+    }
+);
 
 /**
  * Creates a mongoose schema which creates

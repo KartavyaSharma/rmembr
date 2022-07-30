@@ -2,6 +2,7 @@ import { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
 	preset: 'ts-jest',
+	testEnvironment: 'node',
 	verbose: true,
 	transform: {
 		'^.+\\.(ts|tsx)?$': 'ts-jest',
@@ -16,8 +17,10 @@ const config: Config.InitialOptions = {
 	setupFilesAfterEnv: ['<rootDir>/test-setup-after-env.js'],
 	globals: {
 		'ts-jest': {
-			compiler: 'ttypescript'
-		}
+			compiler: 'ttypescript',
+			// Relative path from the folder where jest.config.js is located
+			astTransformers: { before: ['ts-jest-keys-transformer.js'] },
+		},
 	}
 }
 

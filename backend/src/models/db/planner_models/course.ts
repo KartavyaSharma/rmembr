@@ -1,6 +1,6 @@
 import { Model, Schema } from "mongoose";
-import { Utils } from "../../../utils/server_utils";
-import { ISection, ISectionSchema } from "./sections";
+import { ISection, ISectionSchema, JSectionSchema } from "./sections";
+import Joi, { ObjectSchema } from "joi";
 
 /**
  * Defines properties of a course.
@@ -11,6 +11,15 @@ export interface ICourse {
     name: string;
     sections: ISection[];
 }
+
+export const JCourseSchema: ObjectSchema = Joi.object<ICourse>(
+    {
+        _id: Joi.string().required(),
+        _courseGroupId: Joi.string().required(),
+        name: Joi.string().required(),
+        sections: Joi.array().items(JSectionSchema).required(),
+    }
+);
 
 /**
  * Creates a mongoose schema which creates a

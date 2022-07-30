@@ -1,4 +1,6 @@
 import { model, Model, Schema } from "mongoose";
+import Joi, { ObjectSchema } from "joi";
+// const Joi = require('joi').extend(require('@joi/date'));
 
 /**
  * Defines a subsection's properties.
@@ -51,6 +53,46 @@ export interface IOfficeHours {
 export interface IQuestions {
     questions: string[];
 }
+
+
+export const JStatusSchema: ObjectSchema = Joi.object<IStatus>(
+    {
+        state: Joi.string().valid(State.PENDING, State.WIP, State.DONE, State.OVERDUE).required(),
+        date: Joi.date().required(),
+        color: Joi.string().required(),
+    }
+);
+
+export const JRevisionScheduleSchema: ObjectSchema = Joi.object<IRevisionSchedule>(
+    {
+        revs: Joi.array().items(JStatusSchema).required(),
+    }
+);
+
+export const JSubsectionSchema: ObjectSchema = Joi.object<ISubSection>(
+    {
+        _id: Joi.string().required(),
+        _sectionId: Joi.string().required(),
+        name: Joi.string().required(),
+        inClass: Joi.date().required(),
+        status: JStatusSchema.required(),
+        revisionSchedule: JRevisionScheduleSchema.required(),
+        plannedRevisionSchedule: Joi.array().items(Joi.date()).required(),
+    }
+);
+
+export const JQuestionsSchema: ObjectSchema = Joi.object<IQuestions>(
+    {
+        questions: Joi.array().items(Joi.string()).required(),
+    }
+);
+
+export const JOfficeHoursSchema: ObjectSchema = Joi.object<IOfficeHours>(
+    {
+        req: Joi.boolean().required(),
+        questions: Joi.object(JQuestionsSchema).optional(),
+    }
+);
 
 /** Reusable DB State schema. */
 export const IStatusSchema = new Schema<IStatus>(

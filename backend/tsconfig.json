@@ -13,7 +13,16 @@
       "*": ["node_modules/*"]
     },
     "plugins": [
-      { "transform": "ts-transformer-keys/transformer" },
+      {
+        "transform": "./node_modules/typescript-is/lib/transform-inline/transformer",
+        "shortCircuit": true,
+        "ignoreClasses": true,
+        "ignoreMethods": true,
+        "functionBehavior": "ignore",
+        "disallowSuperfluousObjectProperties": true,
+        "transformNonNullExpressions": true,
+        "emitDetailedErrors": "auto"
+      }
     ]
   },
   "include": ["src/**/*", "src/models/**/*"]
