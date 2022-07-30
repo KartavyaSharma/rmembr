@@ -78,12 +78,12 @@ export default class CourseRoutes extends Routes {
             let newCourse: Course;
             let resCourse: ICreateCourseResponse;
             try {
-                Utils.validateObject(req.body, 'name');
+                Utils.validateObject(req.body.payload, 'name');
                 newUser = req.body.user;
                 newCourse = new Course({
                     _id: null,
                     _courseGroupId: newUser.courseGroupId,
-                    name: req.body.name,
+                    name: req.body.payload.name,
                     sections: []
                 });
                 resCourse = await newCourse.register();

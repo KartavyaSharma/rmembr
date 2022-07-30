@@ -44,7 +44,7 @@ describe("Course Test", () => {
         await supertestApp.
             post("/planner/courses").
             auth(userSetupBundle.token, { type: 'bearer' }).
-            send(newCourse).
+            send({ payload: newCourse }).
             expect(200).
             expect("Content-Type", /application\/json/).
             expect(async (res: any) => {
@@ -93,7 +93,7 @@ describe("Course Test", () => {
         await supertestApp.
             post("/planner/courses").
             auth(userSetupBundle.token, { type: 'bearer' }).
-            send({}).
+            send({ payload: {} }).
             expect(400).
             expect("Content-Type", /application\/json/);
     });

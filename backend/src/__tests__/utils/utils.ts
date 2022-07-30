@@ -106,7 +106,7 @@ export default class TestUtils {
         await supertestApp.
             post("/planner/courses").
             auth(userSetupBundle.token, { type: 'bearer' }).
-            send(newCourse).
+            send({ payload: newCourse }).
             expect(async (res) => {
                 createdCourse = res.body.payload.course;
             });
