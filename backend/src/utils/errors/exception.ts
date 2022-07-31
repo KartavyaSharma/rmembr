@@ -35,7 +35,7 @@ export class Exception extends Error {
         const errorOutput: string[] = [
             "Error handler called", '\n',
             `Path: ${req.path}`, '\n',
-            `Error occured: ${err}`, '\n',
+            `Error occured: ${err.message}`, '\n',
         ]
         console.log(errorOutput.join(""));
         if (err instanceof Exception) {

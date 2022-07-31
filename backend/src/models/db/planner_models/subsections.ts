@@ -1,4 +1,4 @@
-import { model, Model, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import Joi, { ObjectSchema } from "joi";
 
 /**
@@ -110,11 +110,18 @@ export const JOfficeHoursSchema: ObjectSchema = Joi.object<IOfficeHours>().keys(
     }
 );
 
-/** Reusable DB State schema. */
+/** Reusable DB Status schema. */
 export const IStatusSchema = new Schema<IStatus>(
     {
         state: { type: String, required: true },
         date: { type: Date, required: true },
+    }
+);
+
+/** Reusable DB State schema */
+export const IStateSchema = new Schema<IState>(
+    {
+        color: { type: String, required: true },
     }
 );
 
@@ -135,6 +142,7 @@ export const ISubSectionSchema = new Schema<ISubSection>(
         revisionSchedule: {
             revs: { type: [IStatusSchema], required: false, default: null }
         },
-        plannedRevisionSchedule: { type: [Date], required: true, default: null }
+        plannedRevisionSchedule: { type: [Date], required: true, default: null },
+        state: { type: IStateSchema, required: true },
     }
 );

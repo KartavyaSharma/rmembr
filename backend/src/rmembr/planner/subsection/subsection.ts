@@ -1,12 +1,12 @@
+import SubsectionGroup from "./subsection_group";
+import Status from "./status";
+import State from "./state";
 import { IRevisionSchedule, ISubSection, StateType, StatusType } from "../../../models/db/planner_models/subsections";
 import { IStatus } from "../../../models/db/planner_models/subsections";
 import { defaultConf, IDefaultConf } from "../../../rmembr/config_store/default_conf";
 import { nanoid } from "nanoid";
-import SubsectionGroup from "./subsection_group";
-import Status from "./status";
 import { IState } from "../../../models/db/planner_models/subsections";
-import State from "./state";
-import { IUpdateSubsectionResponse } from "../../../models/response/response_models";
+import { IUpdateSubsectionResponse, ICreateSubsectionResponse } from "../../../models/response/response_models";
 
 /**
  * Class representing a subsection. Each course can have
@@ -121,7 +121,7 @@ export default class Subsection {
         this._id = subsectionObj._id || nanoid();
         this._sectionId = subsectionObj._sectionId || sectionId;
         this._name = subsectionObj.name;
-        this._inClass = subsectionObj.inClass || new Date();
+        this._inClass = subsectionObj.inClass || null;
         this._revisionSchedule = subsectionObj.revisionSchedule || this.initRevisionSchedule();
         this._plannedRevisionSchedule = subsectionObj.plannedRevisionSchedule || this.generatePlannedRevisionSchedule();
         this._status = subsectionObj.status || new Status().object;
@@ -132,9 +132,9 @@ export default class Subsection {
     /** Adds new subsection to database collection.
      * @returns Promise that resolves to an API response containing a new subsection object.
      */
-    public async create(): Promise<ISubSection> {
-        // TODO: Implement
-        return {} as ISubSection;
+    public async create(subsectionGroupId: string): Promise<ICreateSubsectionResponse> {
+        const group: SubsectionGroup = await SubsectionGroup.get(subsectionGroupId);
+        return group.add(this.object);
     }
 
     /** 
@@ -159,7 +159,7 @@ export default class Subsection {
             revs: []
         };
         defaultConf.settings.intervals.number.forEach(num => {
-            revisionSchedule.revs.push(new Status().object);
+            revisionSchedule.revs.push((new Status()).object);
         });
         return revisionSchedule;
     }
@@ -179,6 +179,7 @@ export default class Subsection {
      * @param subsection Subsection object to update.
      */
     private refreshSubsection(): void {
+        console.log("*** REFRESHING SUBSECTION ***");
         if (this._status.state != StatusType.DONE) {
             const currDate: Date = new Date();
             this._plannedRevisionSchedule.forEach(date => {
@@ -214,6 +215,7 @@ export default class Subsection {
         found.subsections.forEach(subsection => {
             const subObject: Subsection = new Subsection(subsection, found.sectionId);
             subObject.refreshSubsection();
+            subObject.update(subObject.object, subsectionGroupId);
         });
     }
 }

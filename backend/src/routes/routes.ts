@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import bodyParser from 'body-parser';
+import { getMiddleware } from './middleware/middleware';
 
 /**
  * Parent class representing routes for any service on the
@@ -55,6 +56,7 @@ export abstract class Routes {
     protected nestRoutes(nestRoutes: Routes, morePath = ""): void {
         this._routes.use(
             `${morePath != "" ? `/${morePath}` : ""}${nestRoutes.getBase}`,
+            ...getMiddleware(nestRoutes.getBase.substring(1)),
             nestRoutes.getRouter
         );
     }

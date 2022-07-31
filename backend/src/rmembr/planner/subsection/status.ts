@@ -1,4 +1,3 @@
-import { defaultConf } from "../../config_store/default_conf";
 import { IStatus } from "../../../models/db/planner_models/subsections";
 import { StatusType } from '../../../models/db/planner_models/subsections';
 
@@ -13,8 +12,8 @@ export default class Status {
      * @param date against which status is generated.
     */
     constructor(statusObj?: IStatus) {
-        this._date = statusObj.date || null;
-        this._state = StateDict[statusObj.state] || this._state;
+        this._date = statusObj == undefined ? this._date : statusObj.date;
+        this._state = statusObj == undefined ? this._state : StateDict[statusObj.state];
     }
 
     /** Returns the state of this status. */
@@ -34,7 +33,7 @@ export default class Status {
     private _state: StatusType = StatusType.PENDING;
 
     /** Date used to determine status. */
-    private _date: Date;
+    private _date: Date = new Date(0);
 }
 
 /**

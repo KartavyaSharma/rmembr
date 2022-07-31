@@ -1,7 +1,6 @@
 import { ISection } from "../../../models/db/planner_models/sections";
 import { nanoid } from "nanoid";
 import { ISubSection } from "../../../models/db/planner_models/subsections";
-import Subsection from "./subsection";
 import { ISubsectionGroup, SubsectionGroupModel } from "../../../models/db/planner_models/subsection_group";
 import { Exception } from "../../../utils/errors/exception";
 import { ErrorCode } from "../../../utils/errors/error_codes";
@@ -77,6 +76,8 @@ export default class SubsectionGroup {
             this._sectionId = sectionObj._id;
             this._subsections = [];
         }
+
+        
     }
 
     /**

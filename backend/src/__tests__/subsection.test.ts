@@ -26,7 +26,25 @@ describe("Section Test", () => {
         createdSection = await TestUtils.setupSection(app, userSetupBundle, createdCourse._id);
     });
 
-    it.todo("User's course should have an emply list of sections");
+    it("User adds a subsection to their section", async () => {
+        const newSubsection = {
+            name: faker.lorem.word(),
+        }
+        await supertestApp.
+            post(`/planner/courses/${createdCourse._id}/sections/${createdSection._id}/subsections`).
+            auth(userSetupBundle.token, { type: 'bearer' }).
+            send({ payload: newSubsection }).
+            expect(200).
+            expect("Content-Type", /application\/json/).
+            expect(async (res: any) => {
+                const payload: ISubSection = res.body.payload.subsection;
+                console.log(payload);
+                expect(payload).toBeDefined();
+                expect(payload.name).toBeDefined();
+                expect(payload.name).toEqual(newSubsection.name);
+                expect(payload._sectionId).toEqual(createdSection._id);
+            });
+    });
 
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);

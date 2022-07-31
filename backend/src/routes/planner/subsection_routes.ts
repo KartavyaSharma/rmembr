@@ -1,9 +1,12 @@
+import User from "../../rmembr/user/user";
+import Subsection from "../../rmembr/planner/subsection/subsection";
+import Section from "../../rmembr/planner/section";
 import { NextFunction, Request, Response } from "express";
 import { Routes } from "../routes";
-import User from "../../rmembr/user/user";
 import { Utils } from "../../utils/server_utils";
 import { ISubSection } from "../../models/db/planner_models/subsections";
-import Subsection from "../../rmembr/planner/subsection/subsection";
+import { JCreateSubsectionRequest } from "../../models/request/request_validators";
+import { ICreateSubsectionResponse } from "../../models/response/response_models";
 
 
 export default class SubsectionRoutes extends Routes {
@@ -21,12 +24,11 @@ export default class SubsectionRoutes extends Routes {
             let newUser: User;
             let subsectionObj: Subsection;
             try {
-                Utils.validateObject(req.params, 'subsectionId');
-                Utils.validateObject(req.params, 'sectionId');
                 newUser = req.body.user;
+                const associatedSection: Section = await Section.get(newUser.id, req.params.courseId, req.params.sectionId);
                 subsectionObj = await Subsection.get(
                     req.params.subsectionId,
-                    req.params.sectionId
+                    associatedSection.id,
                 );
             } catch (err) {
                 return next(err);
@@ -35,7 +37,29 @@ export default class SubsectionRoutes extends Routes {
         });
         /** ========== POST ========== */
         this._routes.post('/', async (req: Request, res: Response, next: NextFunction) => {
-
+            let newUser: User;
+            let subsection: Subsection;
+            let response: ICreateSubsectionResponse;
+            try {
+                Utils.validateObjectDeep(req.body.payload, JCreateSubsectionRequest);
+                newUser = req.body.user;
+                const associatedSection: Section = await Section.get(newUser.id, req.params.courseId, req.params.sectionId);
+                const subsectionObj: ISubSection = {
+                    _id: null,
+                    _sectionId: null,
+                    name: req.body.payload.name,
+                    inClass: null,
+                    status: null,
+                    revisionSchedule: null,
+                    plannedRevisionSchedule: null,
+                    state: null
+                };
+                subsection = new Subsection(subsectionObj, associatedSection.id);
+                response = await subsection.create(associatedSection.subsectionGroupId);
+            } catch (err) {
+                return next(err);
+            }
+            Utils.sendRes<ICreateSubsectionResponse>(res, response);
         });
         /** ========== DELETE ========== */
         this._routes.delete('/:subsectionId', async (req: Request, res: Response, next: NextFunction) => {
