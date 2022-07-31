@@ -98,6 +98,11 @@ export interface ICreateSubsectionResponse {
     /** Returns created Subsection object. */
     subsection: ISubSection;
 }
+/** GET /subsections/:subsectionId */
+export interface IGetSubsectionResponse {
+    /** Returns Subsection object. */
+    subsection: ISubSection;
+}
 /** DELETE /subsections/:subsectionId */
 export interface IDeleteSubsectionResponse {
     /** Returns the refreshed subsection list w/o deleted subsection. */

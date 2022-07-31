@@ -40,7 +40,7 @@ export default class SectionRoutes extends Routes {
                     req.params.courseId,
                     req.params.sectionId
                 );
-                subsectionGroupObj = await SubsectionGroup.get(sectionObj.subsectionGroupId, sectionObj.id);
+                subsectionGroupObj = await SubsectionGroup.get(sectionObj.object);
             } catch (err) {
                 return next(err);
             }
@@ -69,7 +69,7 @@ export default class SectionRoutes extends Routes {
                     subsectionGroupId: null
                 });
                 resSection = await newSection.register(newUser.id);
-                newSubsectionGroup = await SubsectionGroup.get(resSection.subsectionGroupId, resSection._id);
+                newSubsectionGroup = await SubsectionGroup.get(resSection);
             } catch (err) {
                 return next(err);
             }

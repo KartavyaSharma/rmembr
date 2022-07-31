@@ -1,6 +1,8 @@
 import { IRevisionSchedule, ISubSection } from "../../../models/db/planner_models/subsections";
 import { IStatus } from "../../../models/db/planner_models/subsections";
 import { defaultConf, IDefaultConf } from "../../../rmembr/config_store/default_conf";
+import { ISection } from "../../../models/db/planner_models/sections";
+import { nanoid } from "nanoid";
 
 /**
  * Class representing a subsection. Each course can have
@@ -100,8 +102,25 @@ export default class Subsection {
     /** 
      * Initialize a new subsection ojbect.
      */
-    constructor() {
-
+    constructor(subsectionObj: ISubSection = null, sectionObj: ISection) {
+        if (subsectionObj == null) {
+            this._id = nanoid();
+            this._sectionId = sectionObj._id;
+            this._name = "";
+            this._inClass = new Date();
+            this._revisionSchedule = null;
+            this._plannedRevisionSchedule = [];
+            this._status = null;
+            this.generatePlannedRevisionSchedule();
+        } else {
+            this._id = subsectionObj._id;
+            this._sectionId = subsectionObj._sectionId;
+            this._name = subsectionObj.name;
+            this._inClass = subsectionObj.inClass;
+            this._revisionSchedule = subsectionObj.revisionSchedule;
+            this._plannedRevisionSchedule = subsectionObj.plannedRevisionSchedule;
+            this._status = subsectionObj.status;
+        }
     }
 
 
@@ -117,7 +136,7 @@ export default class Subsection {
      * Generates new revision schedule for revision dates based on config.
      * @param config Configuration object containing revision intervals.
      */
-    private generatePlannedRevisionSchedule(config: IDefaultConf): void {
+    private generatePlannedRevisionSchedule(config: IDefaultConf = defaultConf): void {
         // TODO: Implement
         return;
     }

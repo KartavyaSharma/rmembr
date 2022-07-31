@@ -67,10 +67,16 @@ export default class SubsectionGroup {
      * Initializes new group with all relevent fields. 
      * @param sectionObj Section object associated with this group.
      */
-    constructor(sectionObj: ISection) {
-        this._id = nanoid();
-        this._sectionId = sectionObj._id;
-        this._subsections = [];
+    constructor(sectionObj: ISection, subsectionGroupObj: ISubsectionGroup = null) {
+        if (subsectionGroupObj) {
+            this._id = subsectionGroupObj._id;
+            this._sectionId = subsectionGroupObj._sectionId;
+            this._subsections = subsectionGroupObj.subsections;
+        } else {
+            this._id = nanoid();
+            this._sectionId = sectionObj._id;
+            this._subsections = [];
+        }
     }
 
     /**
@@ -98,38 +104,45 @@ export default class SubsectionGroup {
      * Add to this subsection groups subsection set. Calls the create
      * method from the subsection class
      * @param subsectionObj subsection with all fields filled.
+     * @param sectionObj section object associated with this subsection.
      */
-    public static async add(subsectionObj: ISubSection): Promise<ICreateSubsectionResponse> {
-        // TODO: Implement
-        return {} as ICreateSubsectionResponse;
+    public static async add(subsectionObj: ISubSection, sectionObj: ISection): Promise<ICreateSubsectionResponse> {
+        const created: ISubsectionGroup = await SubsectionGroupModel.findOneAndUpdate(
+            { _id: sectionObj.subsectionGroupId },
+            { $push: { subsections: subsectionObj } },
+            { new: true }
+        );
+        return {
+            subsection: created.subsections.find((obj) => {
+                return obj._id == sectionObj.subsectionGroupId
+            })
+        };
     }
 
     /** 
-     * Returns a subsection with a given ID.
-     * @param id Subsection ID.
+     * Returns the subsection group associated with a section.
      * @param sectionId Section ID.
+     * @returns Promise that resolves to a subsection group object.
      */
-    public static async get(id: string, sectionId: string): Promise<SubsectionGroup> {
-        // TODO : Implement
-        return new SubsectionGroup({} as ISection);
-    }
-
-    /** 
-     * Updates Subsection, replacing it with new Subsection object. 
-     * @param subsectionObj Subsection object with all fields filled.
-     * */
-    public async update(subsectionObj: ISubSection): Promise<IUpdateSubsectionResponse> {
-        // TODO: Implement
-        return {} as IUpdateSubsectionResponse;
+    public static async get(sectionObj: ISection): Promise<SubsectionGroup> {
+        const found: ISubsectionGroup = await SubsectionGroupModel.findOne({ _id: sectionObj.subsectionGroupId });
+        if (!found) {
+            throw new Exception(ErrorCode.UnknownError, "Subsection group not found.");
+        }
+        return new SubsectionGroup(sectionObj, found);
     }
 
     /**
      * Deletes a subsection from the database.
      * @returns Promise that resolves to an API response containing a deleted subsection object.
      */
-    public async delete(): Promise<IDeleteSubsectionResponse> {
-        // TODO: Implement
-        return {} as IDeleteSubsectionResponse;
+    public async delete(subsectionObj: ISubSection): Promise<IDeleteSubsectionResponse> {
+        const deleted: ISubsectionGroup = await SubsectionGroupModel.findOneAndUpdate(
+            { _sectionId: subsectionObj._sectionId },
+            { $pull: { subsections: { _id: subsectionObj._id } } },
+            { new: true }
+        );
+        return { subsections: deleted.subsections }
     }
 
     /**

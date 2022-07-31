@@ -24,7 +24,6 @@ describe("Section Test", () => {
         userSetupBundle = await TestUtils.setupUser(app);
         createdCourse = await TestUtils.setupCourse(app, userSetupBundle);
         createdSection = await TestUtils.setupSection(app, userSetupBundle, createdCourse._id);
-        console.log("section: ", createdSection);
     });
 
     it.todo("User's course should have an emply list of sections");
