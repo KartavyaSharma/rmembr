@@ -1,5 +1,6 @@
 import { ICourse } from "../db/planner_models/course";
 import { ISection } from "../db/planner_models/sections";
+import { ISubSection } from "../db/planner_models/subsections";
 
 /**
  * Interface models for incoming requests across all routes
@@ -35,3 +36,12 @@ export interface IUpdateSectionRequest {
     section: ISection;
 }
 /** ============================= */
+
+/** ========== Subsection ========== */
+export interface ICreateSubsectionRequest {
+    name: string;
+}
+export interface IUpdateSubsectionRequest {
+    subsection: ISubSection
+}
+/** ================================ */

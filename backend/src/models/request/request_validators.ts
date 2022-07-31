@@ -1,5 +1,6 @@
 import { JCourseSchema } from "../db/planner_models/course";
 import { JSectionSchema } from "../db/planner_models/sections";
+import { JSubsectionSchema } from "../db/planner_models/subsections";
 import Joi, { ObjectSchema } from "joi";
 import * as req_mods from './request_models';
 
@@ -47,3 +48,16 @@ export const JUpdateSectionRequest: ObjectSchema = Joi.object<req_mods.IUpdateSe
     }
 );
 /** ============================= */
+
+/** ========== Subsection ========== */
+export const JCreateSubsectionRequest: ObjectSchema = Joi.object<req_mods.ICreateSubsectionRequest>().keys(
+    {
+        name: Joi.string().required(),
+    }
+);
+export const JUpdateSubsectionRequest: ObjectSchema = Joi.object<req_mods.IUpdateSubsectionRequest>().keys(
+    {
+        subsection: JSubsectionSchema.required(),
+    }
+);
+/** ================================ */

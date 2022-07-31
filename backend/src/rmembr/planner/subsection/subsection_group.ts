@@ -106,15 +106,15 @@ export default class SubsectionGroup {
      * @param subsectionObj subsection with all fields filled.
      * @param sectionObj section object associated with this subsection.
      */
-    public static async add(subsectionObj: ISubSection, sectionObj: ISection): Promise<ICreateSubsectionResponse> {
+    public async add(subsectionObj: ISubSection): Promise<ICreateSubsectionResponse> {
         const created: ISubsectionGroup = await SubsectionGroupModel.findOneAndUpdate(
-            { _id: sectionObj.subsectionGroupId },
+            { _id: this.id },
             { $push: { subsections: subsectionObj } },
             { new: true }
         );
         return {
             subsection: created.subsections.find((obj) => {
-                return obj._id == sectionObj.subsectionGroupId
+                return obj._id == subsectionObj._id;
             })
         };
     }
@@ -124,12 +124,12 @@ export default class SubsectionGroup {
      * @param sectionId Section ID.
      * @returns Promise that resolves to a subsection group object.
      */
-    public static async get(sectionObj: ISection): Promise<SubsectionGroup> {
-        const found: ISubsectionGroup = await SubsectionGroupModel.findOne({ _id: sectionObj.subsectionGroupId });
+    public static async get(subsectionGroupId: string): Promise<SubsectionGroup> {
+        const found: ISubsectionGroup = await SubsectionGroupModel.findOne({ _id: subsectionGroupId });
         if (!found) {
             throw new Exception(ErrorCode.UnknownError, "Subsection group not found.");
         }
-        return new SubsectionGroup(sectionObj, found);
+        return new SubsectionGroup(null, found);
     }
 
     /**
@@ -143,6 +143,15 @@ export default class SubsectionGroup {
             { new: true }
         );
         return { subsections: deleted.subsections }
+    }
+
+    /**
+     * Updates a subsection in the database.
+     * @param subsectionObj subsection with all fields filled.
+     */
+    public async update(subsectionObj: ISubSection): Promise<IUpdateSubsectionResponse> {
+        this.delete(subsectionObj);
+        return {subsection: (await this.add(subsectionObj)).subsection};
     }
 
     /**

@@ -1,6 +1,5 @@
 import { model, Model, Schema } from "mongoose";
 import Joi, { ObjectSchema } from "joi";
-// const Joi = require('joi').extend(require('@joi/date'));
 
 /**
  * Defines a subsection's properties.
@@ -13,10 +12,29 @@ export interface ISubSection {
     status: IStatus,
     revisionSchedule: IRevisionSchedule;
     plannedRevisionSchedule: Date[];
+    state: IState
 }
 
-/** Properties a state field can contain. */
-export enum State {
+/** 
+ * Properties a state field can contain based on the
+ * date and the planned revision schedule.
+*/
+export enum StateType {
+    NOT_STARTED = "not_started",
+    WARNING = "warning",
+    OVERDUE = "overdue",
+    DONE = "done",
+}
+
+/**
+ * Properties for a state object;
+ */
+export interface IState {
+    color: string;
+}
+
+/** Properties a status field can contain. */
+export enum StatusType {
     PENDING = 'pending',
     WIP = 'wip',
     DONE = 'done',
@@ -29,7 +47,6 @@ export enum State {
 export interface IStatus {
     state: string;
     date: Date;
-    color: string;
 }
 
 /**
@@ -57,9 +74,8 @@ export interface IQuestions {
 
 export const JStatusSchema: ObjectSchema = Joi.object<IStatus>(
     {
-        state: Joi.string().valid(State.PENDING, State.WIP, State.DONE, State.OVERDUE).required(),
+        state: Joi.string().valid(StatusType.PENDING, StatusType.WIP, StatusType.DONE, StatusType.OVERDUE).required(),
         date: Joi.date().required(),
-        color: Joi.string().required(),
     }
 );
 
@@ -99,7 +115,6 @@ export const IStatusSchema = new Schema<IStatus>(
     {
         state: { type: String, required: true },
         date: { type: Date, required: true },
-        color: { type: String, required: true }
     }
 );
 
@@ -115,7 +130,7 @@ export const ISubSectionSchema = new Schema<ISubSection>(
         status: {
             type: IStatusSchema,
             required: false,
-            default: { state: "pending", date: null, color: null }
+            default: { state: StatusType.PENDING, date: null }
         },
         revisionSchedule: {
             revs: { type: [IStatusSchema], required: false, default: null }
