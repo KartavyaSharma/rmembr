@@ -179,7 +179,6 @@ export default class Subsection {
      * @param subsection Subsection object to update.
      */
     private refreshSubsection(): void {
-        console.log("*** REFRESHING SUBSECTION ***");
         if (this._status.state != StatusType.DONE) {
             const currDate: Date = new Date();
             this._plannedRevisionSchedule.forEach(date => {

@@ -8,7 +8,7 @@ import Subsection from '../../rmembr/planner/subsection/subsection';
  * File contains all middleware function based on major planner paths. 
  */
 
-export const middleware: {
+const middleware: {
     [type: string]: {
         [type: string]: ((req: Request, res: Response, next: NextFunction) => Promise<void>)
     }
@@ -38,7 +38,6 @@ export const middleware: {
 export const getMiddleware = (inPath: string): ((req: Request, res: Response, next: NextFunction) => Promise<void>)[] => {
     if (inPath in middleware) {
         return Object.values(middleware[inPath]);
-    } else {
-        return Object.values(middleware['default']);
     }
+    return Object.values(middleware['default']);
 }

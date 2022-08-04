@@ -9,6 +9,7 @@ import {
     ICreateSubsectionResponse,
     IUpdateSubsectionResponse
 } from "../../../models/response/response_models";
+import Subsection from "./subsection";
 
 /**
  * Class represents a subsection group. Each section has a
@@ -76,8 +77,6 @@ export default class SubsectionGroup {
             this._sectionId = sectionObj._id;
             this._subsections = [];
         }
-
-        
     }
 
     /**
@@ -153,6 +152,11 @@ export default class SubsectionGroup {
     public async update(subsectionObj: ISubSection): Promise<IUpdateSubsectionResponse> {
         this.delete(subsectionObj);
         return {subsection: (await this.add(subsectionObj)).subsection};
+    }
+
+    /** Refreshes all subsections inside this group. */
+    public async refresh(): Promise<void> {
+        await Subsection.refreshAll(this._id);
     }
 
     /**

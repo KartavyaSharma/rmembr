@@ -12,6 +12,8 @@ import { Utils } from './utils/server_utils'
 import { Db } from './utils/database/db';
 import { Auth } from './rmembr/auth/auth_engine';
 import User from './rmembr/user/user';
+import HomeRoutes from './routes/home/home_routes';
+import path from 'path';
 
 
 export default class App {
@@ -56,6 +58,7 @@ export default class App {
     routes(): void {
         Utils.addRoute(this._server, new AuthRoutes());
         Utils.addRoute(this._server, new PlannerRoutes(), Auth.authMid, User.setUser);
+        Utils.addRoute(this._server, new HomeRoutes());
     }
 
     /** Setup middlware functions on this._server. */
@@ -65,6 +68,10 @@ export default class App {
         this._server.use(morgan('combined'));
         this._server.use(express.urlencoded({ extended: true }))
         this._server.use(cors());
+
+        /** For serving static builds. */
+        this._server.use(express.static(path.join(__dirname, '../static/home', 'build')));
+        this._server.use(express.static(path.join(__dirname, '../static/home', 'public')));
 
         /** Custom middlware */
         this._server.use(Exception.handler);

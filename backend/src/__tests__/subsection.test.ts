@@ -12,7 +12,7 @@ let supertestApp: any;
 let app: App;
 let userSetupBundle: { token: string, user: IUser };
 
-describe("Section Test", () => {
+describe("Subsection Test", () => {
 
     let createdCourse: ICourse;
     let createdSection: ISection;
@@ -26,6 +26,8 @@ describe("Section Test", () => {
         createdSection = await TestUtils.setupSection(app, userSetupBundle, createdCourse._id);
     });
 
+    it.todo("User's course should have an emply list of sections");
+
     it("User adds a subsection to their section", async () => {
         const newSubsection = {
             name: faker.lorem.word(),
@@ -38,13 +40,39 @@ describe("Section Test", () => {
             expect("Content-Type", /application\/json/).
             expect(async (res: any) => {
                 const payload: ISubSection = res.body.payload.subsection;
-                console.log(payload);
+                createdSubsection = payload;
                 expect(payload).toBeDefined();
                 expect(payload.name).toBeDefined();
                 expect(payload.name).toEqual(newSubsection.name);
                 expect(payload._sectionId).toEqual(createdSection._id);
             });
     });
+
+    it.todo("Size of subsections in subsection group should be 1");
+
+    it.todo("Retrieve subsection just created");
+
+    it.todo("Checking for all subsection properties from created subsection.");
+
+    it.todo("Check off subsection with done status.");
+
+    it.todo("Complete first second and third revision.");
+
+    it.todo("Check color for DONE subsection");
+
+    it.todo("Delete subsection");
+
+    it.todo("Update subsection with new name");
+
+    it.todo("Retrieve subsection with new name");
+
+    it.todo("Retrieve invalid subsection");
+
+    it.todo("Retrieve subsection with invalid section id");
+
+    it.todo("Delete invalid subsection");
+
+    it.todo("Update invalid subsection");
 
     afterAll(async () => {
         await TestUtils.destroyUser(app, userSetupBundle.user, userSetupBundle.token);
