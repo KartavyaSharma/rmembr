@@ -1,2 +1,2 @@
 #!/bin/bash
-cd static/home && npm run build
+cd static/home && yarn install && npm run build
