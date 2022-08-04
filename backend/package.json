@@ -5,8 +5,9 @@
   "main": "src/server.ts",
   "scripts": {
     "build": "tsc --project ./",
+    "build:prod": "npm run build && npm run start:prod",
     "start:dev": "cross-env NODE_ENV=development nodemon src/server.ts",
-    "start:prod": "cross-env NODE_ENV=production node dist/server.js",
+    "start:prod": "./scripts/buildReact.sh && cross-env NODE_ENV=production node dist/server.js",
     "test": "cross-env NODE_ENV=test jest --runInBand",
     "test:watch": "cross-env NODE_ENV=test jest --watch --runInBand",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand",
