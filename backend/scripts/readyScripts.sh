@@ -1,3 +1,3 @@
 #!/bin/bash
-chmod +x ./oneTestRunner.sh
-chmod +x ./buildReact.sh
+chmod +x ./scripts/oneTestRunner.sh
+chmod +x ./scripts/buildReact.sh
