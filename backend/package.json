@@ -7,7 +7,7 @@
     "build": "tsc --project ./",
     "build:prod": "npm run build && npm run start:prod",
     "start:dev": "cross-env NODE_ENV=development nodemon src/server.ts",
-    "start:prod": "./scripts/buildReact.sh && cross-env NODE_ENV=production node dist/server.js",
+    "start:prod": "npm run ready:scripts && ./scripts/buildReact.sh && cross-env NODE_ENV=production node dist/server.js",
     "test": "cross-env NODE_ENV=test jest --runInBand",
     "test:watch": "cross-env NODE_ENV=test jest --watch --runInBand",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand",
@@ -15,7 +15,8 @@
     "test:debug": "cross-env NODE_ENV=debug jest --runInBand",
     "test:debug:watch": "cross-env NODE_ENV=debug jest --watch --runInBand",
     "test:single": "./scripts/oneTestRunner.sh",
-    "test:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --config eslintrc.js"
+    "test:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --config eslintrc.js",
+    "ready:scripts": "chmod +x ./scripts/readyScripts.sh && ./scripts/readyScripts.sh"
   },
   "repository": {
     "type": "git",
