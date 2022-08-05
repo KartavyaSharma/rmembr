@@ -115,7 +115,7 @@ export default function indexPage() {
             ></path>
           </svg>
         </div>
-        <div className="px-8 py-32 w-full h-full z-50">
+        <div className="px-8 py-32 max-w-[90rem] h-full z-50">
           <div className="grid justify-items-middle min-h-full">
             <div className="grid grid-rows-1 justify-items-stretch relative">
               <div
