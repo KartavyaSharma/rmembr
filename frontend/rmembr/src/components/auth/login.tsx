@@ -27,6 +27,10 @@ const InAnimation = {
     },
 }
 
+const OutAnimation = {
+	
+}
+
 export default function Login(): ReactElement {
   const [isShown, setIsShown] = useState(true);
 
