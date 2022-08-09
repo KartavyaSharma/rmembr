@@ -119,7 +119,7 @@ export default function indexPage() {
             </svg>
           </div>
           <div className="flex w-full justify-center">
-            <div className="px-8 lg:py-16 2xl:py-28 max-w-[90rem] h-full z-50 justify-center items-center">
+            <div className="px-8 py-20 lg:py-16 2xl:py-28 max-w-[90rem] h-full z-50 justify-center items-center">
               <div className="grid justify-items-middle min-h-full w-full">
                 <div className="grid grid-rows-1 justify-items-stretch relative">
                   <div
