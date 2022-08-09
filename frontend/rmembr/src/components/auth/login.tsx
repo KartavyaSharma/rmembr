@@ -21,14 +21,14 @@ const InAnimation = {
         },
     },
     transition: {
-		delay: 0.9,
+		delay: 0.2,
         duration: 1.2,
         ease: "easeOut",
     },
 }
 
 const OutAnimation = {
-	
+
 }
 
 export default function Login(): ReactElement {
