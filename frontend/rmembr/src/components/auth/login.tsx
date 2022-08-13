@@ -123,7 +123,7 @@ export default function Login(): ReactElement {
                     />
 
                     <span className="absolute inset-y-0 inline-flex items-center right-4">
-                    <svg
+                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
                         height="16"
