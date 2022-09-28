@@ -1,13 +1,15 @@
 import React, { ReactElement } from "react";
 
+import { motion, AnimatePresence } from "framer-motion";
+
 export default function Footer(): ReactElement {
   return (
-    <>
-      <div
-        className="grid grid-rows-1 justify-items-stretch h-full min-w-full content-end z-[100] my-5"
-        data-sal="slide-down"
-        data-sal-easing="ease"
-        data-sal-duration="2000"
+    <AnimatePresence>
+      <motion.div
+        // className="grid grid-rows-1 justify-items-stretch h-full min-w-full lg:min-w- content-end z-[100] my-5"
+        // data-sal="slide-down"
+        // data-sal-easing="ease"
+        // data-sal-duration="2000"
       >
         <div className="font-montserrat text-md font-light text-gray-600 p-3 pb-5 align-middle justify-self-center justify-center w-full mt-5 border-t-2 border-gray-600">
           <div className="flex flex-row w-full">
@@ -97,7 +99,7 @@ export default function Footer(): ReactElement {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </motion.div>
+    </AnimatePresence>
   );
 }

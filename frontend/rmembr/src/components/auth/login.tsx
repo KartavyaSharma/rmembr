@@ -1,5 +1,6 @@
 import React, { useState, ReactElement } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Footer from "../../components/landing/footer";
 
 const InAnimation = {
   key: "sign-in",
@@ -54,6 +55,32 @@ const OutAnimation = {
   },
 };
 
+const TextAnimation = {
+  key: "text",
+  initial: {
+    x: "30%",
+    opacity: 0,
+    scale: 0.5,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+  },
+  exit: {
+    x: "-50%",
+    opacity: 0,
+    transition: {
+      duration: 1.2,
+    },
+  },
+  transition: {
+    delay: 0.2,
+    duration: 1.2,
+    ease: "easeOut",
+  },
+};
+
 export default function Login(): ReactElement {
   const [isShown, setIsShown] = useState(true);
 
@@ -64,21 +91,21 @@ export default function Login(): ReactElement {
   return (
     <div>
       <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
-        <div className="max-w-lg mx-auto text-center">
-          <h1 className="text-2xl font-montserrat font-bold sm:text-3xl text-gray-600">
-            Get started today!
-          </h1>
-
-          <p className="mt-4 font-montserrat text-md lg:text-lg font-medium text-gray-600 w-full">
-            rmembr is an academic scheduler designed to simplify your coursework
-            planning process. With rmembr you can keep track of your active
-            recall progress, plan office hours, and record practice questions.
-            All in one place.
-          </p>
-        </div>
         <AnimatePresence>
           {isShown ? (
             <motion.div {...InAnimation}>
+              <div className="max-w-lg mx-auto text-center">
+                <h1 className="text-2xl font-montserrat font-bold sm:text-3xl text-gray-600">
+                  Get started today!
+                </h1>
+
+                <p className="mt-4 font-montserrat text-md lg:text-lg font-medium text-gray-600 w-full">
+                  rmembr is an academic scheduler designed to simplify your
+                  coursework planning process. With rmembr you can keep track of
+                  your active recall progress, plan office hours, and record
+                  practice questions. All in one place.
+                </p>
+              </div>
               <form action="" className="max-w-md mx-auto mt-8 mb-0 space-y-4">
                 <div>
                   <label htmlFor="email" className="sr-only font-montserrat">
@@ -140,7 +167,7 @@ export default function Login(): ReactElement {
 
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-gray-500">
-                    No account?&nbsp;
+                    New here?&nbsp;
                     <button
                       type="button"
                       className="underline"
@@ -158,9 +185,21 @@ export default function Login(): ReactElement {
                   </button>
                 </div>
               </form>
+              <Footer/>
             </motion.div>
           ) : (
             <motion.div {...OutAnimation}>
+              <div className="min-w-full">
+                <div className="max-w-lg mx-auto text-center">
+                <h1 className="text-2xl font-montserrat font-bold sm:text-3xl text-gray-600">
+                  Welcome Aboard!
+                </h1>
+
+                <p className="mt-4 font-montserrat text-md lg:text-lg font-medium text-gray-600 w-full">
+                  Tell us a bit about yourself.
+                </p>
+                </div>
+              </div>
               <form action="" className="max-w-md mx-auto mt-8 mb-0 space-y-4">
                 <div>
                   <label htmlFor="email" className="sr-only font-montserrat">
@@ -169,7 +208,7 @@ export default function Login(): ReactElement {
 
                   <div className="relative">
                     <input
-                      type="email"
+                      type="text"
                       className="w-full p-4 pr-12 text-sm border-2 focus:outline-none border-gray-600 rounded-lg bg-transparent text-white font-montserrat"
                       placeholder="Enter Name"
                     />
@@ -260,6 +299,7 @@ export default function Login(): ReactElement {
                   </button>
                 </div>
               </form>
+              <Footer/>
             </motion.div>
           )}
         </AnimatePresence>

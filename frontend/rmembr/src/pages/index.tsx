@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import * as React from "react";
 import { Helmet } from "react-helmet";
 import Login from "../components/auth/login";
@@ -119,7 +120,7 @@ export default function indexPage() {
             </svg>
           </div>
           <div className="flex w-full justify-center">
-            <div className="px-8 py-20 lg:py-16 2xl:py-28 max-w-[90rem] h-full z-50 justify-center items-center">
+            <div className="px-8 py-20 lg:py-16 2xl:py-28 lg:min-w-[50%] max-w-[90rem] h-full z-50 justify-center items-center">
               <div className="grid justify-items-middle min-h-full w-full">
                 <div className="grid grid-rows-1 justify-items-stretch relative">
                   <div
@@ -153,7 +154,6 @@ export default function indexPage() {
                 <div className="grid grid-rows-1 justify-items-stretch w-full">
                   <Login/>
                 </div>
-                <Footer/>
               </div>
             </div>
           </div>
