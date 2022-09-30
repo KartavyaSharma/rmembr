@@ -103,7 +103,6 @@ export default class SectionRoutes extends Routes {
             try {
                 Utils.validateObject(req.params, "sectionId");
                 Utils.validateObject(req.body.payload, "section");
-                Utils.validateObject(req.body.payload.section, "subsectionGroupId");
                 const payload: { section: ISection } = req.body.payload;
                 await Utils.validateObjectDeep<IUpdateSectionRequest>(payload, JUpdateSectionRequest);
                 newUser = req.body.user;

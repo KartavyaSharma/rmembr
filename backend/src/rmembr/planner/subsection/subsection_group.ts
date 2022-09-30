@@ -31,6 +31,9 @@ export default class SubsectionGroup {
     /** Set contianing IDs of all contained subsections. */
     private _subsections: ISubSection[];
 
+    /** User ID associated with subsection group */
+    private _userId: string;
+
     /**
      * @returns this subsection group's ID.
      */
@@ -67,15 +70,17 @@ export default class SubsectionGroup {
      * Initializes new group with all relevent fields. 
      * @param sectionObj Section object associated with this group.
      */
-    constructor(sectionObj: ISection, subsectionGroupObj: ISubsectionGroup = null) {
+    constructor(sectionObj: ISection, subsectionGroupObj: ISubsectionGroup = null, userId: string = null) {
         if (subsectionGroupObj) {
             this._id = subsectionGroupObj._id;
             this._sectionId = subsectionGroupObj._sectionId;
             this._subsections = subsectionGroupObj.subsections;
+            this._userId = subsectionGroupObj._userId;
         } else {
             this._id = nanoid();
             this._sectionId = sectionObj._id;
             this._subsections = [];
+            this._userId = userId;
         }
     }
 
@@ -95,6 +100,7 @@ export default class SubsectionGroup {
         const newSubsectionGroup: ISubsectionGroup = {
             _id: this._id,
             _sectionId: this._sectionId,
+            _userId: this._userId,
             subsections: []
         }
         const created = await SubsectionGroupModel.create(newSubsectionGroup);
@@ -130,6 +136,21 @@ export default class SubsectionGroup {
             throw new Exception(ErrorCode.UnknownError, "Subsection group not found.");
         }
         return new SubsectionGroup(null, found);
+    }
+
+    /** 
+     * Returns all subsection groups associated with a user.
+     * @param userId User ID.
+     * @returns Promise that resolves to a list of subsection groups.
+     */
+    public static async getAll(userId: string): Promise<SubsectionGroup[]> {
+        const found: ISubsectionGroup[] = await SubsectionGroupModel.find({ _userId: userId });
+        if (!found) {
+            throw new Exception(ErrorCode.UnknownError, "No subsection groups associated with user.");
+        }
+        return found.map((obj) => {
+            return new SubsectionGroup(null, obj);
+        });
     }
 
     /**

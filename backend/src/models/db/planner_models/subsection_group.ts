@@ -8,6 +8,7 @@ import Joi, { ObjectSchema } from "joi";
 export interface ISubsectionGroup { 
     _id: string;
     _sectionId: string;
+    _userId?: string;
     subsections: ISubSection[];
 }
 
@@ -15,6 +16,7 @@ export const JSubsectionGroupSchema: ObjectSchema = Joi.object<ISubsectionGroup>
     {
         _id: Joi.string().required(),
         _sectionId: Joi.string().required(),
+        _userId: Joi.alternatives().try(Joi.string().required(), Joi.allow(null)),
         subsections: Joi.array().items(JSubsectionSchema).required(),
     }
 );
@@ -27,6 +29,7 @@ const ISubsectionGroup = new Schema<ISubsectionGroup>(
     {
         _id: { type: String, required: true },
         _sectionId: { type: String, required: true },
+        _userId: { type: String, required: true, default: null },
         subsections: { type: [ISubSectionSchema], required: false, default: null }
     }
 );

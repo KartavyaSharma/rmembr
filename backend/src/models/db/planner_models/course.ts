@@ -7,7 +7,7 @@ import Joi, { ObjectSchema } from "joi";
  */
 export interface ICourse {
     _id: string;
-    _courseGroupId: string;
+    _courseGroupId?: string;
     name: string;
     sections: ISection[];
 }
@@ -15,7 +15,7 @@ export interface ICourse {
 export const JCourseSchema: ObjectSchema = Joi.object<ICourse>().keys(
     {
         _id: Joi.string().required(),
-        _courseGroupId: Joi.string().required(),
+        _courseGroupId: Joi.alternatives().try(Joi.string().required(), Joi.allow(null)),
         name: Joi.string().required(),
         sections: Joi.array().items(JSectionSchema).required(),
     }

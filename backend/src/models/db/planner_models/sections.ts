@@ -8,7 +8,7 @@ export interface ISection {
     _id: string;
     _courseId: string;
     name: string;
-    subsectionGroupId: string;
+    subsectionGroupId?: string;
 }
 
 export const JSectionSchema: ObjectSchema = Joi.object<ISection>(
@@ -16,7 +16,7 @@ export const JSectionSchema: ObjectSchema = Joi.object<ISection>(
         _id: Joi.string().required(),
         _courseId: Joi.string().required(),
         name: Joi.string().required(),
-        subsectionGroupId: Joi.string().required(),
+        subsectionGroupId: Joi.alternatives().try(Joi.string().required(), Joi.allow(null)),
     }
 );
 

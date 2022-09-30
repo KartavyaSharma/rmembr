@@ -5,7 +5,7 @@ dotenv.config();
 export default {
     port: process.env.PORT,
     database: {
-        uri: process.env.MONGO_URI,
+        uri: process.env.TEST_MONGO_URI,
     },
     token: {
         secret: process.env.TOKEN_SECRET,

@@ -7,10 +7,11 @@ import { Auth } from "../auth/auth_engine";
 import { ICourseGroupResponse, IDeleteUserResponse, ILoginResponse } from "../../models/response/response_models";
 import { Utils } from "../../utils/server_utils";
 import { CourseGroupModel } from "../../models/db/planner_models/course_group";
-import CourseGroup from "../planner/course_group";
 import { defaultConf } from "../config_store/default_conf";
 import { IUserClass, IUserClassStatic } from "../../models/server_models";
 import { ISettings } from "../../models/db/user/settings";
+import CourseGroup from "../planner/course_group";
+import SubsectionGroup from "../planner/subsection/subsection_group";
 
 /**
  * Class representing a user.
@@ -163,6 +164,10 @@ export default class User implements IUserClass {
         try {
             await UserModel.deleteOne({ _id: user.id });
             await CourseGroupModel.deleteOne({ _userId: user.id });
+            const groups:SubsectionGroup[] = await SubsectionGroup.getAll(user.id);
+            for (const group of groups) {
+                await SubsectionGroup.destroy(group.id);
+            }
         } catch (err) {
             return err;
         }

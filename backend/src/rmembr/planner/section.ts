@@ -92,7 +92,7 @@ export default class Section {
      * @returns Section object wrapped in a ICreateSectionResponse object.
      */
     public async register(userId: string): Promise<ISection> {
-        const newSubsectionGroup: SubsectionGroup = new SubsectionGroup(this.object);
+        const newSubsectionGroup: SubsectionGroup = new SubsectionGroup(this.object, null, userId);
         const newSection: ISection = {
             _id: this._id,
             _courseId: this._courseId,

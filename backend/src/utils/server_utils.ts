@@ -63,9 +63,10 @@ export class Utils {
         try {
             await validator.validateAsync(object);
         } catch (err) {
+            const msg: string = `${err}\nON OBJECT: ${object}\nObject does not impelement proper interface.`;
             throw new Exception(
                 ErrorCode.ValidationError,
-                `${err}\nON OBJECT:\n${object}\nObject does not impelement proper interface.`
+                msg
             );
         }
     }

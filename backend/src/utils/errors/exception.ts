@@ -39,7 +39,7 @@ export class Exception extends Error {
         ]
         console.log(errorOutput.join(""));
         if (err instanceof Exception) {
-            console.log(`Error is known.\n Meta: ${err.meta}`)
+            console.log(`Error is known.\nMeta: ${err.meta}`)
             res.status(err.status).send({ error: err });
         } else {
             /** For unhandled errors in system. */

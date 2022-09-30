@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { Routes } from "../routes";
-import User from "../../rmembr/user/user";
 import { ICourse } from "../../models/db/planner_models/course";
 import { Utils } from "../../utils/server_utils";
 import { IUpdateCourseRequest } from "../../models/request/request_models";
+import { JUpdateCourseRequest } from "../../models/request/request_validators";
 import { 
     ICourseGroupResponse, 
     ICreateCourseResponse, 
@@ -12,7 +12,7 @@ import {
 import SectionRoutes from "./section_routes";
 import CourseGroup from "../../rmembr/planner/course_group";
 import Course from "../../rmembr/planner/course";
-import { JUpdateCourseRequest } from "../../models/request/request_validators";
+import User from "../../rmembr/user/user";
 
 export default class CourseRoutes extends Routes {
 
