@@ -2,89 +2,10 @@ import React, { useState, ReactElement } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../../components/landing/footer";
 
-const InAnimation = {
-  key: "sign-in",
-  initial: {
-    y: "30%",
-    opacity: 0,
-    scale: 0.5,
-  },
-  animate: {
-    y: 0,
-    opacity: 1,
-    scale: 1,
-  },
-  exit: {
-    x: "-50%",
-    opacity: 0,
-    transition: {
-      duration: 1.2,
-    },
-  },
-  transition: {
-    delay: 0.2,
-    duration: 1.2,
-    ease: "easeOut",
-  },
-};
-
-const OutAnimation = {
-  key: "sign-up",
-  initial: {
-    y: "30%",
-    opacity: 0,
-    scale: 0.5,
-  },
-  animate: {
-    y: 0,
-    opacity: 1,
-    scale: 1,
-  },
-  exit: {
-    x: "-50%",
-    opacity: 0,
-    transition: {
-      delay: 0.4,
-      duration: 1.2,
-    },
-  },
-  transition: {
-    delay: 1.5,
-    duration: 1.2,
-    ease: "easeOut",
-  },
-};
-
-const TextAnimation = {
-  key: "text",
-  initial: {
-    x: "30%",
-    opacity: 0,
-    scale: 0.5,
-  },
-  animate: {
-    x: 0,
-    opacity: 1,
-    scale: 1,
-  },
-  exit: {
-    x: "-50%",
-    opacity: 0,
-    transition: {
-      duration: 1.2,
-    },
-  },
-  transition: {
-    delay: 0.2,
-    duration: 1.2,
-    ease: "easeOut",
-  },
-};
-
 export default function Login(): ReactElement {
   const [isShown, setIsShown] = useState(true);
 
-  const toggleClick = () => {
+  const toggleAnimation = () => {
     setIsShown(!isShown);
   };
 
@@ -171,7 +92,7 @@ export default function Login(): ReactElement {
                     <button
                       type="button"
                       className="underline"
-                      onClick={toggleClick}
+                      onClick={toggleAnimation}
                     >
                       Sign up
                     </button>
@@ -307,3 +228,82 @@ export default function Login(): ReactElement {
     </div>
   );
 }
+
+const InAnimation = {
+  key: "sign-in",
+  initial: {
+    y: "30%",
+    opacity: 0,
+    scale: 0.5,
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    scale: 1,
+  },
+  exit: {
+    x: "-50%",
+    opacity: 0,
+    transition: {
+      duration: 1.2,
+    },
+  },
+  transition: {
+    delay: 0.2,
+    duration: 1.2,
+    ease: "easeOut",
+  },
+};
+
+const OutAnimation = {
+  key: "sign-up",
+  initial: {
+    y: "30%",
+    opacity: 0,
+    scale: 0.5,
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    scale: 1,
+  },
+  exit: {
+    x: "-50%",
+    opacity: 0,
+    transition: {
+      delay: 0.4,
+      duration: 1.2,
+    },
+  },
+  transition: {
+    delay: 1.5,
+    duration: 1.2,
+    ease: "easeOut",
+  },
+};
+
+const TextAnimation = {
+  key: "text",
+  initial: {
+    x: "30%",
+    opacity: 0,
+    scale: 0.5,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+  },
+  exit: {
+    x: "-50%",
+    opacity: 0,
+    transition: {
+      duration: 1.2,
+    },
+  },
+  transition: {
+    delay: 0.2,
+    duration: 1.2,
+    ease: "easeOut",
+  },
+};
